@@ -9,6 +9,7 @@
 #include "Sprite\SpriteV1Cube.h"
 #include "SceneObject\PerspectiveCamera.h"
 #include "ImWindow\ObjectPropertyWin.h"
+#include "Shader\ShaderManager.h"
 
 namespace yoi
 {
@@ -73,10 +74,6 @@ namespace yoi
 	/****** test draw ******/
 	private:
 		
-		Microsoft::WRL::ComPtr<ID3D11VertexShader> pVertexShader;
-		Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader;
-		Microsoft::WRL::ComPtr<ID3D11InputLayout> pLayout;
-		
 		std::unique_ptr<SceneObj> m_RootObj;
 		CameraObj* m_MainCamera;
 
@@ -125,6 +122,12 @@ namespace yoi
 			static Graphics* s_pInstance;
 		public:
 			static Graphics& GetInstance();
+
+		/******* Shader **********/
+		private:
+			std::unique_ptr<ShaderManager> m_pShaderManager;
+		public:
+			Shader* GetShader(const std::string& shaderTitle);
 	};
 
 }

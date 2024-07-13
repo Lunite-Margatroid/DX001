@@ -15,6 +15,7 @@ namespace yoi
 			<< GetOriginString();
 		whatBuffer = std::move(oss.str());
 		FileLogger::Error(whatBuffer.c_str());
+		FileLogger::Flush();
 		return whatBuffer.c_str();
 	}
 

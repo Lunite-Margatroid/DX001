@@ -22,6 +22,7 @@ namespace yoi
 	void FileLogger::Warn(const char* warn)
 	{
 		GetInstance().m_pLogger->warn(warn);
+
 	}
 	void FileLogger::Info(const char* info)
 	{
@@ -34,5 +35,9 @@ namespace yoi
 	void FileLogger::Error(const char* error)
 	{
 		GetInstance().m_pLogger->error(error);
+	}
+	void FileLogger::Flush()
+	{
+		GetInstance().m_pLogger->flush();
 	}
 }

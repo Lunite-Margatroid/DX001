@@ -120,6 +120,9 @@ namespace yoi
 		bufferDesc.StructureByteStride = 0;
 		subData.pSysMem = constantData;
 		GFX_THROW_INFO(m_pDevice->CreateBuffer(&bufferDesc, &subData, &m_pConstantBuffer));
+
+		// select shader
+		m_Shader = Graphics::GetInstance().GetShader(std::string("Colored Vertex Shader"));
 	}
 	void SpriteV1Cube::RenderV1(const glm::mat4& modelTrans, const glm::mat4& vpTrans)
 	{
@@ -131,6 +134,8 @@ namespace yoi
 		// memset(dataMap.pData, 0, 64 * 5);
 		memcpy((BYTE*)dataMap.pData + 64 * 3, glm::value_ptr(mvpTrans), 64);
 		GFX_THROW_INFO_ONLY(m_pContext->Unmap(m_pConstantBuffer.Get(), 0));
+
+		m_Shader->Bind(m_pContext);
 
 		UINT stripe = sizeof(Vertex);
 		UINT offset = 0;

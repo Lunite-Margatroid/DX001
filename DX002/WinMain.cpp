@@ -12,6 +12,10 @@ int CALLBACK WinMain(
 	{
 		yoi::FileLogger::Info("App begin to Run.");
 		yoi::Application app;
+		int ret = app.Run();
+		std::ostringstream oss;
+		oss << "App end. return code = " << ret;
+		yoi::FileLogger::Info(oss.str().c_str());
 		return app.Run();
 	}
 	catch (const yoi::YoiException& error)

@@ -2,6 +2,8 @@
 #include <d3dcompiler.h>
 #include "Graphics.h"
 #include "GFXMacro.h"
+#include "Logger\FileLogger.h"
+#include "Shader\P3_C3.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -37,6 +39,8 @@ namespace yoi
 			<< "[info] " << GetErrorInfo()
 			<< GetOriginString();
 		whatBuffer = oss.str();
+		FileLogger::Error(whatBuffer.c_str());
+		FileLogger::Flush();
 		return whatBuffer.c_str();
 	}
 
@@ -104,6 +108,8 @@ namespace yoi
 			<< "[reason] " << reason
 			<< GetOriginString();
 		whatBuffer = oss.str();
+		FileLogger::Error(whatBuffer.c_str());
+		FileLogger::Flush();
 		return whatBuffer.c_str();
 	}
 	/* ---------------- DeviceRemovedException ---------------- * end */
@@ -130,6 +136,8 @@ namespace yoi
 			<< "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
 		oss << GetOriginString();
 		whatBuffer = oss.str();
+		FileLogger::Error(whatBuffer.c_str());
+		FileLogger::Flush();
 		return whatBuffer.c_str();
 	}
 	const char* Graphics::InfoException::GetType() const noexcept
@@ -211,6 +219,9 @@ namespace yoi
 		// singleton
 		s_pInstance = this;
 
+		// Init shader manager
+		m_pShaderManager = std::make_unique<ShaderManager>(pDevice.Get(), pContext.Get());
+
 		// init test draw 
 		InitTestDraw();
 
@@ -267,35 +278,7 @@ namespace yoi
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
 		((PerspectiveCamera*)m_MainCamera)->SetWidth(4.0);
 
-		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
-		// create pixel shader
-		GFX_THROW_INFO(D3DReadFileToBlob(L"./shader-bin/PixelShader.cso", &pBlob));
-		GFX_THROW_INFO(pDevice->CreatePixelShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader));
-		// bind pixel shader
-		GFX_THROW_INFO_ONLY(pContext->PSSetShader(pPixelShader.Get(), 0, 0));
-
-		// create vertex shader
-		GFX_THROW_INFO(D3DReadFileToBlob(L"./shader-bin/VertexShader.cso", &pBlob));
-		GFX_THROW_INFO(pDevice->CreateVertexShader(pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader));
-		// bind vertex shader
-		GFX_THROW_INFO_ONLY(pContext->VSSetShader(pVertexShader.Get(), 0, 0));
-
-		// create layout
-		D3D11_INPUT_ELEMENT_DESC ied[] = 
-		{
-			{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, sizeof(float) * 3, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		};
-
-		GFX_THROW_INFO(pDevice->CreateInputLayout(ied, 2, pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pLayout));
-
-		// bind layout
-		GFX_THROW_INFO_ONLY(pContext->IASetInputLayout(pLayout.Get()));
-
-		// set primitive topology
-		GFX_THROW_INFO_ONLY(pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
-
-		// viewport
+		// set viewprot
 		D3D11_VIEWPORT vp;
 		vp.TopLeftX = 0;
 		vp.TopLeftY = 0;
@@ -304,9 +287,6 @@ namespace yoi
 		vp.MinDepth = 0;
 		vp.MaxDepth = 1;
 		GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
-
-
-
 		// set render target
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
@@ -333,5 +313,16 @@ namespace yoi
 	Graphics& Graphics::GetInstance()
 	{
 		return *s_pInstance;
+	}
+	Shader* Graphics::GetShader(const std::string& shaderTitle)
+	{
+		if(m_pShaderManager.get())
+			return m_pShaderManager->GetShader(shaderTitle);
+		else
+		{
+			FileLogger::Error("Shader Manager didn't init.");
+			FileLogger::Flush();
+			return nullptr;
+		}
 	}
 }

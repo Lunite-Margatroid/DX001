@@ -170,6 +170,7 @@
     <ClInclude Include="ImWindow\ObjectPropertyWin.h" />
     <ClInclude Include="Logger\FileLogger.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
+    <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\SpriteV1.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="ImWindow\ImWindow.cpp" />
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
     <ClCompile Include="Logger\FileLogger.cpp" />
+    <ClCompile Include="Shader\P3_C3.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Sprite\SpriteV1.cpp" />

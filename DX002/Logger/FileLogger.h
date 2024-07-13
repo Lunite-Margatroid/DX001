@@ -20,5 +20,6 @@ namespace yoi
         static void Info(const char* info);
         static void Debug(const char* info);
         static void Error(const char* error);
+        static void Flush();
     };
 }

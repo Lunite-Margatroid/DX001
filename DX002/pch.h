@@ -8,6 +8,7 @@
 #include <exception>
 #include <bitset>
 #include <vector>
+#include <map>
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"

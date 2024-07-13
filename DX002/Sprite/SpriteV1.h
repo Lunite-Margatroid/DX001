@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include <d3d11.h>
 #include <wrl.h>
+#include "Shader\Shader.h"
 
 namespace yoi
 {
@@ -14,6 +15,8 @@ namespace yoi
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pVertexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pIndexBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pConstantBuffer;
+
+		Shader* m_Shader;
 
 		SpriteV1(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 	public:
