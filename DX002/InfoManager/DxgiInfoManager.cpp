@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DxgiInfoManager.h"
 #include "Window/Window.h"
-#include "Log\FileLogger.h"
+#include "Logger\FileLogger.h"
 
 #pragma comment(lib, "dxguid.lib")
 

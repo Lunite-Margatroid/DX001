@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Application.h"
-#include "Log/FileLogger.h"
+#include "Logger/FileLogger.h"
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,

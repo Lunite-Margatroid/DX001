@@ -168,9 +168,10 @@
     <ClInclude Include="ImGuiManager\ImWindowManager.h" />
     <ClInclude Include="ImWindow\ImWindow.h" />
     <ClInclude Include="ImWindow\ObjectPropertyWin.h" />
-    <ClInclude Include="Log\FileLogger.h" />
+    <ClInclude Include="Logger\FileLogger.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\SpriteV1.h" />
     <ClInclude Include="Sprite\SpriteV1Cube.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialog.h" />
@@ -209,8 +210,9 @@
     <ClCompile Include="ImGuiManager\ImWindowManager.cpp" />
     <ClCompile Include="ImWindow\ImWindow.cpp" />
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
-    <ClCompile Include="Log\FileLogger.cpp" />
+    <ClCompile Include="Logger\FileLogger.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
+    <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Sprite\SpriteV1.cpp" />
     <ClCompile Include="Sprite\SpriteV1Cube.cpp" />
     <ClCompile Include="vendor\ImGuiFileDialog\ImGuiFileDialog.cpp">
