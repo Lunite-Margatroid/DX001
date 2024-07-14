@@ -229,6 +229,8 @@ namespace yoi
 		pImGuiManager = std::make_unique<ImGuiManager>(hWnd, pDevice.Get(), pContext.Get());
 
 		m_pObjWin = std::make_unique<ObjectPropertyWin>(m_RootObj.get());
+
+		m_DeltaTime = 0.f;
 	}
 
 	void Graphics::ImGuiFrame()
@@ -236,6 +238,51 @@ namespace yoi
 		pImGuiManager->BeginImGuiFrame();
 
 		m_pObjWin->ShowWindow();
+
+		/* temp camera control */
+		// key control
+		ImGuiIO& io = ImGui::GetIO();
+		Camera3DObj* camera = dynamic_cast<Camera3DObj*>(m_MainCamera);
+		if (camera)
+		{
+			if (io.KeysDown[ImGuiKey_W])
+				camera->Move(CameraObj::Direction::front, m_DeltaTime);
+			if (io.KeysDown[ImGuiKey_A])
+				camera->Move(CameraObj::Direction::left, m_DeltaTime);
+			if (io.KeysDown[ImGuiKey_S])
+				camera->Move(CameraObj::Direction::back, m_DeltaTime);
+			if (io.KeysDown[ImGuiKey_D])
+				camera->Move(CameraObj::Direction::right, m_DeltaTime);
+			if (io.KeysDown[ImGuiKey_LeftShift])
+				camera->Move(CameraObj::Direction::down, m_DeltaTime);
+			if (io.KeysDown[ImGuiKey_Space])
+				camera->Move(CameraObj::Direction::up, m_DeltaTime);
+		}
+		// mouse control
+		ImVec2 windowPos = ImGui::GetCursorScreenPos();					// 当前窗口位置
+		ImVec2 windowSize = ImGui::GetWindowSize();					// 窗口大小
+		static ImVec2 sLastCursor;
+		ImVec2 sDeltaPos;
+		if (io.MouseDown[0] && camera)	// 左键按下
+		{
+			// 这里windowPos 是scene绘制区域的左上角
+			if (/*io.MouseClickedPos[0].x >= windowPos.x &&
+				io.MouseClickedPos[0].x <= windowPos.x &&
+				io.MouseClickedPos[0].y >= windowPos.y &&
+				io.MouseClickedPos[0].y <= windowPos.y */
+				true)	// 左键点击位置在目标区域内
+			{
+				sDeltaPos.x = io.MousePos.x - sLastCursor.x;
+				sDeltaPos.y = io.MousePos.y - sLastCursor.y;
+				// std::cout << "Mouse Drag dleta Pos: " << sDeltaPos.x << ", " << sDeltaPos.y << std::endl;
+
+				camera->RotateYaw(-sDeltaPos.x / 500.0f);
+				camera->RotatePitch(-sDeltaPos.y / 500.0f);
+			}
+		}
+		sLastCursor = ImGui::GetMousePos();
+
+
 	}
 
 	void Graphics::EndFrame()
@@ -272,7 +319,8 @@ namespace yoi
 		HRESULT hr;
 
 		// Init Scene obj
-		GFX_THROW_INFO_ONLY(m_RootObj = std::make_unique<SceneObj>(nullptr, new SpriteV1Cube(pDevice.Get(), pContext.Get()), "Cube"));
+		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
+		new SceneObj(m_RootObj.get(), new SpriteV1Cube(pDevice.Get(), pContext.Get()), "Cube");
 		m_MainCamera = new PerspectiveCamera(m_RootObj.get(), nullptr, "Camera");
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
@@ -294,10 +342,11 @@ namespace yoi
 
 	void Graphics::DrawTriangle()
 	{
+		m_DeltaTime = timer.Mark();
 		// set render target
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
-		m_RootObj->Update(timer.Mark());
+		m_RootObj->Update(m_DeltaTime);
 		GFX_THROW_INFO_ONLY(m_RootObj->RenderV1(m_MainCamera->GetVPTrans()));
 	}
 

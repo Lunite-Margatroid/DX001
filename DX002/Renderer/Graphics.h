@@ -81,6 +81,8 @@ namespace yoi
 
 		std::unique_ptr<ObjectPropertyWin> m_pObjWin;
 
+
+		float m_DeltaTime;
 	public:
 		void InitTestDraw();
 		void DrawTriangle();
@@ -88,10 +90,6 @@ namespace yoi
 
 
 	private:
-		/*ID3D11Device* pDevice = nullptr;
-		IDXGISwapChain* pSwap = nullptr;
-		ID3D11DeviceContext* pContext = nullptr;
-		ID3D11RenderTargetView* pTarget = nullptr;*/
 
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
 		Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
@@ -116,7 +114,7 @@ namespace yoi
 		private:
 			std::unique_ptr<ImGuiManager> pImGuiManager;
 
-		/****** Singleton? ******/
+		/****** Singleton ******/
 		// only single window accepted
 		private:
 			static Graphics* s_pInstance;
