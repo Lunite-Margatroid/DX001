@@ -102,6 +102,9 @@ namespace yoi
 		* 使用Get()获取指针。
 		* 使用ReleaseAndGetAddressOf()和&运算符相同。
 		*/
+	public:
+		ID3D11Device* GetDevice();
+		ID3D11DeviceContext* GetContext();
 
 #ifdef  YOI_DEBUG
 	private:

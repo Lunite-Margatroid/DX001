@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="Animation\FrameNode.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BufferManager\BufferManager.h" />
     <ClInclude Include="Exception\UFException.h" />
     <ClInclude Include="ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="ImGuiManager\ImWindowManager.h" />
@@ -171,10 +172,15 @@
     <ClInclude Include="Logger\FileLogger.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="Shader\P3_C3.h" />
+    <ClInclude Include="Shader\P3_T2.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\SpriteV1.h" />
     <ClInclude Include="Sprite\SpriteV1Cube.h" />
+    <ClInclude Include="Sprite\SpriteV2.h" />
+    <ClInclude Include="Texture\ImgRes.h" />
+    <ClInclude Include="Texture\Sampler.h" />
+    <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialog.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
@@ -198,6 +204,8 @@
     <ClInclude Include="SceneObject\SceneObj.h" />
     <ClInclude Include="Sprite\Sprite.h" />
     <ClInclude Include="Timer\YoiTimer.h" />
+    <ClInclude Include="vendor\stb\stb_image.h" />
+    <ClInclude Include="vendor\stb\stb_image_resize.h" />
     <ClInclude Include="Window\KeyBoard.h" />
     <ClInclude Include="Window\Mouse.h" />
     <ClInclude Include="Window\Window.h" />
@@ -206,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\FrameNode.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BufferManager\BufferManager.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="ImGuiManager\ImWindowManager.cpp" />
@@ -213,10 +222,15 @@
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
     <ClCompile Include="Logger\FileLogger.cpp" />
     <ClCompile Include="Shader\P3_C3.cpp" />
+    <ClCompile Include="Shader\P3_T2.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Sprite\SpriteV1.cpp" />
     <ClCompile Include="Sprite\SpriteV1Cube.cpp" />
+    <ClCompile Include="Sprite\SpriteV2.cpp" />
+    <ClCompile Include="Texture\ImgRes.cpp" />
+    <ClCompile Include="Texture\Sampler.cpp" />
+    <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="vendor\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -301,6 +315,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\TexturedPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\TexturedVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="HLSL\VertexShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>

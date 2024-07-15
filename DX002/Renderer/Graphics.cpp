@@ -349,9 +349,20 @@ namespace yoi
 		m_RootObj->Update(m_DeltaTime);
 		GFX_THROW_INFO_ONLY(m_RootObj->RenderV1(m_MainCamera->GetVPTrans()));
 	}
+	ID3D11Device* Graphics::GetDevice()
+	{
+		return pDevice.Get();
+	}
+
+	ID3D11DeviceContext* Graphics::GetContext()
+	{
+		return pContext.Get();
+	}
+
 
 
 #ifdef  YOI_DEBUG
+	
 	DxgiInfoManager& Graphics::GetInfoManager()
 	{
 		return infoManager;

@@ -316,7 +316,7 @@ namespace yoi
 		{
 			if (msg.message == WM_QUIT)
 			{
-				return msg.wParam;
+				return static_cast<int>(msg.wParam);
 			}
 			TranslateMessage(&msg);
 			DispatchMessageA(&msg);

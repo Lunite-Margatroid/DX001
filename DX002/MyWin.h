@@ -39,7 +39,6 @@
 #define NOTAPE
 #define NOABORT
 
-#define STRICT
 
 
 #include <Windows.h>

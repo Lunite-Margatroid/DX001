@@ -11,7 +11,7 @@ namespace yoi
 			{"Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 			{"Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, sizeof(float) * 3, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		};
-		Init(pDevice, pContext, L"shader-bin/VertexShader.cso", L"shader-bin/PixelShader.cso", ed, 2);
+		Init(pDevice, pContext,ed, 2);
 	}
 	const char* P3_C3::GetVertexShaderPath() const
 	{
@@ -23,7 +23,7 @@ namespace yoi
 	}
 	const char* P3_C3::GetInputLayoutInfo() const
 	{
-		return "Position: float32 * 3\nColor: BYTE * 4";
+		return "Position: float32 * 3\nColor:    BYTE * 4";
 	}
 	const char* P3_C3::GetTitle() const
 	{

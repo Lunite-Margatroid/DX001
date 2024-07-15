@@ -9,7 +9,7 @@ namespace yoi
 	{
 		m_pLogger = spdlog::basic_logger_mt("yoi_logger", "logs/log.txt");
 #ifdef YOI_DEBUG
-		m_pLogger->set_level(spdlog::level::level_enum::debug);
+		m_pLogger->set_level(spdlog::level::level_enum::trace);
 #else
 		m_pLogger->set_level(spdlog::level::level_enum::info);
 #endif // YOI_DEBUG
@@ -23,6 +23,10 @@ namespace yoi
 	{
 		GetInstance().m_pLogger->warn(warn);
 
+	}
+	void FileLogger::Trace(const char* trace)
+	{
+		GetInstance().m_pLogger->trace(trace);
 	}
 	void FileLogger::Info(const char* info)
 	{
