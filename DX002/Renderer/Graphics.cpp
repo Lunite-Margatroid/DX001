@@ -4,6 +4,8 @@
 #include "GFXMacro.h"
 #include "Logger\FileLogger.h"
 #include "Shader\P3_C3.h"
+#include "Sprite\ColoredCube.h"
+#include "Sprite\TexturedCube.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
@@ -222,6 +224,9 @@ namespace yoi
 		// Init shader manager
 		m_pShaderManager = std::make_unique<ShaderManager>(pDevice.Get(), pContext.Get());
 
+		// buffer manager
+		m_pBufferManager = std::make_unique<BufferManager>(pDevice.Get());
+
 		// init test draw 
 		InitTestDraw();
 
@@ -320,7 +325,23 @@ namespace yoi
 
 		// Init Scene obj
 		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
-		new SceneObj(m_RootObj.get(), new SpriteV1Cube(pDevice.Get(), pContext.Get()), "Cube");
+		// colored cube
+		SpriteV2* cubeSprite = new SpriteV2();
+		cubeSprite->AddMesh(ColoredCube());
+		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
+		// textured cube
+		cubeSprite = new SpriteV2();
+		cubeSprite->AddMesh(TexturedCube());
+		SceneObj* texturedCube = new SceneObj(m_RootObj.get(), cubeSprite, "Texture Cube");
+		texturedCube->SetPosition(glm::vec3(0.0f, 4.0f, 0.0f));
+		// texture
+		ImgRes img("./img/black.jpg");
+		m_pTexture = std::make_unique<Texture>(img);
+		m_pTexture->Bind();
+		// sampler
+		m_pSampler = std::make_unique<Sampler>();
+		m_pSampler->Bind(pContext.Get());
+		// camera
 		m_MainCamera = new PerspectiveCamera(m_RootObj.get(), nullptr, "Camera");
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
@@ -347,7 +368,7 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
 		m_RootObj->Update(m_DeltaTime);
-		GFX_THROW_INFO_ONLY(m_RootObj->RenderV1(m_MainCamera->GetVPTrans()));
+		GFX_THROW_INFO_ONLY(m_RootObj->RenderV2(m_MainCamera->GetVPTrans()));
 	}
 	ID3D11Device* Graphics::GetDevice()
 	{
@@ -384,5 +405,9 @@ namespace yoi
 			FileLogger::Flush();
 			return nullptr;
 		}
+	}
+	ID3D11Buffer* Graphics::GetBuffer(BufferManager::Buffer buffer)
+	{
+		return (GetInstance().m_pBufferManager)->GetBuffer(buffer);
 	}
 }

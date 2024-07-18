@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BufferManager.h"
+#include "ColoredCubeBuffer.h"
 #include "Renderer\Graphics.h"
 #include "Renderer\GFXMacro.h"
 
@@ -8,6 +9,100 @@ namespace yoi
 	BufferManager::BufferManager(ID3D11Device* pDevice)
 		:m_pDevice(pDevice)
 	{
+		GFX_EXCEPT_SUPPORT();
+		const float side = 1.0f;
+		struct Vertex
+		{
+			struct
+			{
+				float x, y, z;
+			}Position;
+			struct
+			{
+				float u, v;
+			}TexCoord;
+		};
+		Vertex vertexData[] =
+		{
+			{1.0f, -1.0f, -1.0f,	0.0f, 0.0f},
+			{1.0f, -1.0f, 1.0f,		1.0f, 0.0f},
+			{1.0f, 1.0f, 1.0f,		1.0f, 1.0f},
+			{1.0f, 1.0f, -1.0f,		0.0f, 1.0f},
+
+			{-1.0f, -1.0f, -1.0f,	0.0f, 0.0f},
+			{-1.0f, 1.0f, -1.0f,	1.0f, 0.0f},
+			{-1.0f, 1.0f, 1.0f,		1.0f, 1.0f},
+			{-1.0f, -1.0f, 1.0f,	0.0f, 1.0f},
+
+			{ -1.0f,1.0f, -1.0f,	0.0f, 0.0f},
+			{ 1.0f, 1.0f,-1.0f,		1.0f, 0.0f},
+			{ 1.0f, 1.0f,1.0f,		1.0f, 1.0f},
+			{ -1.0f,1.0f, 1.0f,		0.0f, 1.0f},
+
+			{ -1.0f,-1.0f, -1.0f,	0.0f, 0.0f},
+			{ -1.0f,-1.0f, 1.0f,	1.0f, 0.0f},
+			{ 1.0f, -1.0f,1.0f,		1.0f, 1.0f},
+			{ 1.0f, -1.0f,-1.0f,	0.0f, 1.0f},
+
+			{ -1.f, -1.f,1.0f,		0.0f, 0.0f},
+			{ -1.f, 1.f, 1.0f,		1.0f, 0.0f},
+			{ 1.f, 1.f,  1.0f,		1.0f, 1.0f},
+			{ 1.f, -1.f, 1.0f,		0.0f, 1.0f},
+
+			{ -1.0f, -1.0f,-1.0f,	0.0f, 0.0f},
+			{ 1.0f, -1.0f, -1.0f,	1.0f, 0.0f},
+			{ 1.0f, 1.0f, -1.0f,	1.0f, 1.0f},
+			{ -1.0f, 1.0f, -1.0f,	0.0f, 1.0f},
+		};
+
+
+		// 定义数据
+		unsigned int indexData[36] = { 0,1,2,2,3,0 };
+		for (int i = 6; i < 36; i++)
+		{
+			indexData[i] = indexData[i - 6] + 4;
+		}
+
+		// create vertex buffer
+		D3D11_BUFFER_DESC bufferDesc = {};
+		bufferDesc.ByteWidth = sizeof(vertexData);
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = sizeof(Vertex);
+
+		D3D11_SUBRESOURCE_DATA subData = {};
+		subData.pSysMem = vertexData;
+
+		m_BufferMap[Buffer::Vertex_Textured_Cube] = AddBuffer(&bufferDesc, &subData);
+
+		// create index buffer
+		bufferDesc.ByteWidth = sizeof(indexData);
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = sizeof(unsigned int);
+
+		subData.pSysMem = indexData;
+		m_BufferMap[Buffer::Index_Textured_Cube] = AddBuffer(&bufferDesc, &subData);
+
+
+		// create constant buffer
+		BYTE constantData[sizeof(float) * 16 * 5];
+		memset(constantData, 0, sizeof(float) * 16 * 5);
+
+		bufferDesc.ByteWidth = sizeof(float) * 4 * 4 * 5;	// 5 * mat4x4
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+		subData.pSysMem = constantData;
+		m_BufferMap[Buffer::Constant_Matrix] = AddBuffer(&bufferDesc, &subData);
+
+		ColoredCubeBuffer(this);
 	}
 	BufferManager::~BufferManager()
 	{
@@ -22,5 +117,24 @@ namespace yoi
 		m_Buffers.push_back(nullptr);
 		GFX_THROW_INFO(m_pDevice->CreateBuffer(pDescript, initData, &m_Buffers.back()));
 		return m_Buffers.back();
+	}
+	ID3D11Buffer* BufferManager::AddBuffer(Buffer buffer, const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData)
+	{
+		if(m_BufferMap.find(buffer) == m_BufferMap.end())
+			return m_BufferMap[buffer] = AddBuffer(pDescript, initData);
+		else
+		{
+			FileLogger::Warn("Same buffer is loaded");
+			return m_BufferMap[buffer];
+		}
+	}
+	ID3D11Buffer* BufferManager::GetBuffer(Buffer buffer)
+	{
+		if (m_BufferMap.find(buffer) == m_BufferMap.end())
+		{// The buffer is not loaded.
+			FileLogger::Error("The buffer is not loaded.");
+			return nullptr;
+		}
+		return m_BufferMap[buffer];
 	}
 }

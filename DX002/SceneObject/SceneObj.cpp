@@ -102,6 +102,32 @@ namespace yoi
 			child->RenderV1(vpTrans);
 		}
 	}
+	void SceneObj::RenderV2(const glm::mat4& vpTrans)
+	{
+		if (m_ParentObj)
+		{
+			m_ModelTrans = m_ParentObj->m_ModelTrans;
+		}
+		else
+		{
+			m_ModelTrans = glm::mat4(1.0f);
+		}
+		m_ModelTrans = glm::translate(m_ModelTrans, m_Position);
+		// EulerTrans(m_ModelTrans, m_Yaw, m_Pitch, m_Roll);
+		QuaternionRotate(m_ModelTrans, m_Qua);
+		m_ModelTrans = glm::scale(m_ModelTrans, m_Scale);
+		m_ModelTrans = m_ModelTrans * m_StaggerTrans;
+		if (SpriteV2* spritev2 = dynamic_cast<SpriteV2*>(m_Sprite))
+		{
+			spritev2->RenderV2(m_ModelTrans, vpTrans);
+			// FileLogger::Debug("Draw Call: RenderV1.");
+
+		}
+		for (auto child : m_ChildObj)
+		{
+			child->RenderV2(vpTrans);
+		}
+	}
 	void SceneObj::PushChild(SceneObj* child)
 	{
 		if (child->m_ParentObj)

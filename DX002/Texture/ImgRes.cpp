@@ -42,12 +42,21 @@ namespace yoi
 		{
 			m_Data = stbi_load_from_file(f, &m_Width, &m_Height, &m_Channals, 0);
 			fclose(f);
+			std::ostringstream oss;
+			oss << "[Image Loaded]" << std::endl
+				<< "\tFile Path:" << path << std::endl
+				<< "\tWidht:  " << m_Width << std::endl
+				<< "\tHeight: " << m_Height << std::endl
+				<< "\tChannal:" << m_Channals;
+			FileLogger::Info(oss.str().c_str());
+			FileLogger::Flush();
 		}
 		if (m_Data == 0)
 		{
 			std::ostringstream oss;
 			oss << "Can't load file: " << path;
 			FileLogger::Error(oss.str().c_str());
+			FileLogger::Flush();
 		}
 	}
 	ImgRes::~ImgRes()

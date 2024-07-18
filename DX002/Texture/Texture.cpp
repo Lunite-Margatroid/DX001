@@ -7,7 +7,6 @@ namespace yoi
 	Texture::Texture(const ImgRes& img)
 	{
 		GFX_EXCEPT_SUPPORT();
-
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
 		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 		D3D11_TEXTURE2D_DESC  td = {};
@@ -15,7 +14,7 @@ namespace yoi
 		td.Height = img.GetHeight();
 		td.MipLevels = 1u;
 		td.ArraySize = 1u;
-		td.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		td.SampleDesc.Count = 1u;
 		td.SampleDesc.Quality = 0u;
 		td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
@@ -34,8 +33,6 @@ namespace yoi
 		rvd.Texture2D.MostDetailedMip = 0u;
 		rvd.Texture2D.MipLevels = 1u;
 		GFX_THROW_INFO(pDevice->CreateShaderResourceView(pTexture.Get(), &rvd, &m_pResView));
-
-
 	}
 	void Texture::Bind()
 	{

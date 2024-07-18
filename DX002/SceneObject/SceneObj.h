@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite/Sprite.h"
 #include "Sprite\SpriteV1.h"
+#include "Sprite\SpriteV2.h"
 
 namespace yoi
 {
@@ -33,6 +34,7 @@ namespace yoi
 		virtual void Update(float deltaTime);
 		virtual void Render();
 		virtual void RenderV1(const glm::mat4& vpTrans);
+		virtual void RenderV2(const glm::mat4& vpTrans);
 		//virtual void UpdateVar();
 
 		inline static void EulerTrans(glm::mat4& modelTrans, float yaw, float pitch, float roll)

@@ -162,6 +162,18 @@
     <ClInclude Include="BufferManager\BufferManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\TexturedCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\ColoredCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager\ColoredCubeBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -291,6 +303,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BufferManager\BufferManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\TexturedCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\ColoredCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

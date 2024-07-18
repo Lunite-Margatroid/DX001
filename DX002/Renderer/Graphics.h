@@ -10,6 +10,9 @@
 #include "SceneObject\PerspectiveCamera.h"
 #include "ImWindow\ObjectPropertyWin.h"
 #include "Shader\ShaderManager.h"
+#include "BufferManager\BufferManager.h"
+#include "Texture\Texture.h"
+#include "Texture\Sampler.h"
 
 namespace yoi
 {
@@ -81,7 +84,8 @@ namespace yoi
 
 		std::unique_ptr<ObjectPropertyWin> m_pObjWin;
 
-
+		std::unique_ptr<Texture> m_pTexture;
+		std::unique_ptr<Sampler> m_pSampler;
 		float m_DeltaTime;
 	public:
 		void InitTestDraw();
@@ -129,6 +133,12 @@ namespace yoi
 			std::unique_ptr<ShaderManager> m_pShaderManager;
 		public:
 			Shader* GetShader(const std::string& shaderTitle);
+
+		/********* Buffer Manager ***********/
+		private:
+			std::unique_ptr<BufferManager> m_pBufferManager;
+		public:
+			static ID3D11Buffer* GetBuffer(BufferManager::Buffer buffer);
 	};
 
 }

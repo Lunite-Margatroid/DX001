@@ -16,7 +16,6 @@ namespace yoi
 		sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 		sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 		sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-
 		pDevice->CreateSamplerState(&sd, &m_pSampler);
 
 	}
