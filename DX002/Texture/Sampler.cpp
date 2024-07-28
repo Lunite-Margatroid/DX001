@@ -16,7 +16,7 @@ namespace yoi
 		sd.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 		sd.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 		sd.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-		pDevice->CreateSamplerState(&sd, &m_pSampler);
+		GFX_THROW_INFO(pDevice->CreateSamplerState(&sd, &m_pSampler));
 
 	}
 	void Sampler::Bind(ID3D11DeviceContext* pContext)

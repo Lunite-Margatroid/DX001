@@ -174,6 +174,18 @@
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Material\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\TextureManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Material\MaterialManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\P3_T2_Materialed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -314,6 +326,18 @@
     <ClCompile Include="Sprite\ColoredCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Material\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Material\MaterialManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\P3_T2_Materialed.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -330,5 +354,7 @@
     <FxCompile Include="HLSL\PixelShader.hlsl" />
     <FxCompile Include="HLSL\TexturedVS.hlsl" />
     <FxCompile Include="HLSL\TexturedPS.hlsl" />
+    <FxCompile Include="HLSL\MaterialedPS.hlsl" />
+    <FxCompile Include="HLSL\MaterialedVS.hlsl" />
   </ItemGroup>
 </Project>

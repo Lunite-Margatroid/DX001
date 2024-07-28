@@ -13,6 +13,8 @@
 #include "BufferManager\BufferManager.h"
 #include "Texture\Texture.h"
 #include "Texture\Sampler.h"
+#include "Material\MaterialManager.h"
+#include "Texture/TextureManager.h"
 
 namespace yoi
 {
@@ -139,6 +141,14 @@ namespace yoi
 			std::unique_ptr<BufferManager> m_pBufferManager;
 		public:
 			static ID3D11Buffer* GetBuffer(BufferManager::Buffer buffer);
+
+		/*********** Material Manager *************/
+		private:
+			std::unique_ptr<MaterialManager> m_pMaterialManager;
+
+		/*********** Texture Mananger *************/
+		private:
+			std::unique_ptr<TextureManager> m_pTextureManager;
 	};
 
 }

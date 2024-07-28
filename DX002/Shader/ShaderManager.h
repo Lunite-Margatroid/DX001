@@ -3,6 +3,7 @@
 #include "Window\YoiException.h"
 #include "Logger\FileLogger.h"
 
+
 namespace yoi
 {
 	class ShaderManager

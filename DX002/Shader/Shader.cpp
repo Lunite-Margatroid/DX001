@@ -46,7 +46,7 @@ namespace yoi
 	{
 		std::wstring wstr;
 
-		int len = str.size();
+		int len = static_cast<int>(str.size());
 		int nConvent = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, str.c_str(),  len,  nullptr, 0);
 		if (nConvent <= 0)
 		{

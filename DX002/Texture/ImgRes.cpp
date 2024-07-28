@@ -40,8 +40,9 @@ namespace yoi
 
 		if (f)
 		{
-			m_Data = stbi_load_from_file(f, &m_Width, &m_Height, &m_Channals, 0);
+			m_Data = stbi_load_from_file(f, &m_Width, &m_Height, &m_Channals, 4);
 			fclose(f);
+			m_Channals = 4;
 			std::ostringstream oss;
 			oss << "[Image Loaded]" << std::endl
 				<< "\tFile Path:" << path << std::endl
@@ -50,6 +51,20 @@ namespace yoi
 				<< "\tChannal:" << m_Channals;
 			FileLogger::Info(oss.str().c_str());
 			FileLogger::Flush();
+
+			/*std::ostringstream out;
+			out << std::endl;
+			for (int i = 0; i < m_Height; i++)
+			{
+				for (int j = 0; j < m_Width; j++)
+				{
+					unsigned char* data = (unsigned char*)(((unsigned int*)m_Data) + j + i * m_Width);
+					out << '(' << (int)data[0] << ',' << (int)data[1] << ',' << (int)data[2] << ',' << (int)data[3] << ')';
+				}
+				out << std::endl;
+			}
+			FileLogger::Info(out.str().c_str());
+			FileLogger::Flush();*/
 		}
 		if (m_Data == 0)
 		{

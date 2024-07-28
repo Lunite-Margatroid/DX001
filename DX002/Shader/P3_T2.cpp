@@ -22,7 +22,7 @@ namespace yoi
 	}
 	const char* P3_T2::GetInputLayoutInfo() const
 	{
-		return "Position: float32 * 3\nTexCoord: float32 * 2";;
+		return "Position: float32 * 3\nTexCoord: float32 * 2";
 	}
 	const char* P3_T2::GetTitle() const
 	{

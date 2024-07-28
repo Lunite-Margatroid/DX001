@@ -2,6 +2,7 @@
 #include "ShaderManager.h"
 #include "P3_C3.h"
 #include "P3_T2.h"
+#include "P3_T2_Materialed.h"
 #include "Logger\FileLogger.h"
 namespace yoi
 {
@@ -10,6 +11,7 @@ namespace yoi
 		FileLogger::Info("Shaders loading...");
 		RegisterShader<P3_C3>(pDevice, pContext);
 		RegisterShader<P3_T2>(pDevice, pContext);
+		RegisterShader<P3_T2_Materialed>(pDevice, pContext);
 	}
 	ShaderManager::~ShaderManager()
 	{

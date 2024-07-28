@@ -227,6 +227,12 @@ namespace yoi
 		// buffer manager
 		m_pBufferManager = std::make_unique<BufferManager>(pDevice.Get());
 
+		// init texture manager
+		m_pTextureManager = std::make_unique<TextureManager>();
+
+		// init material manager
+		m_pMaterialManager = std::make_unique<MaterialManager>();
+
 		// init test draw 
 		InitTestDraw();
 
@@ -321,23 +327,42 @@ namespace yoi
 
 	void Graphics::InitTestDraw()
 	{
-		HRESULT hr;
+		// HRESULT hr;
+		// texture
+		ImgRes img("./img/rumia.jpg");
+		m_pTexture = std::make_unique<Texture>(img);
+		m_pTexture->Bind();
+
+		Texture* texRumia = m_pTextureManager->LoadTexture("./img/rumia.jpg");
+		Material* mtlRumia = new Material(texRumia, m_pTextureManager->GetAt(0));
+		m_pMaterialManager->Add(mtlRumia, "Rumia");
+		Mesh mshRumia(
+			GetBuffer(BufferManager::Buffer::Vertex_Textured_Cube),
+			GetBuffer(BufferManager::Buffer::Index_Textured_Cube),
+			sizeof(float) * 5, 
+			0u, 
+			0u,
+			36, 
+			0u, 
+			0u,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			GetShader("Materialed Shader"),
+			mtlRumia);
+		
 
 		// Init Scene obj
 		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
+
 		// colored cube
 		SpriteV2* cubeSprite = new SpriteV2();
 		cubeSprite->AddMesh(ColoredCube());
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
 		// textured cube
 		cubeSprite = new SpriteV2();
-		cubeSprite->AddMesh(TexturedCube());
+		cubeSprite->AddMesh(mshRumia);
 		SceneObj* texturedCube = new SceneObj(m_RootObj.get(), cubeSprite, "Texture Cube");
 		texturedCube->SetPosition(glm::vec3(0.0f, 4.0f, 0.0f));
-		// texture
-		ImgRes img("./img/black.jpg");
-		m_pTexture = std::make_unique<Texture>(img);
-		m_pTexture->Bind();
+		
 		// sampler
 		m_pSampler = std::make_unique<Sampler>();
 		m_pSampler->Bind(pContext.Get());

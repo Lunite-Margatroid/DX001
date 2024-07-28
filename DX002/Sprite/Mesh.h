@@ -1,6 +1,7 @@
 #pragma once
 #include "BufferManager\BufferManager.h"
 #include "Shader\Shader.h"
+#include "Material/MaterialManager.h"
 
 namespace yoi
 {
@@ -22,10 +23,11 @@ namespace yoi
 		D3D11_PRIMITIVE_TOPOLOGY m_PrimitiveTopology;
 
 		Shader* m_Shader;
+		Material* m_Material;
 
 		Mesh();
 	public:
-		Mesh(ID3D11Buffer* vertexBuffer, ID3D11Buffer* indexBuffer,  UINT stripe,UINT offset,UINT indexOffset, UINT count, UINT start, UINT base, D3D11_PRIMITIVE_TOPOLOGY primitive, Shader* shader);
+		Mesh(ID3D11Buffer* vertexBuffer, ID3D11Buffer* indexBuffer,  UINT stripe,UINT offset,UINT indexOffset, UINT count, UINT start, UINT base, D3D11_PRIMITIVE_TOPOLOGY primitive, Shader* shader, Material* material = nullptr);
 		~Mesh() = default;
 		Mesh& operator = (const Mesh&) = default;
 		Mesh(const Mesh&) = default;

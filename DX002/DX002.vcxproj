@@ -171,9 +171,12 @@
     <ClInclude Include="ImWindow\ImWindow.h" />
     <ClInclude Include="ImWindow\ObjectPropertyWin.h" />
     <ClInclude Include="Logger\FileLogger.h" />
+    <ClInclude Include="Material\Material.h" />
+    <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\P3_T2.h" />
+    <ClInclude Include="Shader\P3_T2_Materialed.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\ColoredCube.h" />
@@ -185,6 +188,7 @@
     <ClInclude Include="Texture\ImgRes.h" />
     <ClInclude Include="Texture\Sampler.h" />
     <ClInclude Include="Texture\Texture.h" />
+    <ClInclude Include="Texture\TextureManager.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialog.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
@@ -225,8 +229,11 @@
     <ClCompile Include="ImWindow\ImWindow.cpp" />
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
     <ClCompile Include="Logger\FileLogger.cpp" />
+    <ClCompile Include="Material\Material.cpp" />
+    <ClCompile Include="Material\MaterialManager.cpp" />
     <ClCompile Include="Shader\P3_C3.cpp" />
     <ClCompile Include="Shader\P3_T2.cpp" />
+    <ClCompile Include="Shader\P3_T2_Materialed.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Sprite\ColoredCube.cpp" />
@@ -238,6 +245,7 @@
     <ClCompile Include="Texture\ImgRes.cpp" />
     <ClCompile Include="Texture\Sampler.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
+    <ClCompile Include="Texture\TextureManager.cpp" />
     <ClCompile Include="vendor\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
@@ -317,6 +325,18 @@
     <Image Include="sakuya.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="HLSL\MaterialedPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\MaterialedVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="HLSL\PixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
