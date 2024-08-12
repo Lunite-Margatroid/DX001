@@ -4,7 +4,7 @@ struct VSout
     float4 vertPos : SV_POSITION;
 };
 
-cbuffer Cbuf
+cbuffer Cbuf : register(b0)
 {
     matrix modelMatrix;
     matrix viewMatrix;

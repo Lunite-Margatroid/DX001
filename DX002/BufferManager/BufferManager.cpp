@@ -90,6 +90,18 @@ namespace yoi
 
 
 		// create constant buffer
+		// 1. for material shininess
+		float shininess = 64.0f;
+		bufferDesc.ByteWidth = sizeof(float) * 4;
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+		subData.pSysMem = &shininess;
+		AddBuffer(Buffer::Constant_Material_Shininess, &bufferDesc, &subData);
+
+		// 2. for transform matrix
 		BYTE constantData[sizeof(float) * 16 * 5];
 		memset(constantData, 0, sizeof(float) * 16 * 5);
 
@@ -101,6 +113,8 @@ namespace yoi
 		bufferDesc.StructureByteStride = 0u;
 		subData.pSysMem = constantData;
 		m_BufferMap[Buffer::Constant_Matrix] = AddBuffer(&bufferDesc, &subData);
+
+		
 
 		ColoredCubeBuffer(this);
 	}
@@ -115,7 +129,7 @@ namespace yoi
 	{
 		GFX_EXCEPT_SUPPORT();
 		m_Buffers.push_back(nullptr);
-		GFX_THROW_INFO(m_pDevice->CreateBuffer(pDescript, initData, &m_Buffers.back()));
+		GFX_THROW_INFO(m_pDevice->CreateBuffer(pDescript, initData, &(m_Buffers.back())));
 		return m_Buffers.back();
 	}
 	ID3D11Buffer* BufferManager::AddBuffer(Buffer buffer, const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData)
@@ -136,5 +150,19 @@ namespace yoi
 			return nullptr;
 		}
 		return m_BufferMap[buffer];
+	}
+	ID3D11Buffer* BufferManager::SetBufferData(Buffer buffer, unsigned int size, unsigned int offset, void* src)
+	{
+		GFX_EXCEPT_SUPPORT();
+		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
+		ID3D11Buffer* buf = GetBuffer(buffer);
+		if (!buf)
+			return buf;
+		D3D11_MAPPED_SUBRESOURCE dataMap;
+		GFX_THROW_INFO(pContext->Map(buf, 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
+		memcpy((BYTE*)dataMap.pData + offset, src, size);
+		GFX_THROW_INFO_ONLY(pContext->Unmap(buf, 0));
+
+		return buf;
 	}
 }

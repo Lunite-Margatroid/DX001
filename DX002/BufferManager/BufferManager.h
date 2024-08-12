@@ -8,7 +8,7 @@ namespace yoi
 	public:
 		enum class Buffer
 		{
-			Vertex_Textured_Cube, Index_Textured_Cube, Constant_Matrix, Vertex_Colored_Cube, Index_Colored_Cube
+			Vertex_Textured_Cube, Index_Textured_Cube, Constant_Matrix, Vertex_Colored_Cube, Index_Colored_Cube, Constant_Material_Shininess
 		};
 
 
@@ -26,5 +26,7 @@ namespace yoi
 		ID3D11Buffer* AddBuffer(const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
 		ID3D11Buffer* AddBuffer(Buffer buffer, const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
 		ID3D11Buffer* GetBuffer(Buffer buffer);
+
+		ID3D11Buffer* SetBufferData(Buffer buffer, unsigned int size, unsigned int offset, void* src);
 	};
 }

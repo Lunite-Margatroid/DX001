@@ -186,6 +186,9 @@
     <ClInclude Include="Shader\P3_T2_Materialed.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Light\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -338,6 +341,9 @@
     <ClCompile Include="Shader\P3_T2_Materialed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Light\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -356,5 +362,7 @@
     <FxCompile Include="HLSL\TexturedPS.hlsl" />
     <FxCompile Include="HLSL\MaterialedPS.hlsl" />
     <FxCompile Include="HLSL\MaterialedVS.hlsl" />
+    <FxCompile Include="HLSL\LightedMaterialedVS.hlsl" />
+    <FxCompile Include="HLSL\LightedMaterialedPS.hlsl" />
   </ItemGroup>
 </Project>

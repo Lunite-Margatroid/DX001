@@ -141,6 +141,7 @@ namespace yoi
 			std::unique_ptr<BufferManager> m_pBufferManager;
 		public:
 			static ID3D11Buffer* GetBuffer(BufferManager::Buffer buffer);
+			static ID3D11Buffer* SetBufferData(BufferManager::Buffer buffer, unsigned int size, unsigned int offset, void* src);
 
 		/*********** Material Manager *************/
 		private:

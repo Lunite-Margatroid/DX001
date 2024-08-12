@@ -88,6 +88,7 @@
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel>6.6</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -113,6 +114,7 @@
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel>6.6</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,6 +135,7 @@
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel>6.6</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,6 +161,7 @@
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel>6.6</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -170,6 +174,7 @@
     <ClInclude Include="ImGuiManager\ImWindowManager.h" />
     <ClInclude Include="ImWindow\ImWindow.h" />
     <ClInclude Include="ImWindow\ObjectPropertyWin.h" />
+    <ClInclude Include="Light\Light.h" />
     <ClInclude Include="Logger\FileLogger.h" />
     <ClInclude Include="Material\Material.h" />
     <ClInclude Include="Material\MaterialManager.h" />
@@ -228,6 +233,7 @@
     <ClCompile Include="ImGuiManager\ImWindowManager.cpp" />
     <ClCompile Include="ImWindow\ImWindow.cpp" />
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
+    <ClCompile Include="Light\Light.cpp" />
     <ClCompile Include="Logger\FileLogger.cpp" />
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\MaterialManager.cpp" />
@@ -325,6 +331,22 @@
     <Image Include="sakuya.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="HLSL\LightedMaterialedPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">6.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">6.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">6.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">6.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="HLSL\LightedMaterialedVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="HLSL\MaterialedPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

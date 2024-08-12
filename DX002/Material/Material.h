@@ -7,11 +7,12 @@ namespace yoi
 	protected:
 		Texture* m_texDiffuse;
 		Texture* m_texSpecular;
+		float m_Shininess;
 	public:
 		Material() = delete;
-		Material(TextureManager* texManager);
-		Material(const float* texDiffuse, const float* texSpecular, TextureManager* texManager);
-		Material(Texture* diffuse, Texture* specular);
+		Material(TextureManager* texManager, float shininess = 64.0f);
+		Material(const float* texDiffuse, const float* texSpecular, TextureManager* texManager, float shininess = 64.0f);
+		Material(Texture* diffuse, Texture* specular, float shininess = 64.0f);
 		Material(const Material&) = delete;
 		~Material() = default;
 		Material& operator = (const Material&) = delete;

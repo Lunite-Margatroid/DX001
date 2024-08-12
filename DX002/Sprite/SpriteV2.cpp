@@ -30,6 +30,7 @@ namespace yoi
 			D3D11_MAPPED_SUBRESOURCE dataMap;
 			GFX_THROW_INFO(pContext->Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
 			// memset(dataMap.pData, 0, 64 * 5);
+			// set MVP Matrix
 			memcpy((BYTE*)dataMap.pData + 64 * 3, glm::value_ptr(mvpTrans), 64);
 			
 			GFX_THROW_INFO_ONLY(pContext->Unmap(constantBuffer, 0));

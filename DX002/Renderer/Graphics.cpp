@@ -435,4 +435,8 @@ namespace yoi
 	{
 		return (GetInstance().m_pBufferManager)->GetBuffer(buffer);
 	}
+	ID3D11Buffer* Graphics::SetBufferData(BufferManager::Buffer buffer, unsigned int size, unsigned int offset, void* src)
+	{
+		return (GetInstance().m_pBufferManager)->SetBufferData(buffer, size, offset, src);
+	}
 }
