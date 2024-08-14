@@ -233,6 +233,13 @@ namespace yoi
 		// init material manager
 		m_pMaterialManager = std::make_unique<MaterialManager>();
 
+		// init light manager
+		m_pLightManager = std::make_unique<LightManager>(
+			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_DirLight),
+			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_PointLight),
+			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_SpotLight)
+		);
+
 		// init test draw 
 		InitTestDraw();
 
@@ -240,6 +247,8 @@ namespace yoi
 		pImGuiManager = std::make_unique<ImGuiManager>(hWnd, pDevice.Get(), pContext.Get());
 
 		m_pObjWin = std::make_unique<ObjectPropertyWin>(m_RootObj.get());
+
+		
 
 		m_DeltaTime = 0.f;
 	}
@@ -348,6 +357,36 @@ namespace yoi
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			GetShader("Materialed Shader"),
 			mtlRumia);
+
+		Mesh lightedCube(
+			GetBuffer(BufferManager::Buffer::P3_N3_T2_Cube),
+			GetBuffer(BufferManager::Buffer::Index_Textured_Cube),
+			sizeof(float) * 8,
+			0u,
+			0u,
+			36,
+			0u,
+			0u,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			GetShader("Lighted Shader"),
+			mtlRumia);
+
+		// Add light
+		m_pLightManager->AddLight(
+			PointLight(glm::vec3(1.0f), 0.1f, 0.7f, 0.7f, glm::vec3(3.0f, 4.0f, 0.0f))
+		);
+		m_pLightManager->AddLight(
+			DirLight());
+		m_pLightManager->AddLight(
+			SpotLight(glm::vec3(1.0f), 0.1f, 0.7f, 0.7f, glm::vec3(-3.0f, 4.0f, 0.0f), 1.0f, 0.14f, 0.07f,
+				glm::vec3(1.0f, 0.0f, 0.0f))
+			);
+		m_pLightManager->AddLight(
+			SpotLight(glm::vec3(1.0f), 0.1f, 0.7f, 0.7f, glm::vec3(0.0f, 4.0f, -3.0f), 1.0f, 0.14f, 0.07f,
+				glm::vec3(0.0f, 0.0f, 1.0f))
+		);
+
+		m_pLightManager->Flush();
 		
 
 		// Init Scene obj
@@ -359,7 +398,7 @@ namespace yoi
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
 		// textured cube
 		cubeSprite = new SpriteV2();
-		cubeSprite->AddMesh(mshRumia);
+		cubeSprite->AddMesh(lightedCube);
 		SceneObj* texturedCube = new SceneObj(m_RootObj.get(), cubeSprite, "Texture Cube");
 		texturedCube->SetPosition(glm::vec3(0.0f, 4.0f, 0.0f));
 		
@@ -393,7 +432,14 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
 		m_RootObj->Update(m_DeltaTime);
+
+		m_pLightManager->UpdateConstantBuffer();
+		m_pLightManager->Bind(pContext.Get());
 		GFX_THROW_INFO_ONLY(m_RootObj->RenderV2(m_MainCamera->GetVPTrans()));
+	}
+	CameraObj* Graphics::GetMainCamera()
+	{
+		return m_MainCamera;
 	}
 	ID3D11Device* Graphics::GetDevice()
 	{

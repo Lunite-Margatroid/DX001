@@ -1,5 +1,4 @@
 #pragma once
-#include "BufferManager.h"
 void ColoredCubeBuffer(yoi::BufferManager* bufMng)
 {
 	struct Vertex

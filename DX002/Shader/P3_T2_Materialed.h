@@ -6,7 +6,7 @@ namespace yoi
 	{
 	protected:
 	public:
-
+		P3_T2_Materialed();
 		P3_T2_Materialed(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 		~P3_T2_Materialed() = default;
 		P3_T2_Materialed(const P3_T2_Materialed&) = delete;

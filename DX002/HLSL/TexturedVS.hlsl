@@ -4,13 +4,14 @@ struct VSout
 	float4	vertPos : SV_POSITION;
 };
 
-cbuffer Cbuf
+cbuffer Cbuf : register(b0)
 {
-	matrix modelMatrix;
-	matrix viewMatrix;
-	matrix projectionMatrix;
-	matrix mvpMatrix;
-	matrix normalMatrix;
+    matrix modelMatrix;
+    matrix viewMatrix;
+    matrix projectionMatrix;
+    matrix mvpMatrix;
+    matrix normalMatrix;
+    float3 cameraPos;
 };
 
 VSout main(float3 pos : Position, float2 texCoord : TexCoord)

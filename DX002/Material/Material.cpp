@@ -29,7 +29,7 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(1u, 1u, m_texSpecular->m_pResView.GetAddressOf()));
 
 		ID3D11Buffer *buf = Graphics::SetBufferData(BufferManager::Buffer::Constant_Material_Shininess, sizeof(float), 0, &m_Shininess);
-		GFX_THROW_INFO_ONLY(pContext->VSSetConstantBuffers(1, 1, &buf));
+		GFX_THROW_INFO_ONLY(pContext->PSSetConstantBuffers(1, 1, &buf));
 	}
 	void Material::Bind(ID3D11DeviceContext* pContext)
 	{
@@ -37,5 +37,8 @@ namespace yoi
 
 		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(0u, 1u, m_texDiffuse->m_pResView.GetAddressOf()));
 		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(1u, 1u, m_texSpecular->m_pResView.GetAddressOf()));
+
+		ID3D11Buffer* buf = Graphics::SetBufferData(BufferManager::Buffer::Constant_Material_Shininess, sizeof(float), 0, &m_Shininess);
+		GFX_THROW_INFO_ONLY(pContext->PSSetConstantBuffers(1, 1, &buf));
 	}
 }

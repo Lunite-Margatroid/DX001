@@ -8,7 +8,8 @@ namespace yoi
 	public:
 		enum class Buffer
 		{
-			Vertex_Textured_Cube, Index_Textured_Cube, Constant_Matrix, Vertex_Colored_Cube, Index_Colored_Cube, Constant_Material_Shininess
+			Vertex_Textured_Cube, Index_Textured_Cube, Constant_Matrix, Vertex_Colored_Cube, Index_Colored_Cube, Constant_Material_Shininess,
+			Constant_DirLight, Constant_PointLight, Constant_SpotLight, P3_N3_T2_Cube
 		};
 
 

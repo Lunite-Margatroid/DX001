@@ -11,6 +11,7 @@ int CALLBACK WinMain(
 	try
 	{
 		yoi::FileLogger::Info("App begin to Run.");
+		yoi::FileLogger::Flush();
 		yoi::Application app;
 		int ret = app.Run();
 		std::ostringstream oss;

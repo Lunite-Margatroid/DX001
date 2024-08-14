@@ -1,8 +1,12 @@
 #include "pch.h"
 #include "BufferManager.h"
+#include "Logger\FileLogger.h"
+#include "InitBuffer.h"
+#include "ConstantLightBuffer.h"
 #include "ColoredCubeBuffer.h"
 #include "Renderer\Graphics.h"
 #include "Renderer\GFXMacro.h"
+#include "P3_N3_T2_Cube.h"
 
 namespace yoi
 {
@@ -102,10 +106,10 @@ namespace yoi
 		AddBuffer(Buffer::Constant_Material_Shininess, &bufferDesc, &subData);
 
 		// 2. for transform matrix
-		BYTE constantData[sizeof(float) * 16 * 5];
+		BYTE constantData[sizeof(float) * 16 * 5 + sizeof(float) * 4];
 		memset(constantData, 0, sizeof(float) * 16 * 5);
 
-		bufferDesc.ByteWidth = sizeof(float) * 4 * 4 * 5;	// 5 * mat4x4
+		bufferDesc.ByteWidth = sizeof(float) * 16 * 5 + sizeof(float) * 4;	// 5 * mat4x4
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
@@ -117,6 +121,8 @@ namespace yoi
 		
 
 		ColoredCubeBuffer(this);
+		ConstantLightBuffer(this);
+		InitBuffer<Buffer::P3_N3_T2_Cube>(this);
 	}
 	BufferManager::~BufferManager()
 	{
@@ -160,7 +166,7 @@ namespace yoi
 			return buf;
 		D3D11_MAPPED_SUBRESOURCE dataMap;
 		GFX_THROW_INFO(pContext->Map(buf, 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
-		memcpy((BYTE*)dataMap.pData + offset, src, size);
+		memcpy(((BYTE*)dataMap.pData ) + offset, src, size);
 		GFX_THROW_INFO_ONLY(pContext->Unmap(buf, 0));
 
 		return buf;

@@ -15,6 +15,7 @@
 #include "Texture\Sampler.h"
 #include "Material\MaterialManager.h"
 #include "Texture/TextureManager.h"
+#include "Light\LightManager.h"
 
 namespace yoi
 {
@@ -92,6 +93,8 @@ namespace yoi
 	public:
 		void InitTestDraw();
 		void DrawTriangle();
+
+		CameraObj* GetMainCamera();
 	/****** test draw * end */
 
 
@@ -150,6 +153,10 @@ namespace yoi
 		/*********** Texture Mananger *************/
 		private:
 			std::unique_ptr<TextureManager> m_pTextureManager;
+
+		/*********** Light Manager ****************/
+		private:
+			std::unique_ptr<LightManager> m_pLightManager;
 	};
 
 }

@@ -22,6 +22,7 @@ namespace yoi
 		GFX_THROW_INFO(pDevice->CreateInputLayout(attribs, numAttrib, pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &m_pLayout));
 
 		FileLogger::Info(GetShaderDescript().c_str());
+		FileLogger::Flush();
 	}
 	void Shader::Bind(ID3D11DeviceContext* pContext)
 	{

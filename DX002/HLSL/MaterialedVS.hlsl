@@ -11,6 +11,7 @@ cbuffer Cbuf : register(b0)
     matrix projectionMatrix;
     matrix mvpMatrix;
     matrix normalMatrix;
+    float3 cameraPos;
 };
 
 VSout main(float3 pos : Position, float2 texCoord : TexCoord)

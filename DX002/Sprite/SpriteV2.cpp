@@ -25,14 +25,31 @@ namespace yoi
 			GFX_EXCEPT_SUPPORT();
 			ID3D11Buffer* constantBuffer = Graphics::GetInstance().GetBuffer(BufferManager::Buffer::Constant_Matrix);
 			ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
+			CameraObj* camera = Graphics::GetInstance().GetMainCamera();
 
 			glm::mat4 mvpTrans = vpTrans * modelMat;
 			D3D11_MAPPED_SUBRESOURCE dataMap;
 			GFX_THROW_INFO(pContext->Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
 			// memset(dataMap.pData, 0, 64 * 5);
-			// set MVP Matrix
-			memcpy((BYTE*)dataMap.pData + 64 * 3, glm::value_ptr(mvpTrans), 64);
+			// model mat
+			memcpy(dataMap.pData, glm::value_ptr(modelMat), 64);
 			
+			// view mat
+			memcpy((BYTE*)dataMap.pData + 64, glm::value_ptr(camera->GetViewTrans()), 64);
+
+			// projection mat
+			memcpy((BYTE*)dataMap.pData + 128, glm::value_ptr(camera->GetProjectionTrans()), 64);
+
+			// set MVP Matrix
+			memcpy((BYTE*)dataMap.pData + 192, glm::value_ptr(mvpTrans), 64);
+
+			glm::mat4 normalMat = glm::transpose(glm::inverse(glm::mat3(modelMat)));
+			// normal mat
+			memcpy((BYTE*)dataMap.pData + 256, glm::value_ptr(normalMat), 64);
+
+			// camera pos
+			memcpy((BYTE*)dataMap.pData + 320, glm::value_ptr(camera->GetPosition()), 12);
+
 			GFX_THROW_INFO_ONLY(pContext->Unmap(constantBuffer, 0));
 
 			GFX_THROW_INFO_ONLY(pContext->VSSetConstantBuffers(0, 1, &constantBuffer));

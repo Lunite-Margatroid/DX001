@@ -66,47 +66,48 @@ cbuffer SpotLights : register(b4)
     SpotLight sLights[LIGHT_MAX_COUNT];
 };
 
-static float3 FragPos;
-static float3 NormalVec;
-static float3 CameraPos;
 
-inline void CalcLight(out float3 ambient, out float3 diffuse, out float3 specular)
+void CalcLight(in float3 fragPos, in float3 normalVec , in float3 cameraPos, out float3 ambient, out float3 diffuse, out float3 specular)
 {
     ambient = float3(0.0f, 0.0f, 0.0f);
     diffuse = float3(0.0f, 0.0f, 0.0f);
     specular = float3(0.0f, 0.0f, 0.0f);
-    float3 viewDir = normalize(CameraPos - FragPos);
+    float3 viewDir = normalize(cameraPos - fragPos);
     // Direction Light
-    for (int i = 0; i < dSize;i++)
+    int i = 0;
+    for (i = 0; i < dSize;i++)
     {
         // ambient
-        ambient += dLights[i].Color * dLights[i].Contribution.x;
+        ambient += dLights[0].Color * dLights[0].Contribution.x;
         // diffuse
-        diffuse += max(dot(NormalVec, dLights[i].Direction), 0.0f) * dLights[i].Color * dLights[i].Contribution.y;
+        diffuse += max(dot(normalVec, -dLights[i].Direction), 0.0f) * dLights[i].Color * dLights[i].Contribution.y;
         // specular
-        specular += pow(max(dot(normalize(reflect(-dLights[i].Direction, NormalVec)), viewDir), 0.0f), shininess) * dLights[i].Color * dLights[i].Contribution.z;
+        specular += pow(max(dot(normalize(reflect(dLights[i].Direction, normalVec)), viewDir), 0.0f), shininess) * dLights[i].Color * dLights[i].Contribution.z;
 
     }
     // Point Light
-    for (int i = 0; i < pSize;i++)
+    for ( i = 0; i < pSize;i++)
     {
-        float direction = pLights[i].Position - FragPos;
+        float3 direction = pLights[i].Position - fragPos;
         float dist = length(direction);
         direction = direction / dist;
         float k = pLights[i].kConstant + pLights[i].kLinear * dist + pLights[i].kQuadratic * dist * dist;
         
+        float3 tempColor = pLights[i].Color / k;
+        
         // ambient
-        ambient += pLights[i].Color * pLights[i].Contribution.x;
+        ambient += tempColor * pLights[i].Contribution.x;
         // diffuse
-        diffuse += max(dot(NormalVec, direction), 0.0f) * pLights[i].Color * pLights[i].Contribution.y;
+        diffuse += max(dot(normalVec, direction), 0.0f) * tempColor * pLights[i].Contribution.y;
         // specular
-        specular += pow(max(dot(reflect(direction, NormalVec), viewDir), 0.0f), shininess)  / k * pLights[i].Color * pLights[i].Contribution.z;
+        specular += pow(max(dot(reflect(-direction, normalVec), viewDir), 0.0f), shininess) * 
+                    tempColor * pLights[i].Contribution.z;
         
     }
     // spot light
-    for (int i = 0; i < sSize;i++)
+    for (i = 0; i < sSize;i++)
     {
-        float3 direction = sLights[i].Position - FragPos;
+        float3 direction = sLights[i].Position - fragPos;
         float dist = length(direction);
         direction = direction / dist;
         float k = sLights[i].kConstant + sLights[i].kLinear * dist + sLights[i].kQuadratic * dist * dist;
@@ -118,26 +119,31 @@ inline void CalcLight(out float3 ambient, out float3 diffuse, out float3 specula
         // ambient
         ambient += tempColor *  sLights[i].Contribution.x ;
         // diffuse
-        diffuse += max(dot(NormalVec, direction), 0.0f) * tempColor * sLights[i].Contribution.y;
+        diffuse += max(dot(normalVec, direction), 0.0f) * tempColor * sLights[i].Contribution.y;
         // specular
-        specular += pow(max(dot(reflect(direction, NormalVec), viewDir), 0.0f), shininess) / k * tempColor * sLights[i].Contribution.z;
+        specular += pow(max(dot(reflect(-direction, normalVec), viewDir), 0.0f), shininess) / k * tempColor * sLights[i].Contribution.z;
 
     }
     
 }
 
+//struct VSout
+//{
+//    float2 texCoord : TEXCOORD;
+//    float3 fragPos : FRAG_POSITION;
+//    float3 noramlVec : NORMAL_VECTOR;
+//    float3 cameraPos : CAMERA_POSITION;
+//    float4 vertPos : SV_POSITION;
+//};
 
-float4 main(float texCoord : TEXCOORD, float3 fragPos : FRAG_POSITION, float3 normalVec : NORMAL_VECTOR, float3 cameraPos : CAMERA_POSITION) : SV_TARGET
+
+float4 main(float2 texCoord : TEXCOORD, float3 fragPos : FRAG_POSITION, float3 normalVec : NORMAL_VECTOR, float3 cameraPos : CAMERA_POSITION) : SV_TARGET
 {
     float3 ambient ;
     float3 diffuse ;
     float3 specular ;
     
-    FragPos = fragPos;
-    NormalVec = normalVec;
-    CameraPos = cameraPos;
-    
-    CalcLight(ambient, diffuse, specular);
+    CalcLight(fragPos, normalVec, cameraPos, ambient, diffuse, specular);
     
     return float4((ambient + diffuse), 1.0f) * texDiffuse.Sample(smp, texCoord) + float4(specular, 1.0f) * texSpecular.Sample(smp, texCoord);
 }

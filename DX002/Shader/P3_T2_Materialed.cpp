@@ -2,6 +2,9 @@
 #include "P3_T2_Materialed.h"
 namespace yoi
 {
+	P3_T2_Materialed::P3_T2_Materialed()
+	{
+	}
 	yoi::P3_T2_Materialed::P3_T2_Materialed(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 	{
 		D3D11_INPUT_ELEMENT_DESC ed[] =
