@@ -128,6 +128,34 @@ namespace yoi
 			child->RenderV2(vpTrans);
 		}
 	}
+
+	void SceneObj::RenderV3(const CameraObj* camera)
+	{
+		if (m_ParentObj)
+		{
+			m_ModelTrans = m_ParentObj->m_ModelTrans;
+		}
+		else
+		{
+			m_ModelTrans = glm::mat4(1.0f);
+		}
+		m_ModelTrans = glm::translate(m_ModelTrans, m_Position);
+		// EulerTrans(m_ModelTrans, m_Yaw, m_Pitch, m_Roll);
+		QuaternionRotate(m_ModelTrans, m_Qua);
+		m_ModelTrans = glm::scale(m_ModelTrans, m_Scale);
+		m_ModelTrans = m_ModelTrans * m_StaggerTrans;
+		if (SpriteV3* spritev3 = dynamic_cast<SpriteV3*>(m_Sprite))
+		{
+			spritev3->RenderV3(m_ModelTrans, camera);
+			// FileLogger::Debug("Draw Call: RenderV1.");
+
+		}
+		for (auto child : m_ChildObj)
+		{
+			child->RenderV3(camera);
+		}
+	}
+
 	void SceneObj::PushChild(SceneObj* child)
 	{
 		if (child->m_ParentObj)

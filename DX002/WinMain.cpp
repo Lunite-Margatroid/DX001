@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Logger/FileLogger.h"
 
+
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,

@@ -85,6 +85,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <DelayLoadDLLs>assimp-vc143-mt.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
@@ -111,6 +112,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <DelayLoadDLLs>assimp-vc143-mt.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
@@ -132,6 +134,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <DelayLoadDLLs>assimp-vc143-mt.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
@@ -158,6 +161,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <DelayLoadDLLs>assimp-vc143-mt.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <FxCompile>
       <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
@@ -197,6 +201,7 @@
     <ClInclude Include="Sprite\SpriteV1.h" />
     <ClInclude Include="Sprite\SpriteV1Cube.h" />
     <ClInclude Include="Sprite\SpriteV2.h" />
+    <ClInclude Include="Sprite\SpriteV3.h" />
     <ClInclude Include="Sprite\TexturedCube.h" />
     <ClInclude Include="Texture\ImgRes.h" />
     <ClInclude Include="Texture\Sampler.h" />
@@ -260,6 +265,7 @@
     <ClCompile Include="Sprite\SpriteV1.cpp" />
     <ClCompile Include="Sprite\SpriteV1Cube.cpp" />
     <ClCompile Include="Sprite\SpriteV2.cpp" />
+    <ClCompile Include="Sprite\SpriteV3.cpp" />
     <ClCompile Include="Sprite\TexturedCube.cpp" />
     <ClCompile Include="Texture\ImgRes.cpp" />
     <ClCompile Include="Texture\Sampler.cpp" />

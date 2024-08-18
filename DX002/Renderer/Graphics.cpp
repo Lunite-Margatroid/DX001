@@ -393,11 +393,11 @@ namespace yoi
 		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
 
 		// colored cube
-		SpriteV2* cubeSprite = new SpriteV2();
+		SpriteV3* cubeSprite = new SpriteV3();
 		cubeSprite->AddMesh(ColoredCube());
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
 		// textured cube
-		cubeSprite = new SpriteV2();
+		cubeSprite = new SpriteV3();
 		cubeSprite->AddMesh(lightedCube);
 		SceneObj* texturedCube = new SceneObj(m_RootObj.get(), cubeSprite, "Texture Cube");
 		texturedCube->SetPosition(glm::vec3(0.0f, 4.0f, 0.0f));
@@ -435,7 +435,7 @@ namespace yoi
 
 		m_pLightManager->UpdateConstantBuffer();
 		m_pLightManager->Bind(pContext.Get());
-		GFX_THROW_INFO_ONLY(m_RootObj->RenderV2(m_MainCamera->GetVPTrans()));
+		GFX_THROW_INFO_ONLY(m_RootObj->RenderV3(m_MainCamera));
 	}
 	CameraObj* Graphics::GetMainCamera()
 	{
