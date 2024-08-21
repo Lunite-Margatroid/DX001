@@ -57,12 +57,12 @@ namespace yoi
 			HRESULT hr;
 			SIZE_T messageLenght;
 
-			GFX_THROW_NOINFO(pDxgiInfoQueue->GetMessageA(DXGI_DEBUG_ALL, i, nullptr, &messageLenght));
+			GFX_THROW_NOINFO(pDxgiInfoQueue->GetMessage(DXGI_DEBUG_ALL, i, nullptr, &messageLenght));
 
 			auto bytes = std::make_unique<byte[]>(messageLenght);
 			auto pMessage = reinterpret_cast<DXGI_INFO_QUEUE_MESSAGE*>(bytes.get());
 
-			GFX_THROW_NOINFO(pDxgiInfoQueue->GetMessageA(DXGI_DEBUG_ALL, i, pMessage, &messageLenght));
+			GFX_THROW_NOINFO(pDxgiInfoQueue->GetMessage(DXGI_DEBUG_ALL, i, pMessage, &messageLenght));
 			messages.emplace_back(pMessage->pDescription);
 		}
 		return messages;

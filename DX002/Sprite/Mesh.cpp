@@ -45,4 +45,8 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->DrawIndexed(m_IndexCount, m_StartIndex, m_BaseIndex));
 		
 	}
+	void Mesh::SetMaterial(Material* material)
+	{
+		m_Material = material;
+	}
 }

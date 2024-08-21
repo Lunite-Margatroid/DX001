@@ -33,6 +33,7 @@ namespace yoi
 	}
 	ImgRes::ImgRes(const std::string& path)
 	{
+		m_Data = nullptr;
 		std::wstring wstr = UTF8ToWStr(path);
 
 		FILE* f;
@@ -65,6 +66,13 @@ namespace yoi
 			}
 			FileLogger::Info(out.str().c_str());
 			FileLogger::Flush();*/
+		}
+		else
+		{
+			std::ostringstream oss;
+			oss << "Can't find file: " << path;
+			FileLogger::Error(oss.str().c_str());
+			FileLogger::Flush();
 		}
 		if (m_Data == 0)
 		{

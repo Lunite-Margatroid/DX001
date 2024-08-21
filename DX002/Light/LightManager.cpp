@@ -41,7 +41,7 @@ namespace yoi
 		int light_num;
 
 		GFX_THROW_INFO(pContext->Map(m_pDirLightBuffer, 0u, D3D11_MAP_WRITE_DISCARD, 0u, &dataMap));
-		light_num = m_DirLights.size();
+		light_num = static_cast<int>(m_DirLights.size());
 		memcpy(dataMap.pData, &light_num, sizeof(int));
 		for (DirLight* light : m_DirLights)
 		{
@@ -51,7 +51,7 @@ namespace yoi
 		
 
 		offset = 16;
-		light_num = m_PointLights.size();
+		light_num = static_cast<int>(m_PointLights.size());
 		GFX_THROW_INFO(pContext->Map(m_pPointLightBuffer, 0u, D3D11_MAP_WRITE_DISCARD, 0u, &dataMap));
 		memcpy(dataMap.pData, &light_num, sizeof(int));
 		for (PointLight* light : m_PointLights)
@@ -61,7 +61,7 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->Unmap(m_pPointLightBuffer, 0u));
 
 		offset = 16;
-		light_num = m_SpotLights.size();
+		light_num = static_cast<int>(m_SpotLights.size());
 		GFX_THROW_INFO(pContext->Map(m_pSpotLightBuffer, 0u, D3D11_MAP_WRITE_DISCARD, 0u, &dataMap));
 		memcpy(dataMap.pData, &light_num, sizeof(int));
 		for (SpotLight* light : m_SpotLights)

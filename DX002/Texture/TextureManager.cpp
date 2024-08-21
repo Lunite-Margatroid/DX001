@@ -66,4 +66,8 @@ namespace yoi
 		FileLogger::Flush();
 		return nullptr;
 	}
+	unsigned int TextureManager::GetTexCount() const
+	{
+		return m_Textures.size();
+	}
 }

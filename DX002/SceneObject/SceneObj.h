@@ -68,6 +68,7 @@ namespace yoi
 		float GetPitch() const;
 		float GetRoll() const;
 		const Sprite* GetSprite()const;
+		void SetSprite(Sprite*);
 		Sprite* GetSprite();
 		bool HasChild() const;
 

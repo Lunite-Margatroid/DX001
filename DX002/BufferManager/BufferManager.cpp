@@ -13,7 +13,6 @@ namespace yoi
 	BufferManager::BufferManager(ID3D11Device* pDevice)
 		:m_pDevice(pDevice)
 	{
-		GFX_EXCEPT_SUPPORT();
 		const float side = 1.0f;
 		struct Vertex
 		{

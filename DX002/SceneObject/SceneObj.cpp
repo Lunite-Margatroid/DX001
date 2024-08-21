@@ -38,8 +38,6 @@ namespace yoi
 
 	SceneObj::~SceneObj()
 	{
-		if (m_Sprite)
-			delete m_Sprite;
 		this->Clear();
 	}
 
@@ -146,7 +144,8 @@ namespace yoi
 		m_ModelTrans = m_ModelTrans * m_StaggerTrans;
 		if (SpriteV3* spritev3 = dynamic_cast<SpriteV3*>(m_Sprite))
 		{
-			spritev3->RenderV3(m_ModelTrans, camera);
+			if(m_Visible)
+				spritev3->RenderV3(m_ModelTrans, camera);
 			// FileLogger::Debug("Draw Call: RenderV1.");
 
 		}
@@ -197,6 +196,10 @@ namespace yoi
 	const Sprite* SceneObj::GetSprite() const
 	{
 		return m_Sprite;
+	}
+	void SceneObj::SetSprite(Sprite* sprite)
+	{
+		m_Sprite = sprite;
 	}
 	Sprite* SceneObj::GetSprite()
 	{
@@ -298,10 +301,6 @@ namespace yoi
 		if (m_Sprite)
 		{
 			ImGui::SeparatorText("Sprite Property");
-			if (ImGui::Button("Status Unite"))
-			{
-				StatusUnite();
-			}
 			m_Sprite->RenderImGui();
 		}
 	}

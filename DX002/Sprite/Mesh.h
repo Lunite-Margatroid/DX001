@@ -33,5 +33,6 @@ namespace yoi
 		Mesh(const Mesh&) = default;
 
 		void Draw(ID3D11DeviceContext* pContext);
+		void SetMaterial(Material* material);
 	};
 }

@@ -1,0 +1,18 @@
+Texture2D texDiffuse;
+Texture2D texSpecular;
+SamplerState smp;
+
+//struct VSout
+//{
+//    float2 texCoord : TEXCOORD;
+//    float3 fragPos : FRAG_POSITION;
+//    float3 noramlVec : NORMAL_VECTOR;
+//    float3 cameraPos : CAMERA_POSITION;
+//    float4 vertPos : SV_POSITION;
+//};
+
+
+float4 main(float2 texCoord : TEXCOORD) : SV_TARGET
+{
+    return float4(texDiffuse.Sample(smp, texCoord).xyz, 1.0f);
+}

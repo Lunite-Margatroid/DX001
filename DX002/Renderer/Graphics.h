@@ -1,4 +1,9 @@
 #pragma once
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "MyWin.h"
 #include "Window/YoiException.h"
 #include "InfoManager/DxgiInfoManager.h"
@@ -16,6 +21,9 @@
 #include "Material\MaterialManager.h"
 #include "Texture/TextureManager.h"
 #include "Light\LightManager.h"
+#include "Sprite\SpriteManager.h"
+
+
 
 namespace yoi
 {
@@ -104,6 +112,7 @@ namespace yoi
 		Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pContext;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencil;
 		/*
 		* 使用&运算符，获取的是ComPtr的资源的地址，即内部指针的地址。
 		* 使用&运算符，ComPtr会先Release，再返回指针的地址。这意味着使用&后，原先的实例会失效。
@@ -157,6 +166,21 @@ namespace yoi
 		/*********** Light Manager ****************/
 		private:
 			std::unique_ptr<LightManager> m_pLightManager;
+		/*********** Sprite Manager ***************/
+		private:
+			std::unique_ptr<SpriteManager> m_pSpriteManager;
+
+		/*********** Load Model ***************/
+		public:
+			void LoadModel(const std::string& path);
+		private:
+			unsigned int LoadMaterials(const aiScene * scene, const std::string & dictionary);
+			unsigned int LoadMeshes(const aiScene* scene, unsigned int materialBaseInd, std::vector<Mesh> &meshes);
+			Mesh LoadMesh(const aiMesh* mesh);
+			SceneObj* ProcessNode(const aiNode* node, const std::vector<Mesh>& meshes);
+
+			std::map<std::wstring, unsigned int> m_LoadedTex;
+
 	};
 
 }

@@ -17,6 +17,7 @@ namespace yoi
 		td.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		td.SampleDesc.Count = 1u;
 		td.SampleDesc.Quality = 0u;
+		td.Usage = D3D11_USAGE_DEFAULT;
 		td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 		td.CPUAccessFlags = 0u;
 		td.MiscFlags = 0u;

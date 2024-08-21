@@ -28,5 +28,6 @@ namespace yoi
 		Texture* LoadTexture(const float* color, const std::string& title = std::string("No Title"));
 		void LogTextureInfo();
 		Texture* GetAt(int index = 0);
+		unsigned int GetTexCount() const;
 	};
 }

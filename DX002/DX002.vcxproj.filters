@@ -216,6 +216,12 @@
     <ClInclude Include="Sprite\SpriteV3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sprite\SpriteManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\P3_N3_T2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -389,6 +395,12 @@
     <ClCompile Include="Sprite\SpriteV3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite\SpriteManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\P3_N3_T2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -409,5 +421,7 @@
     <FxCompile Include="HLSL\MaterialedVS.hlsl" />
     <FxCompile Include="HLSL\LightedMaterialedVS.hlsl" />
     <FxCompile Include="HLSL\LightedMaterialedPS.hlsl" />
+    <FxCompile Include="HLSL\TexColorPS.hlsl" />
+    <FxCompile Include="HLSL\TexColorVS.hlsl" />
   </ItemGroup>
 </Project>

@@ -48,7 +48,7 @@ namespace yoi
 		std::wstring wstr;
 
 		int len = static_cast<int>(str.size());
-		int nConvent = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, str.c_str(),  len,  nullptr, 0);
+		int nConvent = MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, str.c_str(),  len,  nullptr, 0);
 		if (nConvent <= 0)
 		{
 			FileLogger::Error("Code Converting Failed.");
@@ -57,7 +57,7 @@ namespace yoi
 		else
 		{
 			wstr.resize(nConvent);
-			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, str.c_str(), len, &wstr[0], (int)wstr.size());
+			MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, str.c_str(), len, &wstr[0], (int)wstr.size());
 		}
 		return wstr;
 	}

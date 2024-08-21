@@ -16,6 +16,11 @@ namespace yoi
 		}
 	}
 
+	unsigned int MaterialManager::Size() const
+	{
+		return m_Materials.size();
+	}
+
 	Material* MaterialManager::Add(Material* material, const std::string& title)
 	{
 		m_Materials.emplace_back(MaterialItem(title, material));

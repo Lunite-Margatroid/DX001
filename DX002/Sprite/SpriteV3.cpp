@@ -7,13 +7,48 @@ namespace yoi
 	SpriteV3::SpriteV3()
 	{
 	}
-	void SpriteV3::AddMesh(Mesh& mesh)
+	SpriteV3::SpriteV3(SpriteV3* sprite)
+	{
+		m_Meshes = sprite->m_Meshes;
+	}
+	SpriteV3::SpriteV3(Mesh& mesh)
+	{
+		AddMesh(mesh);
+	}
+	SpriteV3::SpriteV3(Mesh&& mesh)
+	{
+		AddMesh(mesh);
+	}
+	SpriteV3::SpriteV3(std::vector<Mesh>& meshes)
+	{
+		AddMeshes(meshes);
+	}
+	SpriteV3::SpriteV3(std::vector<Mesh>&& meshes)
+	{
+		AddMeshes(meshes);
+	}
+	void SpriteV3::AddMesh(const Mesh& mesh)
 	{
 		m_Meshes.push_back(mesh);
 	}
 	void SpriteV3::AddMesh(Mesh&& mesh)
 	{
 		m_Meshes.emplace_back(mesh);
+	}
+	void SpriteV3::AddMeshes(std::vector<Mesh>& meshes)
+	{
+		std::copy(meshes.begin(), meshes.end(), m_Meshes.end());
+	}
+	void SpriteV3::AddMeshes(std::vector<Mesh>&& meshes)
+	{
+		if (m_Meshes.empty())
+		{
+			m_Meshes = meshes;
+		}
+		else
+		{
+			std::copy(meshes.begin(), meshes.end(), m_Meshes.end());
+		}
 	}
 	void SpriteV3::Render(const glm::mat4& modelMat)
 	{

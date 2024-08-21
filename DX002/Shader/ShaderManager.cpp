@@ -5,6 +5,7 @@
 #include "P3_T2_Materialed.h"
 #include "Logger\FileLogger.h"
 #include "P3_N3_T2_Lighted.h"
+#include "P3_N3_T2.h"
 namespace yoi
 {
 	ShaderManager::ShaderManager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -14,6 +15,7 @@ namespace yoi
 		RegisterShader<P3_T2>(pDevice, pContext);
 		RegisterShader<P3_T2_Materialed>(pDevice, pContext);
 		RegisterShader<P3_N3_T2_Lighted>(pDevice, pContext);
+		RegisterShader<P3_N3_T2>(pDevice, pContext);
 	}
 	ShaderManager::~ShaderManager()
 	{
