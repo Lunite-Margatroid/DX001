@@ -172,7 +172,7 @@ namespace yoi
 
 		/*********** Load Model ***************/
 		public:
-			void LoadModel(const std::string& path);
+			SceneObj* LoadModel(const std::string& path);
 		private:
 			unsigned int LoadMaterials(const aiScene * scene, const std::string & dictionary);
 			unsigned int LoadMeshes(const aiScene* scene, unsigned int materialBaseInd, std::vector<Mesh> &meshes);

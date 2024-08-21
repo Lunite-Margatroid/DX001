@@ -9,7 +9,7 @@ namespace yoi
 		int m_Channals;
 		int m_Width;
 		int m_Height;
-
+		int m_ResultCode;
 	public:
 		ImgRes(const std::string& path);
 		ImgRes() = delete;
@@ -22,6 +22,7 @@ namespace yoi
 		int GetChannal() const;
 		const unsigned char* GetDataPtr() const;
 		void Release();
+		void ErrorColor();
 
 	};
 }

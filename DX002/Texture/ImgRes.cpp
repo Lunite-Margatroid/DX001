@@ -28,8 +28,24 @@ namespace yoi
 	}
 	void ImgRes::Release()
 	{
-		if (m_Data)
+		if (m_ResultCode >= 0)
 			stbi_image_free(m_Data);
+		else
+			delete[] m_Data;
+	}
+	void ImgRes::ErrorColor()
+	{
+		m_Data = new unsigned char[16];
+		unsigned char buf[16] = {
+			0,0,0,255,
+			255,0,255,255,
+			255,0,255,255,
+			0,0,0,255
+		};
+		memcpy(m_Data, buf, 16);
+		m_Channals = 4;
+		m_Height = 2;
+		m_Width = 2;
 	}
 	ImgRes::ImgRes(const std::string& path)
 	{
@@ -53,19 +69,17 @@ namespace yoi
 			FileLogger::Info(oss.str().c_str());
 			FileLogger::Flush();
 
-			/*std::ostringstream out;
-			out << std::endl;
-			for (int i = 0; i < m_Height; i++)
+			m_ResultCode = 0;
+
+			if (m_Data == nullptr)
 			{
-				for (int j = 0; j < m_Width; j++)
-				{
-					unsigned char* data = (unsigned char*)(((unsigned int*)m_Data) + j + i * m_Width);
-					out << '(' << (int)data[0] << ',' << (int)data[1] << ',' << (int)data[2] << ',' << (int)data[3] << ')';
-				}
-				out << std::endl;
+				std::ostringstream oss;
+				oss << "Can't load file: " << path;
+				FileLogger::Error(oss.str().c_str());
+				FileLogger::Flush();
+				m_ResultCode = -2;
+				ErrorColor();
 			}
-			FileLogger::Info(out.str().c_str());
-			FileLogger::Flush();*/
 		}
 		else
 		{
@@ -73,14 +87,10 @@ namespace yoi
 			oss << "Can't find file: " << path;
 			FileLogger::Error(oss.str().c_str());
 			FileLogger::Flush();
+			m_ResultCode = -1;
+			ErrorColor();
 		}
-		if (m_Data == 0)
-		{
-			std::ostringstream oss;
-			oss << "Can't load file: " << path;
-			FileLogger::Error(oss.str().c_str());
-			FileLogger::Flush();
-		}
+		
 	}
 	ImgRes::~ImgRes()
 	{

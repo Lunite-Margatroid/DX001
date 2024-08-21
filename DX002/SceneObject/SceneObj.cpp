@@ -157,10 +157,13 @@ namespace yoi
 
 	void SceneObj::PushChild(SceneObj* child)
 	{
-		if (child->m_ParentObj)
-			(child->m_ParentObj)->RemoveChild(child, true);
-		child->m_ParentObj = this;
-		m_ChildObj.push_back(child);
+		if (child)
+		{
+			if (child->m_ParentObj)
+				(child->m_ParentObj)->RemoveChild(child, true);
+			child->m_ParentObj = this;
+			m_ChildObj.push_back(child);
+		}
 	}
 	void SceneObj::RemoveChild(SceneObj* child, bool swap)
 	{

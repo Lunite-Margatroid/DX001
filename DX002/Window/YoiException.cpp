@@ -12,6 +12,7 @@ namespace yoi
 	{
 		std::ostringstream oss;
 		oss << GetType() << std::endl
+			<< "line: " << GetLine() << "file: " << GetFile() << std::endl
 			<< GetOriginString();
 		whatBuffer = std::move(oss.str());
 		FileLogger::Error(whatBuffer.c_str());

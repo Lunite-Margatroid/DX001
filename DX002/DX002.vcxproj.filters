@@ -33,9 +33,6 @@
     <ClInclude Include="Window\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Timer\YoiTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -227,9 +224,6 @@
     <ClCompile Include="Window\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Window\YoiException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -237,9 +231,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Window\Mouse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timer\YoiTimer.cpp">

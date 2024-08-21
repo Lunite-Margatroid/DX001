@@ -38,6 +38,7 @@ namespace yoi
 	{
 		std::ostringstream oss;
 		oss << GetType() << std::endl
+			<< "line: " << GetLine() << "\nfile: " << GetFile() << std::endl
 			<< "[Error Code] " << GetErrorCode() << std::endl
 			<< "[Error String] " << GetErrorString() << std::endl
 			<< "[Description] " << GetErrorDescription() << std::endl
@@ -138,7 +139,9 @@ namespace yoi
 	{
 		std::ostringstream oss;
 		oss << GetType() << std::endl
-			<< "\n[Error Info]\n" << GetErrorInfo() << std::endl << std::endl;
+			<< "\n[Error Info]\n" 
+			<<"line: " << GetLine() << "\nfile: " << GetFile()<< std::endl
+			<<GetErrorInfo() << std::endl << std::endl;
 		oss << GetOriginString();
 		whatBuffer = oss.str();
 		FileLogger::Error(whatBuffer.c_str());
@@ -160,8 +163,8 @@ namespace yoi
 	{
 		DXGI_SWAP_CHAIN_DESC scd = {};
 
-		scd.BufferDesc.Width = 0u;
-		scd.BufferDesc.Height = 0u;
+		scd.BufferDesc.Width = YOI_WINDOW_WIDTH;
+		scd.BufferDesc.Height = YOI_WINDOW_HEIGHT;
 		scd.BufferDesc.RefreshRate.Numerator = 0u;
 		scd.BufferDesc.RefreshRate.Denominator = 0u;
 		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -309,15 +312,17 @@ namespace yoi
 		// init sprite manager
 		m_pSpriteManager = std::make_unique<SpriteManager>();
 
-		// init test draw 
-		InitTestDraw();
+		
+		// Init Scene obj
+		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
 
+		// init test draw 
+		// InitTestDraw();
+		
 		// init ImGui
 		pImGuiManager = std::make_unique<ImGuiManager>(hWnd, pDevice.Get(), pContext.Get());
 
 		m_pObjWin = std::make_unique<ObjectPropertyWin>(m_RootObj.get());
-
-
 
 		m_DeltaTime = 0.f;
 	}
@@ -458,10 +463,6 @@ namespace yoi
 
 		m_pLightManager->Flush();
 
-
-		// Init Scene obj
-		m_RootObj = std::make_unique<SceneObj>(nullptr, nullptr, "Root");
-
 		// colored cube
 		SpriteV3* cubeSprite = m_pSpriteManager->Sprite(ColoredCube());
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
@@ -483,15 +484,15 @@ namespace yoi
 		D3D11_VIEWPORT vp = {};
 		vp.TopLeftX = 0;
 		vp.TopLeftY = 0;
-		vp.Width = 800;
-		vp.Height = 600;
+		vp.Width = YOI_WINDOW_WIDTH;
+		vp.Height = YOI_WINDOW_HEIGHT;
 		vp.MinDepth = 0;
 		vp.MaxDepth = 1;
 		GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
 		// set render target
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
-		LoadModel("L:\\OpenGL\\model\\78515\\78515.fbx");
+		// LoadModel("L:\\OpenGL\\model\\78515\\78515.fbx");
 
 	}
 
@@ -557,7 +558,7 @@ namespace yoi
 	{
 		return (GetInstance().m_pBufferManager)->SetBufferData(buffer, size, offset, src);
 	}
-	void Graphics::LoadModel(const std::string& path)
+	SceneObj* Graphics::LoadModel(const std::string& path)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeMeshes);
@@ -567,7 +568,7 @@ namespace yoi
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			FileLogger::Error(importer.GetErrorString());
-			return;
+			return nullptr;
 		}
 
 		// »ñÈ¡Â·¾¶
@@ -575,7 +576,7 @@ namespace yoi
 		int b = path.find_last_of('\\');
 		int t = std::max(a, b);
 		std::string directory = path.substr(0, t);
-		std::string fileName = path.substr(t, path.length() - t - 1);
+		std::string fileName = path.substr(t + 1, path.length() - t - 1);
 
 		// material
 		unsigned int materialBase = LoadMaterials(scene, directory);
@@ -586,6 +587,12 @@ namespace yoi
 		SceneObj* obj = ProcessNode(scene->mRootNode, meshes);
 		obj->SetObjName(fileName);
 		m_RootObj->PushChild(obj);
+
+		std::ostringstream oss;
+		oss << "Model file: " << path << "/tloaded.";
+		FileLogger::Info(oss.str().c_str());
+
+		return obj;
 	}
 
 	unsigned int Graphics::LoadMaterials(const aiScene* scene, const std::string& dictionary)

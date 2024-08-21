@@ -27,26 +27,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -90,7 +90,7 @@
       <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
-      <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(SolutionDir)shader-bin\%(Filename).cso</ObjectFileOutput>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
@@ -119,7 +119,7 @@
       <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
-      <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(SolutionDir)shader-bin\%(Filename).cso</ObjectFileOutput>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@
       <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
-      <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(SolutionDir)shader-bin\%(Filename).cso</ObjectFileOutput>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
@@ -172,13 +172,12 @@
       <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
-      <ObjectFileOutput>$(ProjectDir)shader-bin\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(SolutionDir)shader-bin\%(Filename).cso</ObjectFileOutput>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation\FrameNode.h" />
-    <ClInclude Include="Application.h" />
     <ClInclude Include="BufferManager\BufferManager.h" />
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
@@ -249,7 +248,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\FrameNode.cpp" />
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
@@ -352,7 +350,6 @@
     <ClCompile Include="Window\KeyBoard.cpp" />
     <ClCompile Include="Window\Mouse.cpp" />
     <ClCompile Include="Window\Window.cpp" />
-    <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="Window\YoiException.cpp" />
   </ItemGroup>
   <ItemGroup>
