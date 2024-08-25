@@ -7,7 +7,6 @@ namespace yoi
 	Texture::Texture(const ImgRes& img)
 	{
 		GFX_EXCEPT_SUPPORT();
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
 		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 		D3D11_TEXTURE2D_DESC  td = {};
 		td.Width = m_Width = img.GetWidth();
@@ -26,19 +25,33 @@ namespace yoi
 		sb.pSysMem = img.GetDataPtr();
 		sb.SysMemPitch = img.GetWidth() * img.GetChannal();
 
-		GFX_THROW_INFO(pDevice->CreateTexture2D(&td, &sb, &pTexture));
+		GFX_THROW_INFO(pDevice->CreateTexture2D(&td, &sb, &m_pTexture2D));
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC rvd = {};
 		rvd.Format = td.Format;
 		rvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		rvd.Texture2D.MostDetailedMip = 0u;
 		rvd.Texture2D.MipLevels = 1u;
-		GFX_THROW_INFO(pDevice->CreateShaderResourceView(pTexture.Get(), &rvd, &m_pResView));
+		GFX_THROW_INFO(pDevice->CreateShaderResourceView(m_pTexture2D.Get(), &rvd, &m_pResView));
 	}
+
+	Texture::Texture(ID3D11Device* device, const D3D11_TEXTURE2D_DESC* desc, const D3D11_SUBRESOURCE_DATA* data)
+	{
+		GFX_EXCEPT_SUPPORT();
+
+		GFX_THROW_INFO(device->CreateTexture2D(desc, data, &m_pTexture2D));
+
+		D3D11_SHADER_RESOURCE_VIEW_DESC rvd = {};
+		rvd.Format = desc->Format;
+		rvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		rvd.Texture2D.MostDetailedMip = 0u;
+		rvd.Texture2D.MipLevels = 1u;
+		GFX_THROW_INFO(device->CreateShaderResourceView(m_pTexture2D.Get(), &rvd, &m_pResView));
+	}
+
 	Texture::Texture(const float* color)
 	{
 		GFX_EXCEPT_SUPPORT();
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
 		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 		D3D11_TEXTURE2D_DESC  td = {};
 		td.Width = m_Width = 1u;
@@ -56,22 +69,30 @@ namespace yoi
 		sb.pSysMem = color;
 		sb.SysMemPitch = sizeof(float) * 4;
 
-		GFX_THROW_INFO(pDevice->CreateTexture2D(&td, &sb, &pTexture));
+		GFX_THROW_INFO(pDevice->CreateTexture2D(&td, &sb, &m_pTexture2D));
 
 		D3D11_SHADER_RESOURCE_VIEW_DESC rvd = {};
 		rvd.Format = td.Format;
 		rvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 		rvd.Texture2D.MostDetailedMip = 0u;
 		rvd.Texture2D.MipLevels = 1u;
-		GFX_THROW_INFO(pDevice->CreateShaderResourceView(pTexture.Get(), &rvd, &m_pResView));
+		GFX_THROW_INFO(pDevice->CreateShaderResourceView(m_pTexture2D.Get(), &rvd, &m_pResView));
 	}
-	void Texture::Bind()
+	void Texture::Bind(UINT resigter )
 	{
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
-		pContext->PSSetShaderResources(0u, 1u, m_pResView.GetAddressOf());
+		pContext->PSSetShaderResources(resigter, 1u, m_pResView.GetAddressOf());
 	}
-	void Texture::Bind(ID3D11DeviceContext* pContext)
+	void Texture::BindCS(ID3D11DeviceContext* pContext, UINT resigter)
 	{
-		pContext->PSSetShaderResources(0u, 1u, m_pResView.GetAddressOf());
+		pContext->CSSetShaderResources(resigter, 1u, m_pResView.GetAddressOf());
+	}
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture::GetTexture2D()
+	{
+		return m_pTexture2D;
+	}
+	void Texture::Bind(ID3D11DeviceContext* pContext, UINT resigter )
+	{
+		pContext->PSSetShaderResources(resigter, 1u, m_pResView.GetAddressOf());
 	}
 }

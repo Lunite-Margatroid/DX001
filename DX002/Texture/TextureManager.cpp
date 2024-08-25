@@ -40,6 +40,18 @@ namespace yoi
 			));
 		return texture;
 	}
+	Texture* TextureManager::LoadTexture(ID3D11Device* device, const D3D11_TEXTURE2D_DESC* desc, const D3D11_SUBRESOURCE_DATA* data)
+	{
+		Texture* texture = new Texture(device, desc, data);
+
+		char titleBuffer[16] = "Tex";
+		_itoa(static_cast<int>(m_Textures.size() + 1), titleBuffer + 3, 10);
+
+		m_Textures.emplace_back(
+			TextureItem(titleBuffer, texture)
+		);
+		return texture;
+	}
 	void TextureManager::LogTextureInfo()
 	{
 		std::ostringstream oss;

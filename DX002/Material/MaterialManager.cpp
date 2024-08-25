@@ -5,6 +5,7 @@ namespace yoi
 {
 
 	MaterialManager::MaterialManager()
+		:m_Materials(std::vector<MaterialItem>())
 	{
 	}
 

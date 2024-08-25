@@ -40,9 +40,12 @@ namespace yoi
 		private:
 			HRESULT hr;
 		};
+
+	protected:
+		Window(const char* name, int width, int height);
 	public:
 		Window(int width, int height, const char* name) noexcept;
-		~Window();
+		virtual ~Window();
 
 		Window(const Window&) = delete;
 		Window& operator = (const Window&) = delete;
@@ -60,15 +63,18 @@ namespace yoi
 		int width;
 		int height;
 		HWND hWnd;
-
+	
 	public:
 		KeyBoard kbd;
 		Mouse mouse;
-	private:
+	protected:
 		std::unique_ptr<Graphics> pGfx;
 	public:
 		HWND GetHandleWindow();
 		Graphics& Gfx();
+
+		Graphics* GetGraphisPtr();
+		HWND GetHandle();
 	};
 }
 

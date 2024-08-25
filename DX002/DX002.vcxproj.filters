@@ -219,6 +219,18 @@
     <ClInclude Include="Shader\P3_N3_T2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneObject\Camera2DObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CShader\CShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager\P2_N2_Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\P2_T2_2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -392,6 +404,15 @@
     <ClCompile Include="Shader\P3_N3_T2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneObject\Camera2DObj.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CShader\CShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\P2_T2_2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -414,5 +435,8 @@
     <FxCompile Include="HLSL\LightedMaterialedPS.hlsl" />
     <FxCompile Include="HLSL\TexColorPS.hlsl" />
     <FxCompile Include="HLSL\TexColorVS.hlsl" />
+    <FxCompile Include="HLSL\ComputeShader.hlsl" />
+    <FxCompile Include="HLSL\Textured2DPS.hlsl" />
+    <FxCompile Include="HLSL\Textured2DVS.hlsl" />
   </ItemGroup>
 </Project>

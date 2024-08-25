@@ -41,7 +41,7 @@ namespace yoi
 		const glm::mat4& GetVPTrans() const;
 
 		const glm::vec3& GetHeadTo() const;
-		void HeadTo(const glm::vec3& target);
+		virtual void HeadTo(const glm::vec3& target) = 0;
 
 		void RenderImGui() override;
 

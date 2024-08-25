@@ -87,4 +87,23 @@ namespace yoi
 		CameraObj::RenderImGui();
 		ImGui::DragFloat("View Range scale", &m_ViewRangeScale, 0.01f,0.1f, 2.0f);
 	}
+
+	void Camera3DObj::HeadTo(const glm::vec3& target)
+	{
+		glm::vec3 dir = target - glm::vec3(m_ModelTrans[3]);
+		float xz = sqrtf(dir.x * dir.x + dir.z * dir.z);
+		if (xz > 0.0f)
+		{
+			m_Yaw = dir.x > 0 ? -acosf(-dir.z / xz) : acosf(-dir.z / xz);
+		}
+
+		float xyz = sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z);
+		if (xyz > 0.0f)
+		{
+			m_Pitch = acos(xz / xyz);
+			m_Pitch = dir.y > 0 ? m_Pitch : -m_Pitch;
+			m_Pitch = m_Pitch < 1.5f ? m_Pitch : 1.5f;
+			m_Pitch = m_Pitch > -1.5f ? m_Pitch : -1.5f;
+		}
+	}
 }

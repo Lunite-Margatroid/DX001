@@ -34,5 +34,7 @@ namespace yoi
 		float GetFar() const;
 
 		void RenderImGui() override;
+
+		virtual void HeadTo(const glm::vec3& target) override;
 	};
 }

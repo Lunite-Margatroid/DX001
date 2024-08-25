@@ -22,10 +22,11 @@ namespace yoi
 	public:
 		TextureManager();
 		~TextureManager();
-		TextureManager(const Texture&) = delete;
+		TextureManager(const TextureManager&) = delete;
 		TextureManager& operator = (const TextureManager&) = delete;
 		Texture* LoadTexture(const std::string& path);
 		Texture* LoadTexture(const float* color, const std::string& title = std::string("No Title"));
+		Texture* LoadTexture(ID3D11Device*, const D3D11_TEXTURE2D_DESC*, const D3D11_SUBRESOURCE_DATA* );
 		void LogTextureInfo();
 		Texture* GetAt(int index = 0);
 		unsigned int GetTexCount() const;

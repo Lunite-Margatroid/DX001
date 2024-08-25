@@ -23,6 +23,7 @@
 #include "Light\LightManager.h"
 #include "Sprite\SpriteManager.h"
 
+#include "CShader\CShader.h"
 
 
 namespace yoi
@@ -78,7 +79,7 @@ namespace yoi
 		Graphics(HWND hWnd);
 		Graphics(const Graphics&) = delete;
 		Graphics& operator=(const Graphics&) = delete;
-		~Graphics() = default;
+		virtual ~Graphics() = default;
 		
 		void ImGuiFrame();
 		void EndFrame();
@@ -86,7 +87,7 @@ namespace yoi
 		void ClearBuffer(float red, float green, float blue);
 
 	/****** test draw ******/
-	private:
+	protected:
 		
 		std::unique_ptr<SceneObj> m_RootObj;
 		CameraObj* m_MainCamera;
@@ -106,8 +107,7 @@ namespace yoi
 	/****** test draw * end */
 
 
-	private:
-
+	protected:
 		Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
 		Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pContext;
@@ -125,14 +125,14 @@ namespace yoi
 		ID3D11DeviceContext* GetContext();
 
 #ifdef  YOI_DEBUG
-	private:
+	protected:
 		DxgiInfoManager infoManager;
 	public:
 		DxgiInfoManager& GetInfoManager();
 #endif //  YOI_DEBUG
 
 		/**** ImGui ****/
-		private:
+		protected:
 			std::unique_ptr<ImGuiManager> pImGuiManager;
 
 		/****** Singleton ******/
@@ -143,31 +143,31 @@ namespace yoi
 			static Graphics& GetInstance();
 
 		/******* Shader **********/
-		private:
+		protected:
 			std::unique_ptr<ShaderManager> m_pShaderManager;
 		public:
 			Shader* GetShader(const std::string& shaderTitle);
 
 		/********* Buffer Manager ***********/
-		private:
+		protected:
 			std::unique_ptr<BufferManager> m_pBufferManager;
 		public:
 			static ID3D11Buffer* GetBuffer(BufferManager::Buffer buffer);
 			static ID3D11Buffer* SetBufferData(BufferManager::Buffer buffer, unsigned int size, unsigned int offset, void* src);
 
 		/*********** Material Manager *************/
-		private:
+		protected:
 			std::unique_ptr<MaterialManager> m_pMaterialManager;
 
 		/*********** Texture Mananger *************/
-		private:
+		protected:
 			std::unique_ptr<TextureManager> m_pTextureManager;
 
 		/*********** Light Manager ****************/
-		private:
+		protected:
 			std::unique_ptr<LightManager> m_pLightManager;
 		/*********** Sprite Manager ***************/
-		private:
+		protected:
 			std::unique_ptr<SpriteManager> m_pSpriteManager;
 
 		/*********** Load Model ***************/

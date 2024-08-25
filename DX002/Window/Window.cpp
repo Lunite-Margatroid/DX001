@@ -93,6 +93,40 @@ namespace yoi
 
 
 	// -------------------- Window --------------------------
+	Window::Window(const char* name, int width, int height)
+		:width(width), height(height)
+	{
+		// 定义窗口位置
+		RECT rect;
+		rect.left = 100;
+		rect.right = width + rect.left;
+		rect.top = 100;
+		rect.bottom = height + rect.top;
+		// 调节有效客户区
+		AdjustWindowRect(&rect, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
+			FALSE);
+		// exception test 
+
+
+
+		// create window
+		hWnd = CreateWindowA(
+			WindowClass::GetName(),
+			name,
+			WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
+			CW_USEDEFAULT,
+			CW_USEDEFAULT,
+			rect.right - rect.left,
+			rect.bottom - rect.top,
+			nullptr,
+			nullptr,
+			WindowClass::GetInstance(),
+			this
+		);
+		// show window
+		ShowWindow(hWnd, SW_SHOWDEFAULT);
+	}
+
 	Window::Window(int width, int height, const char* name) noexcept
 		:width(width), height(height)
 	{
@@ -131,6 +165,7 @@ namespace yoi
 
 	Window::~Window()
 	{
+		pGfx.release();
 		DestroyWindow(hWnd);
 	}
 
@@ -309,6 +344,11 @@ namespace yoi
 		return *pGfx;
 	}
 
+	Graphics* Window::GetGraphisPtr()
+	{
+		return pGfx.get();
+	}
+
 	std::optional<int> Window::ProcessMessage()
 	{
 		MSG msg;
@@ -322,5 +362,10 @@ namespace yoi
 			DispatchMessageA(&msg);
 		}
 		return std::nullopt;
+	}
+
+	HWND Window::GetHandle()
+	{
+		return hWnd;
 	}
 }

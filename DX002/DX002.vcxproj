@@ -182,7 +182,9 @@
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
     <ClInclude Include="BufferManager\InitBuffer.h" />
+    <ClInclude Include="BufferManager\P2_N2_Quad.h" />
     <ClInclude Include="BufferManager\P3_N3_T2_Cube.h" />
+    <ClInclude Include="CShader\CShader.h" />
     <ClInclude Include="Exception\UFException.h" />
     <ClInclude Include="ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="ImGuiManager\ImWindowManager.h" />
@@ -197,6 +199,8 @@
     <ClInclude Include="Material\Material.h" />
     <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
+    <ClInclude Include="SceneObject\Camera2DObj.h" />
+    <ClInclude Include="Shader\P2_T2_2D.h" />
     <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\P3_N3_T2.h" />
     <ClInclude Include="Shader\P3_T2.h" />
@@ -249,6 +253,7 @@
   <ItemGroup>
     <ClCompile Include="Animation\FrameNode.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
+    <ClCompile Include="CShader\CShader.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="ImGuiManager\ImWindowManager.cpp" />
@@ -262,6 +267,8 @@
     <ClCompile Include="Logger\FileLogger.cpp" />
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\MaterialManager.cpp" />
+    <ClCompile Include="SceneObject\Camera2DObj.cpp" />
+    <ClCompile Include="Shader\P2_T2_2D.cpp" />
     <ClCompile Include="Shader\P3_C3.cpp" />
     <ClCompile Include="Shader\P3_N3_T2.cpp" />
     <ClCompile Include="Shader\P3_T2.cpp" />
@@ -359,6 +366,16 @@
     <Image Include="sakuya.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="HLSL\ComputeShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="HLSL\LightedMaterialedPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -396,6 +413,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="HLSL\TexColorVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\Textured2DPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\Textured2DVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
