@@ -123,7 +123,7 @@ namespace yoi
 		ColoredCubeBuffer(this);
 		ConstantLightBuffer(this);
 		InitBuffer<Buffer::P3_N3_T2_Cube>(this);
-		InitBuffer<Buffer::Vertex_P2_N2_Quad>(this);
+		InitBuffer<Buffer::Vertex_P2_T2_Quad>(this);
 	}
 	BufferManager::~BufferManager()
 	{

@@ -463,6 +463,9 @@ namespace yoi
 
 		m_pLightManager->Flush();
 
+		// white material
+		Material* whtMaterial = m_pMaterialManager->CreateMaterial(m_pTextureManager->GetAt(), m_pTextureManager->GetAt(), 64.0f);
+
 		// colored cube
 		SpriteV3* cubeSprite = m_pSpriteManager->Sprite(ColoredCube());
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
@@ -470,6 +473,22 @@ namespace yoi
 		cubeSprite = m_pSpriteManager->Sprite(lightedCube);
 		SceneObj* texturedCube = new SceneObj(m_RootObj.get(), cubeSprite, "Texture Cube");
 		texturedCube->SetPosition(glm::vec3(0.0f, 4.0f, 0.0f));
+
+		// gird test
+		SpriteV3* gridSprite = m_pSpriteManager->CreateGrid(
+			100, 100, m_pShaderManager->GetShader("Lighted Shader"), whtMaterial, *(m_pBufferManager.get()),
+			[](float x, float z) { return 0.3f * ( z * sinf(10.f * x) + x * cosf(10.f * z) ); },
+			[](float x, float z) { return 
+				glm::normalize(
+					glm::vec3( 
+						-3.f * z * cosf(10.f * x) - 0.3f * cosf(10.f * z), 
+						1.0f,
+						-0.3f * sinf(10.f * x) + 3.f * x * sinf(10.f * z) 
+							)
+				); }
+		);
+		SceneObj* gridObj = new SceneObj(m_RootObj.get(), gridSprite, "grid");
+		gridObj->SetPosition(glm::vec3(4.0f, 0.0f, 0.0f));
 
 		// sampler
 		m_pSampler = std::make_unique<Sampler>();

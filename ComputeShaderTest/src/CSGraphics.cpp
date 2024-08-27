@@ -91,7 +91,7 @@ void CSGraphics::ComputeShaderTestInit()
 
 	// init mesh
 	yoi::Mesh mesh(
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_N2_Quad),
+		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_T2_Quad),
 		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Quad),
 		sizeof(float) * 4,
 		0u,
@@ -104,7 +104,7 @@ void CSGraphics::ComputeShaderTestInit()
 		mtl);
 
 	yoi::Mesh meshRumia(
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_N2_Quad),
+		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_T2_Quad),
 		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Quad),
 		sizeof(float) * 4,
 		0u,

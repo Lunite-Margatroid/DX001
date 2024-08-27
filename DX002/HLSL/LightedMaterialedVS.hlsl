@@ -22,7 +22,7 @@ VSout main(float3 pos : Position, float3 normal : Normal, float2 texCoord : TexC
     VSout vsout;
     vsout.texCoord = texCoord;
     vsout.fragPos = mul( modelMatrix, float4(pos, 1.0f) ).xyz;
-    vsout.noramlVec = mul(normalMatrix, float4(normal, 0.0f)).xyz;
+    vsout.noramlVec = normalize(mul(normalMatrix, float4(normal, 0.0f)).xyz);
     vsout.vertPos = mul(mvpMatrix, float4(pos, 1.0f));
     vsout.cameraPos = cameraPos;
     

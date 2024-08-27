@@ -4,7 +4,7 @@ namespace yoi
 {
 	// Init vertex_buffer and index_buffer of textured quad
 	template<>
-	void InitBuffer<BufferManager::Buffer::Vertex_P2_N2_Quad>(yoi::BufferManager* bufMng)
+	void InitBuffer<BufferManager::Buffer::Vertex_P2_T2_Quad>(yoi::BufferManager* bufMng)
 	{
 		struct Vertex
 		{
@@ -38,7 +38,7 @@ namespace yoi
 		D3D11_SUBRESOURCE_DATA subData = {};
 		subData.pSysMem = vertexData;
 
-		bufMng->AddBuffer(yoi::BufferManager::Buffer::Vertex_P2_N2_Quad, &bufferDesc, &subData);
+		bufMng->AddBuffer(yoi::BufferManager::Buffer::Vertex_P2_T2_Quad, &bufferDesc, &subData);
 
 
 		// create index buffer
