@@ -286,6 +286,19 @@ namespace yoi
 		GFX_THROW_INFO(pDevice->CreateDepthStencilState(&dsd, &pDSState));
 		GFX_THROW_INFO_ONLY(pContext->OMSetDepthStencilState(pDSState.Get(), 0));
 
+		// set viewprot
+		D3D11_VIEWPORT vp = {};
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		vp.Width = YOI_WINDOW_WIDTH;
+		vp.Height = YOI_WINDOW_HEIGHT;
+		vp.MinDepth = 0;
+		vp.MaxDepth = 1;
+		GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
+		// set render target
+		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
+
+
 
 		// singleton
 		s_pInstance = this;
@@ -499,17 +512,7 @@ namespace yoi
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
 		((PerspectiveCamera*)m_MainCamera)->SetWidth(4.0);
 
-		// set viewprot
-		D3D11_VIEWPORT vp = {};
-		vp.TopLeftX = 0;
-		vp.TopLeftY = 0;
-		vp.Width = YOI_WINDOW_WIDTH;
-		vp.Height = YOI_WINDOW_HEIGHT;
-		vp.MinDepth = 0;
-		vp.MaxDepth = 1;
-		GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
-		// set render target
-		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
+		
 
 		// LoadModel("L:\\OpenGL\\model\\78515\\78515.fbx");
 

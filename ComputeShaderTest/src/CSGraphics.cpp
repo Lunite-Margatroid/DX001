@@ -121,18 +121,4 @@ void CSGraphics::ComputeShaderTestInit()
 	// create obj
 	yoi::SceneObj* obj = new yoi::SceneObj(m_RootObj.get(), spt);
 	obj = new yoi::SceneObj(m_RootObj.get(), sptRumia, "Rumia");
-
-	// init view port 
-	// set viewprot
-	D3D11_VIEWPORT vp = {};
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
-	vp.Width = YOI_WINDOW_WIDTH;
-	vp.Height = YOI_WINDOW_HEIGHT;
-	vp.MinDepth = 0;
-	vp.MaxDepth = 1;
-	GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
-
-	// set render target
-	GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 }
