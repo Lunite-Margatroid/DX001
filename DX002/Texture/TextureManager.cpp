@@ -61,16 +61,19 @@ namespace yoi
 		int count = 0;
 		for (TextureItem& item : m_Textures)
 		{
+			D3D11_TEXTURE2D_DESC td = {};
+			item.tex->GetTexture2D()->GetDesc(&td);
+
 			count++;
-			int width = item.tex->m_Width;
-			int height = item.tex->m_Height;
+			int width = td.Width;
+			int height = td.Height;
 			oss <<'[' <<count << ']' << std::setw(3) <<item.title << std::setw(16) << "Width: " << std::setw(5) << width << "Height: " << std::setw(5) << height << std::endl;
 		}
 
 		FileLogger::Info(oss.str().c_str());
 		FileLogger::Flush();
 	}
-	Texture* TextureManager::GetAt(int index)
+	BasicTexture2D* TextureManager::GetAt(int index)
 	{
 		if (index < m_Textures.size() )
 			return m_Textures[index].tex;

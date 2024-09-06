@@ -8,8 +8,8 @@ namespace yoi
 	Material::Material(TextureManager* texManager, float shininess)
 		:m_Shininess(shininess)
 	{
-		m_texDiffuse = texManager->GetAt(0);
-		m_texSpecular = texManager->GetAt(0);
+		m_texDiffuse = dynamic_cast<Texture*>(texManager->GetAt(0));
+		m_texSpecular = dynamic_cast<Texture*>(texManager->GetAt(0));
 	}
 	Material::Material(const float* texDiffuse, const float* texSpecular, TextureManager* texManager, float shininess)
 		:m_Shininess(shininess)

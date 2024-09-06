@@ -431,7 +431,7 @@ namespace yoi
 		m_pTexture->Bind();
 
 		Texture* texRumia = m_pTextureManager->LoadTexture("./img/rumia.jpg");
-		Material* mtlRumia = new Material(texRumia, m_pTextureManager->GetAt(0));
+		Material* mtlRumia = new Material(texRumia, dynamic_cast<Texture*>(m_pTextureManager->GetAt(0)));
 		m_pMaterialManager->Add(mtlRumia, "Rumia");
 		Mesh mshRumia(
 			GetBuffer(BufferManager::Buffer::Vertex_Textured_Cube),
@@ -477,7 +477,7 @@ namespace yoi
 		m_pLightManager->Flush();
 
 		// white material
-		Material* whtMaterial = m_pMaterialManager->CreateMaterial(m_pTextureManager->GetAt(), m_pTextureManager->GetAt(), 64.0f);
+		Material* whtMaterial = m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(m_pTextureManager->GetAt()), dynamic_cast<Texture*>(m_pTextureManager->GetAt()), 64.0f);
 
 		// colored cube
 		SpriteV3* cubeSprite = m_pSpriteManager->Sprite(ColoredCube());
@@ -621,7 +621,7 @@ namespace yoi
 	{
 		unsigned int materialCount = m_pMaterialManager->Size();
 		aiTextureType texTypes[2] = { aiTextureType_DIFFUSE, aiTextureType_SPECULAR };
-		Texture* yoiTextures[2] = { m_pTextureManager->GetAt(), m_pTextureManager->GetAt() };
+		Texture* yoiTextures[2] = { dynamic_cast<Texture*>(m_pTextureManager->GetAt()), dynamic_cast<Texture*>(m_pTextureManager->GetAt()) };
 		for (unsigned int i = 0; i < scene->mNumMaterials; i++)
 		{
 			aiMaterial* material = scene->mMaterials[i];
@@ -637,7 +637,7 @@ namespace yoi
 					if (ret != aiReturn_SUCCESS)
 					{
 						FileLogger::Warn("assimp GetTexture fail");
-						yoiTextures[j] = m_pTextureManager->GetAt();
+						yoiTextures[j] = dynamic_cast<Texture*>(m_pTextureManager->GetAt());
 					}
 					else
 					{// reading success
@@ -657,12 +657,12 @@ namespace yoi
 						}
 						else
 						{
-							yoiTextures[j] = m_pTextureManager->GetAt((*iter).second);
+							yoiTextures[j] = dynamic_cast<Texture*>(m_pTextureManager->GetAt((*iter).second));
 						}
 					}
 				}
 			}
-			m_pMaterialManager->CreateMaterial(yoiTextures[0], yoiTextures[1], 64.0f);
+			m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(yoiTextures[0]), dynamic_cast<Texture*>(yoiTextures[1]), 64.0f);
 		}
 
 		return materialCount;

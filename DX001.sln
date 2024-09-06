@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sandbox", "sandbox\sandbox.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComputeShaderTest", "ComputeShaderTest\ComputeShaderTest.vcxproj", "{8E4F912E-8B2F-4700-AA5A-6436FA1655A1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaveTest", "WaveTest\WaveTest.vcxproj", "{4EA83B1F-5B49-4272-A609-0D8929E1E43A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{8E4F912E-8B2F-4700-AA5A-6436FA1655A1}.Release|x64.Build.0 = Release|x64
 		{8E4F912E-8B2F-4700-AA5A-6436FA1655A1}.Release|x86.ActiveCfg = Release|Win32
 		{8E4F912E-8B2F-4700-AA5A-6436FA1655A1}.Release|x86.Build.0 = Release|Win32
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Debug|x64.ActiveCfg = Debug|x64
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Debug|x64.Build.0 = Debug|x64
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Debug|x86.ActiveCfg = Debug|Win32
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Debug|x86.Build.0 = Debug|Win32
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x64.ActiveCfg = Release|x64
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x64.Build.0 = Release|x64
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x86.ActiveCfg = Release|Win32
+		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

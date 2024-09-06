@@ -13,7 +13,7 @@ namespace yoi
 		struct TextureItem
 		{
 			std::string title;
-			Texture* tex;
+			BasicTexture2D* tex;
 			TextureItem(const std::string& ttl, Texture* t) :
 				title(ttl), tex(t) {}
 		};
@@ -28,7 +28,7 @@ namespace yoi
 		Texture* LoadTexture(const float* color, const std::string& title = std::string("No Title"));
 		Texture* LoadTexture(ID3D11Device*, const D3D11_TEXTURE2D_DESC*, const D3D11_SUBRESOURCE_DATA* );
 		void LogTextureInfo();
-		Texture* GetAt(int index = 0);
+		BasicTexture2D* GetAt(int index = 0);
 		unsigned int GetTexCount() const;
 	};
 }

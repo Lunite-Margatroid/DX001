@@ -231,6 +231,15 @@
     <ClInclude Include="Shader\P2_T2_2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\BasicTexture2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\UATexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\WaterWave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -411,6 +420,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader\P2_T2_2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\BasicTexture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\UATexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\WaterWave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

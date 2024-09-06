@@ -10,8 +10,21 @@ namespace yoi
 	void ObjectPropertyWin::ShowWindow()
 	{
 		ImGui::Begin(GetWindowTitle(), &m_Open);
+
+		// get the frame time
+
+		ImGuiIO& io = ImGui::GetIO();
+		ImGui::Text("Frame Time: %f.3", io.DeltaTime);
+		ImGui::Separator();
+
+		// draw scene object tree structure
+
 		DrawObjTree(m_RootObj);
+
+		// draw the property of selected object
+
 		m_SelectObj->RenderImGui();
+
 		ImGui::End();
 	}
 	const char* ObjectPropertyWin::GetWindowTitle() const

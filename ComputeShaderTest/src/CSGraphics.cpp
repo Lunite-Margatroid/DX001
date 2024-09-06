@@ -3,6 +3,7 @@
 #include "Renderer\GFXMacro.h"
 #include "SceneObject\Camera2DObj.h"
 #include "CSApplication.h"
+#include "Texture\UATexture.h"
 
 CSGraphics::CSGraphics(HWND hwnd)
 	:Graphics(hwnd)
@@ -41,21 +42,24 @@ void CSGraphics::ComputeShaderTestInit()
 	yoi::Texture* tex = m_pTextureManager->LoadTexture(pDevice.Get(), &td, nullptr);
 	
 	// create unordered access view
-	D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
+	/*D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
 	uavd.Format = format;
 	uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
 	uavd.Texture2D.MipSlice = 0u;
 
-	GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(tex->GetTexture2D().Get(), &uavd, &m_OutputUAV));
+	GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(tex->GetTexture2D().Get(), &uavd, &m_OutputUAV));*/
+
+	yoi::UATexture outputUAV(*tex);
 
 	// bind the resource view of test texture
-	//m_MaskImg->Bind(pContext.Get(), 1);
-	//m_TestImg->Bind(pContext.Get(), 0);
+	// m_MaskImg->Bind(pContext.Get(), 1);
+	// m_TestImg->Bind(pContext.Get(), 0);
 	m_MaskImg->BindCS(pContext.Get(), 1);
 	m_TestImg->BindCS(pContext.Get(), 0);
 
 	// bind unordered access view
-	GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, m_OutputUAV.GetAddressOf(), 0u));
+	// GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, m_OutputUAV.GetAddressOf(), 0u));
+	outputUAV.BindCS(pContext.Get(), 0u);
 	// m_OutputUAV->Release();
 
 
@@ -66,8 +70,9 @@ void CSGraphics::ComputeShaderTestInit()
 	GFX_THROW_INFO_ONLY(pContext->Dispatch(16, 16, 1));
 
 	// unbind 
-	ID3D11UnorderedAccessView* unbinding = nullptr;
-	GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, &unbinding, 0u));
+	// ID3D11UnorderedAccessView* unbinding = nullptr;
+	// GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, &unbinding, 0u));
+	outputUAV.Unbind(pContext.Get(), 0u);
 
 	// init camera
 	yoi::Camera2DObj* camera = new yoi::Camera2DObj();
@@ -83,7 +88,7 @@ void CSGraphics::ComputeShaderTestInit()
 
 	// init render object
 	// init material
-	yoi::Texture* defaultTex = m_pTextureManager->GetAt();
+	yoi::Texture* defaultTex = dynamic_cast<yoi::Texture*>(m_pTextureManager->GetAt());
 	yoi::Material* mtl = new yoi::Material(tex, defaultTex, 64.0f);
 	m_pMaterialManager->Add(mtl, "no name");
 	

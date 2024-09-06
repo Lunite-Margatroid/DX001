@@ -216,10 +216,13 @@
     <ClInclude Include="Sprite\SpriteV2.h" />
     <ClInclude Include="Sprite\SpriteV3.h" />
     <ClInclude Include="Sprite\TexturedCube.h" />
+    <ClInclude Include="Sprite\WaterWave.h" />
+    <ClInclude Include="Texture\BasicTexture2D.h" />
     <ClInclude Include="Texture\ImgRes.h" />
     <ClInclude Include="Texture\Sampler.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
+    <ClInclude Include="Texture\UATexture.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialog.h" />
     <ClInclude Include="vendor\ImGuiFileDialog\ImGuiFileDialogConfig.h" />
     <ClInclude Include="vendor\ImGui\imconfig.h" />
@@ -284,10 +287,13 @@
     <ClCompile Include="Sprite\SpriteV2.cpp" />
     <ClCompile Include="Sprite\SpriteV3.cpp" />
     <ClCompile Include="Sprite\TexturedCube.cpp" />
+    <ClCompile Include="Sprite\WaterWave.cpp" />
+    <ClCompile Include="Texture\BasicTexture2D.cpp" />
     <ClCompile Include="Texture\ImgRes.cpp" />
     <ClCompile Include="Texture\Sampler.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />
+    <ClCompile Include="Texture\UATexture.cpp" />
     <ClCompile Include="vendor\ImGuiFileDialog\ImGuiFileDialog.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
