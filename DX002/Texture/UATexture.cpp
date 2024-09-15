@@ -51,8 +51,16 @@ namespace yoi
 
 		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pTexture2D.Get(), &uavd, &m_pUAV));
 	}
-	UATexture::UATexture(UINT width, UINT height, void* data, D3D11_USAGE usage)
+	UATexture::UATexture(UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag)
 	{
+		// ---- create temp data ---
+		float* tempData = nullptr;
+		if (data == nullptr)
+		{
+			tempData = new float[width * height];
+			data = static_cast<void*>(tempData);
+		}
+		// -------------------------
 		GFX_EXCEPT_SUPPORT();
 		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 		D3D11_TEXTURE2D_DESC  td = {};
@@ -63,9 +71,9 @@ namespace yoi
 		td.Format = DXGI_FORMAT_R32_FLOAT;
 		td.SampleDesc.Count = 1u;
 		td.SampleDesc.Quality = 0u;
-		td.Usage = usage;
+		td.Usage = D3D11_USAGE_DEFAULT;
 		td.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
-		td.CPUAccessFlags = 0u;
+		td.CPUAccessFlags = cpuFlag;
 		td.MiscFlags = 0u;
 
 		D3D11_SUBRESOURCE_DATA sd = {};
@@ -82,7 +90,8 @@ namespace yoi
 
 		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pTexture2D.Get(), &uavd, &m_pUAV));
 
-
+		if (tempData)
+			delete[] tempData;
 
 	}
 	void UATexture::Bind(ID3D11DeviceContext* pContext, UINT slot)

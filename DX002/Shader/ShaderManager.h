@@ -2,7 +2,7 @@
 #include "Shader.h"
 #include "Window\YoiException.h"
 #include "Logger\FileLogger.h"
-
+#include "CShader\CShader.h"
 
 namespace yoi
 {
@@ -21,6 +21,8 @@ namespace yoi
 
 	private:
 		std::map<std::string, Shader*> m_Shaders;
+
+		std::map<std::string, CShader*> m_ComputeShaders;
 	public:
 		ShaderManager(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 		~ShaderManager();
@@ -29,6 +31,8 @@ namespace yoi
 
 		const std::map<std::string, Shader*>& GetShaderMap();
 		Shader* GetShader(const std::string& shaderTitle);
+		CShader* GetComputeShader(const std::string& shaderTitle);
+
 
 		template<typename TShader>
 		void RegisterShader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
@@ -58,5 +62,7 @@ namespace yoi
 			}
 			
 		}
+
+		void RegisterComputeShader(ID3D11Device* pDevice, const std::string& path, const std::string& title);
 	};
 }

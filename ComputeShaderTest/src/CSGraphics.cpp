@@ -89,10 +89,15 @@ void CSGraphics::ComputeShaderTestInit()
 	// init render object
 	// init material
 	yoi::Texture* defaultTex = dynamic_cast<yoi::Texture*>(m_pTextureManager->GetAt());
-	yoi::Material* mtl = new yoi::Material(tex, defaultTex, 64.0f);
+	yoi::Material* mtl = new yoi::Material(
+		tex, 
+		defaultTex, 
+		dynamic_cast<yoi::Texture*>(m_pTextureManager->GetAt(1)),
+		dynamic_cast<yoi::Texture*>(m_pTextureManager->GetAt(2)),
+		64.0f);
 	m_pMaterialManager->Add(mtl, "no name");
 	
-	yoi::Material* mtlRumia = m_pMaterialManager->CreateMaterial(texRumia, defaultTex, 64.0f);
+	yoi::Material* mtlRumia = m_pMaterialManager->CreateMaterial(texRumia, defaultTex, m_pTextureManager.get(), 64.0f);
 
 	// init mesh
 	yoi::Mesh mesh(

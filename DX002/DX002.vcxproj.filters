@@ -240,6 +240,12 @@
     <ClInclude Include="Sprite\WaterWave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\CSUTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\P3_N3_T2_Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -431,6 +437,12 @@
     <ClCompile Include="Sprite\WaterWave.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture\CSUTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\P3_N3_T2_Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -456,5 +468,8 @@
     <FxCompile Include="HLSL\ComputeShader.hlsl" />
     <FxCompile Include="HLSL\Textured2DPS.hlsl" />
     <FxCompile Include="HLSL\Textured2DVS.hlsl" />
+    <FxCompile Include="HLSL\WaterWaveVS.hlsl" />
+    <FxCompile Include="HLSL\WaterWavePS.hlsl" />
+    <FxCompile Include="HLSL\WaterWaveCS.hlsl" />
   </ItemGroup>
 </Project>

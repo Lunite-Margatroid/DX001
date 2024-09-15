@@ -6,8 +6,17 @@ namespace yoi
 {
 	TextureManager::TextureManager()
 	{
+		/* default texture for diffuse and specular texture at index 0. */
 		float white[4] = {1.0f, 1.0f,1.0f,1.0f};
-		LoadTexture(white, std::string("single-color while"));
+		LoadTexture(white, std::string("single-color white"));
+		
+		/* default texture for normal texture at index 1 */
+		float green[4] = {0.0f, 1.0f, 0.0f, 1.0f};
+		LoadTexture(green, std::string("single-color green"));
+
+		/* default texture for height texture at index 2. */
+		float black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+		LoadTexture(black, std::string("single-color black"));
 	}
 	TextureManager::~TextureManager()
 	{
@@ -51,6 +60,11 @@ namespace yoi
 			TextureItem(titleBuffer, texture)
 		);
 		return texture;
+	}
+	BasicTexture2D* TextureManager::AddTexture(BasicTexture2D* tex, const std::string& title)
+	{
+		m_Textures.emplace_back(title, tex);
+		return tex;
 	}
 	void TextureManager::LogTextureInfo()
 	{

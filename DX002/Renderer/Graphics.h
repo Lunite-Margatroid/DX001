@@ -98,6 +98,7 @@ namespace yoi
 
 		std::unique_ptr<Texture> m_pTexture;
 		std::unique_ptr<Sampler> m_pSampler;
+		std::unique_ptr<Sampler> m_pSampler1;
 		float m_DeltaTime;
 	public:
 		void InitTestDraw();

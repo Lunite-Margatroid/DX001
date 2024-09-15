@@ -11,6 +11,8 @@ namespace yoi
 		friend class TextureManager;
 	protected:
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_pResView;
+
+		Texture() = default;
 	public:
 		Texture(const ImgRes& img);
 		// Create a single-color Texture
@@ -21,20 +23,20 @@ namespace yoi
 		Texture(const Texture&) = delete;
 		Texture& operator = (const Texture&) = delete;
 
-		void Bind(UINT resigter = 0u) override;
-		void Bind(ID3D11DeviceContext* pContext, UINT resigter = 0u) override;
-		void Unbind(UINT slot = 0u) override;
-		void Unbind(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void Bind(UINT resigter = 0u) override;
+		virtual void Bind(ID3D11DeviceContext* pContext, UINT resigter = 0u) override;
+		virtual void Unbind(UINT slot = 0u) override;
+		virtual void Unbind(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
 
-		void BindCS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void BindPS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void BindGS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void BindVS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void BindCS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void BindPS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void BindGS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void BindVS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
 
-		void UnbindCS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void UnbindPS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void UnbindGS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
-		void UnbindVS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void UnbindCS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void UnbindPS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void UnbindGS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
+		virtual void UnbindVS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
 
 
 	};

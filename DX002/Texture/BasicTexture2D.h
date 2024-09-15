@@ -12,9 +12,7 @@ namespace yoi
 		BasicTexture2D() = default;
 		virtual ~BasicTexture2D() = default;
 		BasicTexture2D(const BasicTexture2D&);
-		BasicTexture2D(BasicTexture2D&&);
 		BasicTexture2D& operator = (const BasicTexture2D&);
-		BasicTexture2D& operator = (BasicTexture2D&&);
 
 		BasicTexture2D(Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture);
 		BasicTexture2D(const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd);

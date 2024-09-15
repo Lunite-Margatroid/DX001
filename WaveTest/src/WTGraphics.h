@@ -17,5 +17,5 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> m_OutputUAV;
 public:
-	void ComputeShaderTestInit();
+	void WaveTestInit();
 };

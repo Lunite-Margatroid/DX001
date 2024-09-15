@@ -9,20 +9,10 @@ namespace yoi
         :BasicTexture2D(other.m_pTexture2D)
     {
     }
-    BasicTexture2D::BasicTexture2D(BasicTexture2D&& other)
-    {
-        m_pTexture2D = std::move(other.m_pTexture2D);
-    }
     BasicTexture2D& BasicTexture2D::operator=(const BasicTexture2D& other)
     {
         m_pTexture2D.ReleaseAndGetAddressOf();
         m_pTexture2D = other.m_pTexture2D;
-        return *this;
-    }
-    BasicTexture2D& BasicTexture2D::operator=(BasicTexture2D&& other)
-    {
-        m_pTexture2D.ReleaseAndGetAddressOf();
-        m_pTexture2D = std::move(other.m_pTexture2D);
         return *this;
     }
     BasicTexture2D::BasicTexture2D(Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture)

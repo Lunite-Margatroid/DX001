@@ -431,7 +431,7 @@ namespace yoi
 		m_pTexture->Bind();
 
 		Texture* texRumia = m_pTextureManager->LoadTexture("./img/rumia.jpg");
-		Material* mtlRumia = new Material(texRumia, dynamic_cast<Texture*>(m_pTextureManager->GetAt(0)));
+		Material* mtlRumia = new Material(texRumia, m_pTextureManager.get());
 		m_pMaterialManager->Add(mtlRumia, "Rumia");
 		Mesh mshRumia(
 			GetBuffer(BufferManager::Buffer::Vertex_Textured_Cube),
@@ -477,7 +477,7 @@ namespace yoi
 		m_pLightManager->Flush();
 
 		// white material
-		Material* whtMaterial = m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(m_pTextureManager->GetAt()), dynamic_cast<Texture*>(m_pTextureManager->GetAt()), 64.0f);
+		Material* whtMaterial = m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(m_pTextureManager->GetAt()), dynamic_cast<Texture*>(m_pTextureManager->GetAt()), m_pTextureManager.get(), 64.0f);
 
 		// colored cube
 		SpriteV3* cubeSprite = m_pSpriteManager->Sprite(ColoredCube());
@@ -662,7 +662,7 @@ namespace yoi
 					}
 				}
 			}
-			m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(yoiTextures[0]), dynamic_cast<Texture*>(yoiTextures[1]), 64.0f);
+			m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(yoiTextures[0]), dynamic_cast<Texture*>(yoiTextures[1]), m_pTextureManager.get(), 64.0f);
 		}
 
 		return materialCount;

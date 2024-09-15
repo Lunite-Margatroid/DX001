@@ -7,6 +7,7 @@
 #include "P3_N3_T2_Lighted.h"
 #include "P3_N3_T2.h"
 #include "P2_T2_2D.h"
+#include "P3_N3_T2_Wave.h"
 
 namespace yoi
 {
@@ -19,12 +20,20 @@ namespace yoi
 		RegisterShader<P3_N3_T2_Lighted>(pDevice, pContext);
 		RegisterShader<P3_N3_T2>(pDevice, pContext);
 		RegisterShader<P2_T2_2D>(pDevice, pContext);
+		RegisterShader<P3_N3_T2_Wave>(pDevice, pContext);
+
+		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveCS.cso", "Water Wave Update");
 	}
 	ShaderManager::~ShaderManager()
 	{
 		for (auto& iter : m_Shaders)
 		{
 			delete iter.second;
+		}
+
+		for (auto& shader : m_ComputeShaders)
+		{
+			delete shader.second;
 		}
 	}
 	const std::map<std::string, Shader*>& ShaderManager::GetShaderMap()
@@ -39,6 +48,34 @@ namespace yoi
 			return nullptr;
 		}
 		return (*iter).second;
+	}
+	CShader* ShaderManager::GetComputeShader(const std::string& shaderTitle)
+	{
+		if (m_ComputeShaders.find(shaderTitle) == m_ComputeShaders.end())
+		{
+			std::ostringstream oss;
+			oss << "Compute Shader " << '\"' << shaderTitle << "\" does not exist.";
+			FileLogger::Warn(oss.str().c_str());
+			return nullptr;
+		}
+		else
+		{
+			return m_ComputeShaders[shaderTitle];
+		}
+		return nullptr;
+	}
+	void ShaderManager::RegisterComputeShader(ID3D11Device* pDevice, const std::string& path, const std::string& title)
+	{
+		if (m_ComputeShaders.find(title) != m_ComputeShaders.end())
+		{
+			std::ostringstream oss;
+			oss << "Compute Shader with title " << '\"' << title << "\" has been loaded.";
+			FileLogger::Error(oss.str().c_str());
+		}
+		else
+		{
+			m_ComputeShaders[title] = new CShader(pDevice, path);
+		}
 	}
 	ShaderManager::ShaderException::ShaderException(int line, const char* file, const std::string& info)noexcept
 		:YoiException(line, file), m_Info(info)

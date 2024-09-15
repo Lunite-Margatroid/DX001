@@ -118,7 +118,16 @@ namespace yoi
 		subData.pSysMem = constantData;
 		m_BufferMap[Buffer::Constant_Matrix] = AddBuffer(&bufferDesc, &subData);
 
-		
+		// create constant buffer for water wave upadating
+		float waterwaveUpdateSetting[4] = {0.0f, 0.0f, 0.0f, 0.01f};
+		bufferDesc.ByteWidth = sizeof(float) * 4;	// the ByteWidth(value = 12) must be a multiple of 16.
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+		subData.pSysMem = waterwaveUpdateSetting;
+		m_BufferMap[Buffer::Constant_Water_Wave_Update] = AddBuffer(&bufferDesc, &subData);
 
 		ColoredCubeBuffer(this);
 		ConstantLightBuffer(this);

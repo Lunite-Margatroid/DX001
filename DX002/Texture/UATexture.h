@@ -1,6 +1,7 @@
 #pragma once
 /*
 * Unorder Access View Shader Resource
+* 
 */
 
 #include "BasicTexture2D.h"
@@ -22,6 +23,7 @@ namespace yoi
 
 		/// <summary>
 		/// expected struction for RGBA texture
+		/// CPU Read and Write is not allowed
 		/// </summary>
 		/// <param name=""></param>
 		UATexture(ImgRes&);
@@ -33,8 +35,8 @@ namespace yoi
 		/// <param name="width"> width of the tex </param>
 		/// <param name="height"> height of the tex </param>
 		/// <param name="data"> data ptr of the resource. all 0 if nullptr is given.</param>
-		/// <param name="usage"> usage of the tex </param>
-		UATexture( UINT width, UINT height, void* data, D3D11_USAGE usage);
+		/// <param name="cpuFlag"> access right of cpu </param>
+		UATexture( UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag);
 
 		/********* defulat bind func ****************/
 

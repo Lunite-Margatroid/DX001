@@ -43,6 +43,8 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->IASetVertexBuffers(0u, 1u, &m_pVertexBuffer, &m_VertexStripe, &m_VertexOffset));
 		GFX_THROW_INFO_ONLY(pContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, m_IndexOffset));
 		GFX_THROW_INFO_ONLY(pContext->DrawIndexed(m_IndexCount, m_StartIndex, m_BaseIndex));
+		if (m_Material)
+			m_Material->Unbind(pContext);
 		
 	}
 	void Mesh::SetMaterial(Material* material)

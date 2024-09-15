@@ -1,7 +1,9 @@
 #pragma once
 #include "SpriteV3.h"
+#include "WaterWave.h"
 #include "Mesh.h"
 #include "BufferManager\BufferManager.h"
+#include "Shader\ShaderManager.h"
 
 namespace yoi
 {
@@ -50,5 +52,15 @@ namespace yoi
 			const std::function<float(float, float)>& GenHeight = [](float x, float y) { return 0.0f; },
 			const std::function<glm::vec3(float, float)>& GenNormal = [](float x, float y) { return glm::vec3(0.0f, 1.0f, 0.0f); });
 
+
+		WaterWave* CreateWave(int width, 
+			ShaderManager&  shaderManager, 
+			BufferManager& bufferManager,
+			TextureManager& texManager,
+			MaterialManager& materialManager,
+			Texture* diffuseTexture = nullptr,
+			Texture* specularTexture = nullptr,
+			const std::function<float(float, float)>& GenHeight = [](float x, float y) { return 0.0f; },
+			const std::function<glm::vec3(float, float)>& GenNormal = [](float x, float y) { return glm::vec3(0.0f, 1.0f, 0.0f); });
 	};
 }
