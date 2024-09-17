@@ -471,5 +471,7 @@
     <FxCompile Include="HLSL\WaterWaveVS.hlsl" />
     <FxCompile Include="HLSL\WaterWavePS.hlsl" />
     <FxCompile Include="HLSL\WaterWaveCS.hlsl" />
+    <FxCompile Include="HLSL\WaterWaveDisturbCS.hlsl" />
+    <FxCompile Include="HLSL\WaterWaveCalmCS.hlsl" />
   </ItemGroup>
 </Project>

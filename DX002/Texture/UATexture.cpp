@@ -58,6 +58,7 @@ namespace yoi
 		if (data == nullptr)
 		{
 			tempData = new float[width * height];
+			memset(tempData, 0, width * height * sizeof(float));
 			data = static_cast<void*>(tempData);
 		}
 		// -------------------------

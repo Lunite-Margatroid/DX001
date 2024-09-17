@@ -23,6 +23,8 @@ namespace yoi
 		RegisterShader<P3_N3_T2_Wave>(pDevice, pContext);
 
 		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveCS.cso", "Water Wave Update");
+		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveDisturbCS.cso", "Water Wave Disturb");
+		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveCalmCS.cso", "Water Wave Calm");
 	}
 	ShaderManager::~ShaderManager()
 	{

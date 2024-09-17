@@ -30,12 +30,17 @@ void WTGraphics::WaveTestInit()
 	m_pSampler = std::make_unique<yoi::Sampler>();
 	m_pSampler->Bind(pContext.Get(), 0u);
 
+	
+
 	float borderColor[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 	m_pSampler1 = std::make_unique<yoi::Sampler>(
-		D3D11_FILTER_MIN_LINEAR_MAG_POINT_MIP_LINEAR,
+		D3D11_FILTER_MIN_MAG_MIP_LINEAR,
 		D3D11_TEXTURE_ADDRESS_BORDER,
 		borderColor);
-	m_pSampler1->Bind(pContext.Get(), 1u);
+	m_pSampler1->BindVS(pContext.Get(), 1u);
+
+
+	yoi::Texture* texRumia = m_pTextureManager->LoadTexture("./res/img/rumia.jpg");
 
 	// create object
 	yoi::WaterWave* waveSprite = m_pSpriteManager->CreateWave(
@@ -58,7 +63,7 @@ void WTGraphics::WaveTestInit()
 	m_pLightManager->Flush();
 
 
-	yoi::Texture* texRumia = m_pTextureManager->LoadTexture("./res/img/rumia.jpg");
+	
 	yoi::Material* mtlRumia = m_pMaterialManager->CreateMaterial(texRumia, m_pTextureManager.get());
 	yoi::Mesh meshRumia(
 		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube),

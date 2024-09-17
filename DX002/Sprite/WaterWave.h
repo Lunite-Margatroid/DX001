@@ -37,20 +37,31 @@ namespace yoi
 
 		CSUTexture* m_pHeightTexture;
 		CShader* m_UpdateShader;
+		CShader* m_DisturbShader;
+		CShader* m_CalmShader;
 
 		unsigned int m_Width;
 		float m_CellWidth;
 		float m_c;
 		float m_Mu;
 		float m_tThreshold;
+
+		float m_DisturbCycle;
+		float m_DisturbHeight;
+		float m_DisturbTimer;
 	public:
 
-		WaterWave(CSUTexture* heightTexture, CShader* updateShader, unsigned int width, float cellWidth, float c = 0.05, float mu = 0.5f);
+		WaterWave(CSUTexture* heightTexture, CShader* updateShader, CShader* disturbShader, CShader* calmShader, unsigned int width, float cellWidth, float c = 0.03f, float mu = 0.4f);
 		~WaterWave();
 
 		virtual void RenderV3(const glm::mat4& modelMat, const CameraObj* camera) override;
 
-		void Update(float deltaTime);
-	
+		void Update(float deltaTime) override;
+
+		void Disturb(unsigned int x, unsigned int z, float y);
+		
+		void RenderImGui() override;
+
+		void WaveReset();
 	};
 }

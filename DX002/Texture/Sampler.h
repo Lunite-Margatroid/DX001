@@ -23,5 +23,7 @@ namespace yoi
 		Sampler(const Sampler&) = delete;
 		Sampler& operator = (const Sampler&) = delete;
 		void Bind(ID3D11DeviceContext* pContext, UINT slot = 0);
+
+		void BindVS(ID3D11DeviceContext* pContext, UINT slot = 0);
 	};
 }

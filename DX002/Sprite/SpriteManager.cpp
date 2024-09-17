@@ -269,13 +269,14 @@ namespace yoi
 			diffuseTexture, 
 			specularTexture, 
 			normalTexture, 
-			dynamic_cast<Texture*>(heightTexture), 64.0f);
+			dynamic_cast<Texture*>(heightTexture),
+			64.0f);
 
 
 		/*********** create mesh ******************/
 
 		Mesh mesh(vertexBuffer, indexBuffer, sizePerVertex, 0, 0, countIndex, 0, 0, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, 
-			shaderManager.GetShader("Lighted Shader"), material);
+			shaderManager.GetShader("Water Wave Render Shader"), material);
 
 		/************create sprite ****************/
 
@@ -283,9 +284,12 @@ namespace yoi
 		WaterWave* sprite = new WaterWave(
 			heightTexture,
 			shaderManager.GetComputeShader("Water Wave Update"),
+			shaderManager.GetComputeShader("Water Wave Disturb"),
+			shaderManager.GetComputeShader("Water Wave Calm"),
 			width,
 			gridWidth
 		);
+		sprite->AddMesh(mesh);
 
 		m_Sprites.insert(dynamic_cast<SpriteV3*>(sprite));
 

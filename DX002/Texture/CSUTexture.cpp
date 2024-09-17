@@ -35,6 +35,7 @@ namespace yoi
 	{
 		// temp data
 		std::unique_ptr<float[]> tData( new float[width * height]);
+		memset(tData.get(), 0, width * height * sizeof(float));
 
 		// initialize texture2d resource
 		D3D11_TEXTURE2D_DESC  td = {};

@@ -53,4 +53,9 @@ namespace yoi
 	{
 		pContext->PSSetSamplers(slot, 1u, m_pSampler.GetAddressOf());
 	}
+
+	void Sampler::BindVS(ID3D11DeviceContext* pContext, UINT slot)
+	{
+		pContext->VSSetSamplers(slot, 1u, m_pSampler.GetAddressOf());
+	}
 }

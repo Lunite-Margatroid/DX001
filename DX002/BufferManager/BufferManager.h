@@ -55,7 +55,11 @@ namespace yoi
 			Vertex_P2_T2_Quad,
 
 			// constant buffer for water wave updating
-			Constant_Water_Wave_Update
+			Constant_Water_Wave_Update,
+			
+			// constant buffer for disturb wave
+			// used by waterwave sprite
+			Constant_Disturb
 		};
 
 

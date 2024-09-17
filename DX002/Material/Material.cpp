@@ -86,10 +86,10 @@ namespace yoi
 		GFX_EXCEPT_SUPPORT();
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
 
-		ID3D11ShaderResourceView* null_ptr = nullptr;
+		ID3D11ShaderResourceView* null_ptr[2] = { nullptr, nullptr };
 
-		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(0u, 2u, &null_ptr));
-		GFX_THROW_INFO_ONLY(pContext->VSSetShaderResources(2u, 2u, &null_ptr));
+		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(0u, 2u, null_ptr));
+		GFX_THROW_INFO_ONLY(pContext->VSSetShaderResources(2u, 2u, null_ptr));
 	}
 	void Material::Unbind(ID3D11DeviceContext* pContext)
 	{
