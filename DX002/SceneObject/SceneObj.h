@@ -40,6 +40,7 @@ namespace yoi
 		virtual void RenderV1(const glm::mat4& vpTrans);
 		virtual void RenderV2(const glm::mat4& vpTrans);
 		virtual void RenderV3(const CameraObj* camera);
+		// virtual void AddToRenderQueueV3(const CameraObj* camera);
 		//virtual void UpdateVar();
 
 		inline static void EulerTrans(glm::mat4& modelTrans, float yaw, float pitch, float roll)

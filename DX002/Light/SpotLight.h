@@ -15,7 +15,8 @@ namespace yoi
 			const glm::vec3& position = glm::vec3(0.0f), \
 			float kConstant = 1.0f, float kLinear = 0.14f, float kQuadratic = 0.07f,\
 			const glm::vec3& direction = glm::vec3(0.0f, -1.0f, 0.0f),\
-			float outerEdge = 0.94f, float innerEdge = 0.96
+			float outerEdge = 0.94f, float innerEdge = 0.96,\
+			LightObj* obj = nullptr
 		);
 
 		SpotLight(const SpotLight&) = default;
@@ -23,5 +24,7 @@ namespace yoi
 		~SpotLight() = default;
 
 		size_t WriteToBuffer(void* dest, size_t offset) override;
+
+		void UpdatePosition() override;
 	};
 }

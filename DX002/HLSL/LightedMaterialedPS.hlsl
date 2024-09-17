@@ -145,5 +145,8 @@ float4 main(float2 texCoord : TEXCOORD, float3 fragPos : FRAG_POSITION, float3 n
     
     CalcLight(fragPos, normalVec, cameraPos, ambient, diffuse, specular);
     
-    return float4((ambient + diffuse), 1.0f) * texDiffuse.Sample(smp, texCoord) + float4(specular, 1.0f) * texSpecular.Sample(smp, texCoord);
+    const float3 grayCalc = float3(0.299f, 0.587f, 0.114f);
+    
+    return float4((ambient + diffuse), 1.0f) * texDiffuse.Sample(smp, texCoord) + 
+        float4(specular, dot(grayCalc, specular)) * texSpecular.Sample(smp, texCoord);
 }

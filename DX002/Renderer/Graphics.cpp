@@ -299,6 +299,21 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, pTarget.GetAddressOf(), nullptr));
 
 
+		// create blend state
+		D3D11_BLEND_DESC bd = {};
+		bd.AlphaToCoverageEnable = false;
+		bd.IndependentBlendEnable = false;
+		bd.RenderTarget[0].BlendEnable = true;
+		bd.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		bd.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+		bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+		bd.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD; 
+		bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		bd.RenderTarget[0].RenderTargetWriteMask = static_cast<unsigned char>(0xfu);
+
+		GFX_THROW_INFO(pDevice->CreateBlendState(&bd, &pBlendState));
+		GFX_THROW_INFO_ONLY(pContext->OMSetBlendState(pBlendState.Get(), nullptr, 0xffffffffu));
 
 		// singleton
 		s_pInstance = this;
@@ -338,6 +353,12 @@ namespace yoi
 		m_pObjWin = std::make_unique<ObjectPropertyWin>(m_RootObj.get());
 
 		m_DeltaTime = 0.f;
+	}
+
+	Graphics::~Graphics()
+	{
+		if (m_MainCamera)
+			delete m_MainCamera;
 	}
 
 	void Graphics::ImGuiFrame()
@@ -527,6 +548,9 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->ClearDepthStencilView(pDepthStencil.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0x00));
 
 		m_RootObj->Update(m_DeltaTime);
+
+		m_pLightManager->Flush();
+		m_pLightManager->Bind(pContext.Get());
 
 		m_pLightManager->UpdateConstantBuffer();
 		m_pLightManager->Bind(pContext.Get());

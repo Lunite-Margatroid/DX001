@@ -26,50 +26,53 @@ namespace yoi
 		void Bind(ID3D11DeviceContext* pContext);
 
 		template<typename T>
-		bool AddLight(const T& light)
+		Light* AddLight(const T& light)
 		{
 			FileLogger::Error("Unknown light type.");
 			FileLogger::Flush();
-			return false;
+			return nullptr;
 		}
 
 		template<>
-		bool AddLight(const DirLight& light)
+		Light* AddLight(const DirLight& light)
 		{
 			if (m_DirLights.size() >= LIGHT_MAX_COUNT)
 			{
 				FileLogger::Error("Num of Direction Light has been Max.");
 				FileLogger::Flush();
-				return false;
+				return nullptr;
 			}
-			m_DirLights.emplace_back(new DirLight(light));
-			return true;
+			DirLight* newLight = new DirLight(light);
+			m_DirLights.emplace_back(newLight);
+			return dynamic_cast<Light*>(newLight);
 		}
 
 		template<>
-		bool AddLight(const PointLight& light)
+		Light* AddLight(const PointLight& light)
 		{
 			if (m_PointLights.size() >= LIGHT_MAX_COUNT)
 			{
 				FileLogger::Error("Num of Point Light has been Max.");
 				FileLogger::Flush();
-				return false;
+				return nullptr;
 			}
-			m_PointLights.emplace_back(new PointLight(light));
-			return true;
+			PointLight* newLight = new PointLight(light);
+			m_PointLights.emplace_back(newLight);
+			return dynamic_cast<Light*>(newLight);
 		}
 
 		template<>
-		bool AddLight(const SpotLight& light)
+		Light* AddLight(const SpotLight& light)
 		{
 			if (m_SpotLights.size() >= LIGHT_MAX_COUNT)
 			{
 				FileLogger::Error("Num of Spot Light has been max.");
 				FileLogger::Flush();
-				return false;
+				return nullptr;
 			}
-			m_SpotLights.emplace_back(new SpotLight(light));
-			return true;
+			SpotLight* newLight = new SpotLight(light);
+			m_SpotLights.emplace_back(newLight);
+			return dynamic_cast<Light*>(newLight);
 		}
 
 		template<typename T>

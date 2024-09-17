@@ -246,6 +246,9 @@
     <ClInclude Include="Shader\P3_N3_T2_Wave.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneObject\LightObj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -441,6 +444,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shader\P3_N3_T2_Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneObject\LightObj.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

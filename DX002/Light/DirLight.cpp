@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "DirLight.h"
-
+#include "SceneObject\LightObj.h"
 namespace yoi
 {
-	DirLight::DirLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3 direction)
-		:Light(color, ambient, diffuse, specular), m_Direction(direction)
+	DirLight::DirLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3 direction, LightObj* obj)
+		:Light(color, ambient, diffuse, specular, obj), m_Direction(direction)
 	{
 	}
 	size_t DirLight::WriteToBuffer(void* dest, size_t offset)
@@ -31,5 +31,15 @@ namespace yoi
 		offset += 16;
 
 		return offset;
+	}
+	void DirLight::UpdatePosition()
+	{
+		if (m_AttachObj)
+		{
+			glm::qua<float> qua = m_AttachObj->GetQuaternionRotate();
+			glm::mat4 rotationTrans(1.0f);
+			SceneObj::QuaternionRotate(rotationTrans, qua);
+			m_Direction = rotationTrans * glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+		}
 	}
 }

@@ -3,6 +3,7 @@
 #include "Renderer\GFXMacro.h"
 #include "SceneObject\Camera2DObj.h"
 #include "WTApplication.h"
+#include "SceneObject\LightObj.h"
 
 WTGraphics::WTGraphics(HWND hwnd)
 	:Graphics(hwnd)
@@ -39,8 +40,10 @@ void WTGraphics::WaveTestInit()
 		borderColor);
 	m_pSampler1->BindVS(pContext.Get(), 1u);
 
-
+	// create textures
+	constexpr float waterColor[4] = { 78.0f / 255.0f, 162.0f / 255.f, 1.0f, 0.2f };
 	yoi::Texture* texRumia = m_pTextureManager->LoadTexture("./res/img/rumia.jpg");
+	yoi::Texture* texWater = m_pTextureManager->LoadTexture(waterColor, "water face");
 
 	// create object
 	yoi::WaterWave* waveSprite = m_pSpriteManager->CreateWave(
@@ -48,27 +51,33 @@ void WTGraphics::WaveTestInit()
 		*m_pShaderManager,
 		*m_pBufferManager,
 		*m_pTextureManager,
-		*m_pMaterialManager);
+		*m_pMaterialManager,
+		texWater);
 
 	yoi::SceneObj* waveObj = new yoi::SceneObj(m_RootObj.get(), waveSprite, "test wave");
 
 
 	// Add light
-	m_pLightManager->AddLight(
+	/*m_pLightManager->AddLight(
 		yoi::DirLight(
 			glm::vec3(1.0f, 1.0f, 1.0f),
 			0.1f, 0.7f, 0.7f,
 			glm::vec3(0.2f, -0.7f, 0.0f)
 		));
-	m_pLightManager->Flush();
+	m_pLightManager->Flush();*/
 
+	yoi::Light* pointLight =
+		m_pLightManager->AddLight(
+			yoi::PointLight()
+		);
 
 	
 	yoi::Material* mtlRumia = m_pMaterialManager->CreateMaterial(texRumia, m_pTextureManager.get());
+	yoi::Material* mtlWhite = m_pMaterialManager->CreateMaterial(dynamic_cast<yoi::Texture*>(m_pTextureManager->GetAt(0)), m_pTextureManager.get());
 	yoi::Mesh meshRumia(
 		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube),
 		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Colored_Cube),
-		sizeof(float) * 8 ,
+		sizeof(float) * 8,
 		0,
 		0,
 		36,
@@ -77,7 +86,22 @@ void WTGraphics::WaveTestInit()
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 		m_pShaderManager->GetShader("Lighted Shader"),
 		mtlRumia);
+	yoi::Mesh meshWhite(
+		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube),
+		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Colored_Cube),
+		sizeof(float) * 8,
+		0,
+		0,
+		36,
+		0,
+		0,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		m_pShaderManager->GetShader("Texture Color Shader"),
+		mtlWhite);
 	yoi::SpriteV3* spriteCube = m_pSpriteManager->Sprite(meshRumia);
+	yoi::SpriteV3* spriteWhite = m_pSpriteManager->Sprite(meshWhite);
 	yoi::SceneObj* objCube = new yoi::SceneObj(m_RootObj.get(), spriteCube, "Rumia Cube");
+	yoi::LightObj* objWhite = new yoi::LightObj(m_RootObj.get(), spriteWhite, "White Light", pointLight);
+	objWhite->SetScale(glm::vec3(0.3f,0.3f,0.3f));
 
 }

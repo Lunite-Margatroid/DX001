@@ -52,6 +52,8 @@ namespace yoi
 	public:
 
 		WaterWave(CSUTexture* heightTexture, CShader* updateShader, CShader* disturbShader, CShader* calmShader, unsigned int width, float cellWidth, float c = 0.03f, float mu = 0.4f);
+		WaterWave(const WaterWave&) = delete;
+		WaterWave& operator = (const WaterWave&) = delete;
 		~WaterWave();
 
 		virtual void RenderV3(const glm::mat4& modelMat, const CameraObj* camera) override;

@@ -14,11 +14,14 @@ namespace yoi
 		PointLight(const glm::vec3& color = glm::vec3(1.0f), \
 			float ambient = 0.1f, float diffuse = 0.7f, float specular = 0.7f, \
 			const glm::vec3& position = glm::vec3(0.0f), \
-			float kConstant = 1.0f, float kLinear = 0.14f, float kQuadratic = 0.07f);
+			float kConstant = 1.0f, float kLinear = 0.14f, float kQuadratic = 0.07f,\
+			LightObj* obj = nullptr);
 		PointLight(const PointLight&) = default;
 		PointLight& operator = (const PointLight&) = default;
 		virtual ~PointLight() = default;
 
 		virtual size_t WriteToBuffer(void* dest, size_t offset) override;
+
+		void UpdatePosition() override;
 	};
 }

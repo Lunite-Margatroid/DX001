@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "PointLight.h"
+#include "SceneObject/LightObj.h"
 namespace yoi
 {
-	PointLight::PointLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3& position, float kConstant, float kLinear, float kQuadratic)
-		:Light(color, ambient, diffuse, specular),
+	PointLight::PointLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3& position, float kConstant, float kLinear, float kQuadratic, LightObj* obj)
+		:Light(color, ambient, diffuse, specular, obj),
 		m_Position(position),
 		m_kConstant(kConstant),
 		m_kLinear(kLinear),
@@ -44,5 +45,12 @@ namespace yoi
 		offset += 20;
 
 		return offset;
+	}
+	void PointLight::UpdatePosition()
+	{
+		if (m_AttachObj)
+		{
+			m_Position = m_AttachObj->GetModelTrans() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+		}
 	}
 }

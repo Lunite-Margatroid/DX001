@@ -200,6 +200,7 @@
     <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="SceneObject\Camera2DObj.h" />
+    <ClInclude Include="SceneObject\LightObj.h" />
     <ClInclude Include="Shader\P2_T2_2D.h" />
     <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\P3_N3_T2.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\MaterialManager.cpp" />
     <ClCompile Include="SceneObject\Camera2DObj.cpp" />
+    <ClCompile Include="SceneObject\LightObj.cpp" />
     <ClCompile Include="Shader\P2_T2_2D.cpp" />
     <ClCompile Include="Shader\P3_C3.cpp" />
     <ClCompile Include="Shader\P3_N3_T2.cpp" />

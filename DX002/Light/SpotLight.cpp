@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "SpotLight.h"
-
+#include "SceneObject\LightObj.h"
 namespace yoi
 {
-	SpotLight::SpotLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3& position, float kConstant, float kLinear, float kQuadratic, const glm::vec3& direction, float outerEdge, float innerEdge)
-		:PointLight(color, ambient, diffuse, specular, position, kConstant, kLinear, kQuadratic),
-		DirLight(color, ambient, diffuse, specular, direction),
+	SpotLight::SpotLight(const glm::vec3& color, float ambient, float diffuse, float specular, const glm::vec3& position, float kConstant, float kLinear, float kQuadratic, const glm::vec3& direction, float outerEdge, float innerEdge, LightObj* obj)
+		:PointLight(color, ambient, diffuse, specular, position, kConstant, kLinear, kQuadratic, obj),
+		DirLight(color, ambient, diffuse, specular, direction, obj),
 		m_OuterEdge(outerEdge),
 		m_InnerEdge(innerEdge)
 	{
@@ -54,5 +54,15 @@ namespace yoi
 		offset += 12;
 
 		return offset;
+	}
+	void SpotLight::UpdatePosition()
+	{
+		if (m_AttachObj)
+		{
+			glm::mat4& modelTrans = m_AttachObj->GetModelTrans();
+			m_Position = modelTrans * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+			m_Direction = modelTrans * glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
+			m_Direction = glm::normalize(m_Direction);
+		}
 	}
 }
