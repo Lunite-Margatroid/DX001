@@ -178,12 +178,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Animation\FrameNode.h" />
+    <ClInclude Include="Application.h" />
     <ClInclude Include="BufferManager\BufferManager.h" />
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
     <ClInclude Include="BufferManager\InitBuffer.h" />
     <ClInclude Include="BufferManager\P2_N2_Quad.h" />
     <ClInclude Include="BufferManager\P3_N3_T2_Cube.h" />
+    <ClInclude Include="BufferManager\Vertex_P3_N3_T2_Quad.h" />
     <ClInclude Include="CShader\CShader.h" />
     <ClInclude Include="Exception\UFException.h" />
     <ClInclude Include="ImGuiManager\ImGuiManager.h" />
@@ -258,6 +260,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation\FrameNode.cpp" />
+    <ClCompile Include="Application.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
     <ClCompile Include="CShader\CShader.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />

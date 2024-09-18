@@ -146,25 +146,19 @@
       <AdditionalDependencies>assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  
   <ItemDefinitionGroup>
-	<PostBuildEvent>
-		<Command>copy $(SolutionDir)shader-bin\ $(ProjectDir)shader-bin\ </Command>
-		<Message>copy compiled shader</Message>
-	</PostBuildEvent>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)shader-bin\ $(ProjectDir)shader-bin\ </Command>
+      <Message>copy compiled shader</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
-  
-  
   <ItemGroup>
+    <ClCompile Include="src\IniteTextDraw.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\WTApplication.cpp" />
-    <ClCompile Include="src\WTGraphics.cpp" />
-    <ClCompile Include="src\WTWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\WTApplication.h" />
-    <ClInclude Include="src\WTGraphics.h" />
-    <ClInclude Include="src\WTWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DX002\DX002.vcxproj">

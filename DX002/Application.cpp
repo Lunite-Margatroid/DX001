@@ -5,7 +5,15 @@ namespace yoi
 {
 	Application::Application() :
 		wnd(YOI_WINDOW_WIDTH, YOI_WINDOW_HEIGHT, "DX002")
-	{}
+	{
+		wnd.Gfx().InitTestDraw();
+	}
+
+	Application::Application(unsigned int width, unsigned int height, const char* title)
+		:wnd(width, height, title)
+	{
+		wnd.Gfx().InitTestDraw();
+	}
 
 	int Application::Run()
 	{

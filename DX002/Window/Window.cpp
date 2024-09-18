@@ -160,7 +160,7 @@ namespace yoi
 		// show window
 		ShowWindow(hWnd, SW_SHOWDEFAULT);
 		// create graph
-		pGfx = std::make_unique<Graphics>(hWnd);
+		pGfx = std::make_unique<Graphics>(hWnd, width, height);
 	}
 
 	Window::~Window()

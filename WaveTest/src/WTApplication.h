@@ -1,22 +1,19 @@
 #pragma once
-#include "WTWindow.h"
 #include "Timer/YoiTimer.h"
+#include "Application.h"
 
-#define YOI_WINDOW_WIDTH 800
-#define YOI_WINDOW_HEIGHT 600
+#define WAVE_TEST_WINDOW_WIDTH 1280
+#define WAVE_TEST_WINDOW_HEIGHT 720
 
 
 class yoi::Window;
 class yoi::YoiTimer;
 
-class Application
+class WTAApplication : public yoi::Application
 {
 public:
-	Application();
-	int Run();
+	WTAApplication();
+	int Run() override;
 private:
-	void DoFrame();
-private:
-	WTWindow wnd;
-	yoi::YoiTimer timer;
+	void DoFrame() override;
 };

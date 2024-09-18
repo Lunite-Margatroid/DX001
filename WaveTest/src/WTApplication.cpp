@@ -4,13 +4,13 @@
 
 
 
-Application::Application() :
-	wnd(YOI_WINDOW_WIDTH, YOI_WINDOW_HEIGHT, "DX002")
+WTAApplication::WTAApplication() :
+	yoi::Application(WAVE_TEST_WINDOW_WIDTH, WAVE_TEST_WINDOW_HEIGHT, "wave test")
 {
-
+	
 }
 
-int Application::Run()
+int WTAApplication::Run()
 {
 	while (true)
 	{
@@ -23,7 +23,7 @@ int Application::Run()
 	return 0;
 }
 
-void Application::DoFrame()
+void WTAApplication::DoFrame()
 {
 	/*std::ostringstream oss;
 	oss << "time has pasted: " << timer.Peek() << 's';

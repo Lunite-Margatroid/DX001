@@ -48,7 +48,7 @@ namespace yoi
 			// vertex buffer of a cube. Position-float3 : Normal-float3 : TexCoord-float2
 			P3_N3_T2_Cube,
 
-			// index buffer of a rectangle. It is for trangle strip primitive. unsigned int * 4.
+			// index buffer of a rectangle. It is for triangle strip primitive. unsigned int * 4.
 			Index_Quad, 
 
 			// vertex buffer of a 2D rectangle. Position-float2 : TexCoord-float2
@@ -59,7 +59,10 @@ namespace yoi
 			
 			// constant buffer for disturb wave
 			// used by waterwave sprite
-			Constant_Disturb
+			Constant_Disturb,
+
+			// vertex buffer of a 3D rectangle.
+			Vertex_P3_N3_T2_Quad
 		};
 
 

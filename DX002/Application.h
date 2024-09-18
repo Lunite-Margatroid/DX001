@@ -11,10 +11,11 @@ namespace yoi
 	{
 	public:
 		Application();
-		int Run();
-	private:
-		void DoFrame();
-	private:
+		Application(unsigned int width, unsigned int height, const char* title);
+		virtual int Run();
+	protected:
+		virtual void DoFrame();
+	protected:
 		Window wnd;
 		YoiTimer timer;
 	};

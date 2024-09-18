@@ -159,12 +159,12 @@ namespace yoi
 	}
 	/******************* InfoException ************** end */
 
-	Graphics::Graphics(HWND hWnd)
+	Graphics::Graphics(HWND hWnd, unsigned int width, unsigned int height)
 	{
 		DXGI_SWAP_CHAIN_DESC scd = {};
 
-		scd.BufferDesc.Width = YOI_WINDOW_WIDTH;
-		scd.BufferDesc.Height = YOI_WINDOW_HEIGHT;
+		scd.BufferDesc.Width = width;
+		scd.BufferDesc.Height = height;
 		scd.BufferDesc.RefreshRate.Numerator = 0u;
 		scd.BufferDesc.RefreshRate.Denominator = 0u;
 		scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -227,8 +227,8 @@ namespace yoi
 		// create depthstencil view
 		// create a 2d texture for depthstencil
 		D3D11_TEXTURE2D_DESC  td = {};
-		td.Width = YOI_WINDOW_WIDTH;
-		td.Height = YOI_WINDOW_HEIGHT;
+		td.Width = width;
+		td.Height = height;
 		td.MipLevels = 1u;
 		td.ArraySize = 1u;
 		td.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -290,8 +290,8 @@ namespace yoi
 		D3D11_VIEWPORT vp = {};
 		vp.TopLeftX = 0;
 		vp.TopLeftY = 0;
-		vp.Width = YOI_WINDOW_WIDTH;
-		vp.Height = YOI_WINDOW_HEIGHT;
+		vp.Width = width;
+		vp.Height = height;
 		vp.MinDepth = 0;
 		vp.MaxDepth = 1;
 		GFX_THROW_INFO_ONLY(pContext->RSSetViewports(1, &vp));
@@ -442,7 +442,7 @@ namespace yoi
 		pContext->ClearRenderTargetView(pTarget.Get(), color);
 	}
 
-
+	/*
 	void Graphics::InitTestDraw()
 	{
 		// HRESULT hr;
@@ -538,7 +538,7 @@ namespace yoi
 		// LoadModel("L:\\OpenGL\\model\\78515\\78515.fbx");
 
 	}
-
+	*/
 	void Graphics::DrawTriangle()
 	{
 		m_DeltaTime = timer.Mark();
@@ -607,7 +607,7 @@ namespace yoi
 	SceneObj* Graphics::LoadModel(const std::string& path)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeMeshes);
+		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_OptimizeMeshes | aiProcess_OptimizeGraph);
 		m_LoadedTex.clear();
 
 		// ²é´í
@@ -635,7 +635,7 @@ namespace yoi
 		m_RootObj->PushChild(obj);
 
 		std::ostringstream oss;
-		oss << "Model file: " << path << "/tloaded.";
+		oss << "Model file: \"" << path << "\" loaded.";
 		FileLogger::Info(oss.str().c_str());
 
 		return obj;

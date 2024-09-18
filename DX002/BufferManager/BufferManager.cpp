@@ -8,6 +8,7 @@
 #include "Renderer\GFXMacro.h"
 #include "P3_N3_T2_Cube.h"
 #include "P2_N2_Quad.h"
+#include "Vertex_P3_N3_T2_Quad.h"
 
 namespace yoi
 {
@@ -145,6 +146,7 @@ namespace yoi
 		ConstantLightBuffer(this);
 		InitBuffer<Buffer::P3_N3_T2_Cube>(this);
 		InitBuffer<Buffer::Vertex_P2_T2_Quad>(this);
+		InitBuffer<Buffer::Vertex_P3_N3_T2_Quad>(this);
 	}
 	BufferManager::~BufferManager()
 	{
