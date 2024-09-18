@@ -47,10 +47,10 @@ namespace yoi
 	}
 	void WaterWave::Update(float deltaTime)
 	{
-		if (deltaTime == 0.0f) return;
-		if (deltaTime >= m_tThreshold)
-			deltaTime = m_tThreshold * 0.7;
-
+		//if (deltaTime == 0.0f) return;
+		//if (deltaTime >= m_tThreshold)
+		//	deltaTime = m_tThreshold * 0.7;
+		const float constDeltaTime = 0.016f;
 
 		GFX_EXCEPT_SUPPORT();
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
@@ -59,12 +59,12 @@ namespace yoi
 		// calculate the coefficients
 		float constantSetting[4];
 
-		float temp1 = 2 * deltaTime * deltaTime * m_c * m_c / (m_CellWidth * m_CellWidth);
-		float temp2 = m_Mu * deltaTime + 2;
+		float temp1 = 2 * constDeltaTime * constDeltaTime * m_c * m_c / (m_CellWidth * m_CellWidth);
+		float temp2 = m_Mu * constDeltaTime + 2;
 
 		constantSetting[0] = (4 - 4 * temp1) / temp2;
 		constantSetting[1] = temp1 / temp2;
-		constantSetting[2] = (m_Mu * deltaTime - 2) / temp2;
+		constantSetting[2] = (m_Mu * constDeltaTime - 2) / temp2;
 		constantSetting[3] = m_CellWidth;
 
 		Graphics::SetBufferData(BufferManager::Buffer::Constant_Water_Wave_Update, sizeof(float) * 4, 0, constantSetting);
