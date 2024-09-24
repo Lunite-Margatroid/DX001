@@ -94,5 +94,7 @@ namespace yoi
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
 		((PerspectiveCamera*)m_MainCamera)->SetWidth(4.0);
+
+		// LoadModel("L:\\OpenGL\\model\\54\\Maid.pmx");
 	}
 }

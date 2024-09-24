@@ -255,6 +255,9 @@
     <ClInclude Include="Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\P3_N3_T2_ChessBoard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -458,6 +461,9 @@
     <ClCompile Include="Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shader\P3_N3_T2_ChessBoard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -488,5 +494,6 @@
     <FxCompile Include="HLSL\WaterWaveCS.hlsl" />
     <FxCompile Include="HLSL\WaterWaveDisturbCS.hlsl" />
     <FxCompile Include="HLSL\WaterWaveCalmCS.hlsl" />
+    <FxCompile Include="HLSL\ChessBoardPS.hlsl" />
   </ItemGroup>
 </Project>

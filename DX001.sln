@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComputeShaderTest", "Comput
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WaveTest", "WaveTest\WaveTest.vcxproj", "{4EA83B1F-5B49-4272-A609-0D8929E1E43A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClothSimu", "ClothSimu\ClothSimu.vcxproj", "{B204B78F-4FDF-45E7-81CA-8205B7D966FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x64.Build.0 = Release|x64
 		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x86.ActiveCfg = Release|Win32
 		{4EA83B1F-5B49-4272-A609-0D8929E1E43A}.Release|x86.Build.0 = Release|Win32
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Debug|x64.ActiveCfg = Debug|x64
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Debug|x64.Build.0 = Debug|x64
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Debug|x86.ActiveCfg = Debug|Win32
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Debug|x86.Build.0 = Debug|Win32
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Release|x64.ActiveCfg = Release|x64
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Release|x64.Build.0 = Release|x64
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Release|x86.ActiveCfg = Release|Win32
+		{B204B78F-4FDF-45E7-81CA-8205B7D966FD}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

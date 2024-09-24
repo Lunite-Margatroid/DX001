@@ -79,7 +79,7 @@ void CalcLight(in float3 fragPos, in float3 normalVec, in float3 cameraPos, out 
     for (i = 0; i < dSize; i++)
     {
         // ambient
-        ambient += dLights[0].Color * dLights[0].Contribution.x;
+        ambient += dLights[i].Color * dLights[i].Contribution.x;
         // diffuse
         diffuse += max(dot(normalVec, -dLights[i].Direction), 0.0f) * dLights[i].Color * dLights[i].Contribution.y;
         // specular

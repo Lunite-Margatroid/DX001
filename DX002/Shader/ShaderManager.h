@@ -37,21 +37,21 @@ namespace yoi
 		template<typename TShader>
 		void RegisterShader(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 		{
-			TShader* t = new TShader(pDevice, pContext);
-			Shader* shader = dynamic_cast<Shader*>(t);
+			TShader* tShader = new TShader(pDevice, pContext);
+			Shader* shader = dynamic_cast<Shader*>(tShader);
 			if (shader == nullptr)
 			{
-				delete t;
+				delete tShader;
 				const char errorInfo[] = "Template class is not shader.";
 				FileLogger::Error(errorInfo);
 				FileLogger::Flush();
 				throw ShaderException(__LINE__, __FILE__, errorInfo);
 				return;
 			}
-			std::string shaderTitle = shader->GetTitle();
-			if (m_Shaders.find(std::string(shaderTitle)) == m_Shaders.end())
+			std::string shaderTitle = tShader->GetTitle();
+			if (m_Shaders.find(shaderTitle) == m_Shaders.end())
 			{
-				m_Shaders[std::string(shader->GetTitle())] = shader;
+				m_Shaders[shaderTitle] = tShader;
 			}
 			else
 			{

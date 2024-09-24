@@ -206,6 +206,7 @@
     <ClInclude Include="Shader\P2_T2_2D.h" />
     <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\P3_N3_T2.h" />
+    <ClInclude Include="Shader\P3_N3_T2_ChessBoard.h" />
     <ClInclude Include="Shader\P3_T2.h" />
     <ClInclude Include="Shader\P3_N3_T2_Lighted.h" />
     <ClInclude Include="Shader\P3_T2_Materialed.h" />
@@ -281,6 +282,7 @@
     <ClCompile Include="Shader\P2_T2_2D.cpp" />
     <ClCompile Include="Shader\P3_C3.cpp" />
     <ClCompile Include="Shader\P3_N3_T2.cpp" />
+    <ClCompile Include="Shader\P3_N3_T2_ChessBoard.cpp" />
     <ClCompile Include="Shader\P3_T2.cpp" />
     <ClCompile Include="Shader\P3_N3_T2_Lighted.cpp" />
     <ClCompile Include="Shader\P3_T2_Materialed.cpp" />
@@ -381,6 +383,12 @@
     <Image Include="sakuya.ico" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="HLSL\ChessBoardPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="HLSL\ComputeShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
