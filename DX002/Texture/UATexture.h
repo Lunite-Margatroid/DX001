@@ -29,14 +29,15 @@ namespace yoi
 		UATexture(ImgRes&);
 
 		/// <summary>
-		/// expected struction for height texture
+		/// expected struction for height texture or position texture
 		/// the format is R32_FLOAT
 		/// </summary>
 		/// <param name="width"> width of the tex </param>
 		/// <param name="height"> height of the tex </param>
 		/// <param name="data"> data ptr of the resource. all 0 if nullptr is given.</param>
 		/// <param name="cpuFlag"> access right of cpu </param>
-		UATexture( UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag);
+		/// <param name="format"> denote height texture or position texture. </param>
+		UATexture( UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag = static_cast<D3D11_CPU_ACCESS_FLAG>(0u), DXGI_FORMAT format = DXGI_FORMAT_R32_FLOAT);
 
 		/********* defulat bind func ****************/
 

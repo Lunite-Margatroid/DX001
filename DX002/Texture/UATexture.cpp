@@ -51,14 +51,16 @@ namespace yoi
 
 		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pTexture2D.Get(), &uavd, &m_pUAV));
 	}
-	UATexture::UATexture(UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag)
+	UATexture::UATexture(UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag, DXGI_FORMAT format)
 	{
+		assert(format == DXGI_FORMAT_R32_FLOAT || format == DXGI_FORMAT_R32G32B32_FLOAT);
+		int nChannal = format == DXGI_FORMAT_R32G32B32_FLOAT ? 3 : 1;
 		// ---- create temp data ---
 		float* tempData = nullptr;
 		if (data == nullptr)
 		{
-			tempData = new float[width * height];
-			memset(tempData, 0, width * height * sizeof(float));
+			tempData = new float[width * height * nChannal];
+			memset(tempData, 0, width * height * sizeof(float) * nChannal);
 			data = static_cast<void*>(tempData);
 		}
 		// -------------------------
@@ -69,7 +71,7 @@ namespace yoi
 		td.Height = height;
 		td.MipLevels = 1u;
 		td.ArraySize = 1u;
-		td.Format = DXGI_FORMAT_R32_FLOAT;
+		td.Format = format;
 		td.SampleDesc.Count = 1u;
 		td.SampleDesc.Quality = 0u;
 		td.Usage = D3D11_USAGE_DEFAULT;
@@ -79,7 +81,7 @@ namespace yoi
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = data;
-		sd.SysMemPitch = width * sizeof(float);
+		sd.SysMemPitch = width * sizeof(float) * nChannal;
 		assert(sizeof(float) == 4);
 
 		GFX_THROW_INFO(pDevice->CreateTexture2D(&td, &sd, &m_pTexture2D));

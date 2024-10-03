@@ -179,12 +179,15 @@
   <ItemGroup>
     <ClInclude Include="Animation\FrameNode.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BufferManager\Buffer.h" />
     <ClInclude Include="BufferManager\BufferManager.h" />
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
+    <ClInclude Include="BufferManager\IndexBuffer.h" />
     <ClInclude Include="BufferManager\InitBuffer.h" />
     <ClInclude Include="BufferManager\P2_N2_Quad.h" />
     <ClInclude Include="BufferManager\P3_N3_T2_Cube.h" />
+    <ClInclude Include="BufferManager\VertexBuffer.h" />
     <ClInclude Include="BufferManager\Vertex_P3_N3_T2_Quad.h" />
     <ClInclude Include="CShader\CShader.h" />
     <ClInclude Include="Exception\UFException.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\ColoredCube.h" />
     <ClInclude Include="Sprite\Mesh.h" />
+    <ClInclude Include="Sprite\QuadCloth.h" />
     <ClInclude Include="Sprite\SpriteManager.h" />
     <ClInclude Include="Sprite\SpriteV1.h" />
     <ClInclude Include="Sprite\SpriteV1Cube.h" />
@@ -262,7 +266,10 @@
   <ItemGroup>
     <ClCompile Include="Animation\FrameNode.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="BufferManager\Buffer.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
+    <ClCompile Include="BufferManager\IndexBuffer.cpp" />
+    <ClCompile Include="BufferManager\VertexBuffer.cpp" />
     <ClCompile Include="CShader\CShader.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
@@ -291,6 +298,7 @@
     <ClCompile Include="Shader\ShaderManager.cpp" />
     <ClCompile Include="Sprite\ColoredCube.cpp" />
     <ClCompile Include="Sprite\Mesh.cpp" />
+    <ClCompile Include="Sprite\QuadCloth.cpp" />
     <ClCompile Include="Sprite\SpriteManager.cpp" />
     <ClCompile Include="Sprite\SpriteV1.cpp" />
     <ClCompile Include="Sprite\SpriteV1Cube.cpp" />
@@ -388,6 +396,16 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\ClothSimUpdateCS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="HLSL\ComputeShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>

@@ -4,7 +4,7 @@
 namespace yoi
 {
 
-	yoi::LightObj::LightObj(SceneObj* parent, Sprite* sprite, const std::string& objName, Light* light)
+	LightObj::LightObj(SceneObj* parent, Sprite* sprite, const std::string& objName, Light* light)
 		:SceneObj(parent, sprite, objName), m_Light(light)
 	{
 		if (m_Light)

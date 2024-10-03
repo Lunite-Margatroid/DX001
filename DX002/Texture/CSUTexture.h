@@ -25,12 +25,13 @@ namespace yoi
 		CSUTexture(const ImgRes& imgRes);
 
 		/// <summary>
-		/// struct a height texture. default date is all 0.0
+		/// struct a height or position texture. default date is all 0.0
 		/// CPU Read and Write is allowed
 		/// </summary>
 		/// <param name="width">width</param>
 		/// <param name="height">height</param>
-		CSUTexture(unsigned int width, unsigned int height);
+		/// <param name="format"> denote height texture or positon texture.</param>
+		CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format = DXGI_FORMAT_R32_FLOAT);
 
 		~CSUTexture() = default;
 		CSUTexture(const CSUTexture&) = delete;

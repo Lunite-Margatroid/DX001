@@ -258,6 +258,18 @@
     <ClInclude Include="Shader\P3_N3_T2_ChessBoard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BufferManager\Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager\VertexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager\IndexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\QuadCloth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -464,6 +476,18 @@
     <ClCompile Include="Shader\P3_N3_T2_ChessBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BufferManager\Buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferManager\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferManager\IndexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite\QuadCloth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -495,5 +519,6 @@
     <FxCompile Include="HLSL\WaterWaveDisturbCS.hlsl" />
     <FxCompile Include="HLSL\WaterWaveCalmCS.hlsl" />
     <FxCompile Include="HLSL\ChessBoardPS.hlsl" />
+    <FxCompile Include="HLSL\ClothSimUpdateCS.hlsl" />
   </ItemGroup>
 </Project>

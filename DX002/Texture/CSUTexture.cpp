@@ -31,11 +31,14 @@ namespace yoi
 		InitResourceView();
 	}
 
-	CSUTexture::CSUTexture(unsigned int width, unsigned int height)
+	CSUTexture::CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format)
 	{
+		assert(format == DXGI_FORMAT_R32_FLOAT || format == DXGI_FORMAT_R32G32B32_FLOAT);
+		int nChannal = format == DXGI_FORMAT_R32_FLOAT ? 1 : 3;
+
 		// temp data
-		std::unique_ptr<float[]> tData( new float[width * height]);
-		memset(tData.get(), 0, width * height * sizeof(float));
+		std::unique_ptr<float[]> tData( new float[width * height * nChannal]);
+		memset(tData.get(), 0, width * height * sizeof(float) * nChannal);
 
 		// initialize texture2d resource
 		D3D11_TEXTURE2D_DESC  td = {};
@@ -43,7 +46,7 @@ namespace yoi
 		td.Height = height;
 		td.MipLevels = 1u;
 		td.ArraySize = 1u;
-		td.Format = DXGI_FORMAT_R32_FLOAT;
+		td.Format = format;
 		td.SampleDesc.Count = 1u;
 		td.SampleDesc.Quality = 0u;
 		td.Usage = D3D11_USAGE_DEFAULT;
@@ -53,7 +56,7 @@ namespace yoi
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = tData.get();
-		sd.SysMemPitch = width * sizeof(float);
+		sd.SysMemPitch = width * sizeof(float) * nChannal;
 
 		InitTextureResource(&td, &sd);
 
