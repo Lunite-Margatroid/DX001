@@ -1,5 +1,5 @@
-Texture2D texDiffuse;
-Texture2D texSpecular;
+Texture2D texDiffuse : register(t0);
+Texture2D texSpecular : register(t1);
 SamplerState smp;
 
 static const int LIGHT_MAX_COUNT = 16;

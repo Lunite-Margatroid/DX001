@@ -20,6 +20,7 @@ cbuffer ClothSimSetting : register(b0)
     float tBeta;
     
     uint constraintU;
+    
     uint constraintV;
     float constraintX;
     float constraintY;

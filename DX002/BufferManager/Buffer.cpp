@@ -40,4 +40,13 @@ namespace yoi
 	{
 		return m_d3dBuffer.Get();
 	}
+	void Buffer::SetBufferData(ID3D11DeviceContext* pContext, void* src, size_t size, size_t offset)
+	{
+		GFX_EXCEPT_SUPPORT();
+
+		D3D11_MAPPED_SUBRESOURCE dataMap;
+		GFX_THROW_INFO(pContext->Map(m_d3dBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
+		memcpy(((BYTE*)dataMap.pData) + offset, src, size);
+		GFX_THROW_INFO_ONLY(pContext->Unmap(m_d3dBuffer.Get(), 0));
+	}
 }

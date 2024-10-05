@@ -31,7 +31,7 @@ namespace yoi
 		InitResourceView();
 	}
 
-	CSUTexture::CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format)
+	CSUTexture::CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format, UINT cpuAccess)
 	{
 		assert(format == DXGI_FORMAT_R32_FLOAT || format == DXGI_FORMAT_R32G32B32_FLOAT);
 		int nChannal = format == DXGI_FORMAT_R32_FLOAT ? 1 : 3;
@@ -51,7 +51,7 @@ namespace yoi
 		td.SampleDesc.Quality = 0u;
 		td.Usage = D3D11_USAGE_DEFAULT;
 		td.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
-		td.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
+		td.CPUAccessFlags = cpuAccess;
 		td.MiscFlags = 0u;
 
 		D3D11_SUBRESOURCE_DATA sd = {};

@@ -520,5 +520,8 @@
     <FxCompile Include="HLSL\WaterWaveCalmCS.hlsl" />
     <FxCompile Include="HLSL\ChessBoardPS.hlsl" />
     <FxCompile Include="HLSL\ClothSimUpdateCS.hlsl" />
+    <FxCompile Include="HLSL\ClothSimGenNormal.hlsl" />
+    <FxCompile Include="HLSL\ClothSimVS.hlsl" />
+    <FxCompile Include="HLSL\ClothSimConstraintCS.hlsl" />
   </ItemGroup>
 </Project>

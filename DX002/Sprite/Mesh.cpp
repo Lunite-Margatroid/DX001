@@ -32,6 +32,7 @@ namespace yoi
 		m_Shader(shader),
 		m_Material(material)
 	{
+		// m_VertexStripe = 0u;
 	}
 	void Mesh::Draw(ID3D11DeviceContext* pContext)
 	{

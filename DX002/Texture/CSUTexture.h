@@ -26,12 +26,14 @@ namespace yoi
 
 		/// <summary>
 		/// struct a height or position texture. default date is all 0.0
-		/// CPU Read and Write is allowed
+		/// default CPU Read and Write is allowed
 		/// </summary>
 		/// <param name="width">width</param>
 		/// <param name="height">height</param>
 		/// <param name="format"> denote height texture or positon texture.</param>
-		CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format = DXGI_FORMAT_R32_FLOAT);
+		/// <param name="cpuAccess"> read or write access for cpu</param>
+		CSUTexture(unsigned int width, unsigned int height, DXGI_FORMAT format = DXGI_FORMAT_R32_FLOAT,
+			UINT cpuAccess = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE);
 
 		~CSUTexture() = default;
 		CSUTexture(const CSUTexture&) = delete;
