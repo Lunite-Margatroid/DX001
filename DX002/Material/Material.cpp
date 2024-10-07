@@ -43,22 +43,8 @@ namespace yoi
 	}
 	void Material::Bind()
 	{
-		GFX_EXCEPT_SUPPORT();
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
-		// bind diffuse texture on pixel shader
-		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(0u, 1u, m_texDiffuse->m_pResView.GetAddressOf()));
-		// bind specular texture on pixel shader
-		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(1u, 1u, m_texSpecular->m_pResView.GetAddressOf()));
-
-		// bind shininess on pixel shader
-		ID3D11Buffer *buf = Graphics::SetBufferData(BufferManager::Buffer::Constant_Material_Shininess, sizeof(float), 0, &m_Shininess);
-		GFX_THROW_INFO_ONLY(pContext->PSSetConstantBuffers(1, 1, &buf));
-
-		// bind normal texture on vertex shader
-		GFX_THROW_INFO_ONLY(pContext->VSSetShaderResources(2u, 1u, m_texNormal->m_pResView.GetAddressOf()));
-
-		// bind height texture on vertex shader
-		GFX_THROW_INFO_ONLY(pContext->VSSetShaderResources(3u, 1u, m_texHeight->m_pResView.GetAddressOf()));
+		Bind(pContext);
 
 	}
 	void Material::Bind(ID3D11DeviceContext* pContext)
@@ -72,8 +58,9 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->PSSetShaderResources(1u, 1u, m_texSpecular->m_pResView.GetAddressOf()));
 
 		// bind shininess const buffer on pixel shader
-		ID3D11Buffer* buf = Graphics::SetBufferData(BufferManager::Buffer::Constant_Material_Shininess, sizeof(float), 0, &m_Shininess);
-		GFX_THROW_INFO_ONLY(pContext->PSSetConstantBuffers(1, 1, &buf));
+		Buffer* buf = Graphics::SetBufferData(BufferManager::Buffers::Constant_Material_Shininess, sizeof(float), 0, &m_Shininess);
+		ID3D11Buffer* pBuffer = buf->GetBuffer();
+		GFX_THROW_INFO_ONLY(pContext->PSSetConstantBuffers(1, 1, &pBuffer));
 
 		// bind normal texture on vertex shader
 		GFX_THROW_INFO_ONLY(pContext->VSSetShaderResources(2u, 1u, m_texNormal->m_pResView.GetAddressOf()));

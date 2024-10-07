@@ -6,6 +6,14 @@ namespace yoi
 	class VertexBuffer : public Buffer
 	{
 	public:
+		template<typename T, int d>
+		struct Distrib
+		{
+			using type = T;
+			static int dimension() { return d; };
+		};
+
+
 		struct Layout
 		{
 			// size of type and dimension of every attribution
@@ -16,13 +24,16 @@ namespace yoi
 			Layout() :typeLayout(0) {}
 		};
 	protected:
-		Layout m_VertexBufferLayout;
+		
 		size_t m_Offset;
 		unsigned int m_VertexCount;
+	public:
+		Layout m_VertexBufferLayout;
 		
 	public:
 		VertexBuffer();
-		explicit VertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
+		VertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
+		VertexBuffer(Buffer&& buffer, size_t offset, unsigned int vertexCount);
 		VertexBuffer(const VertexBuffer&) = delete;
 		VertexBuffer& operator = (const VertexBuffer&) = delete;
 		~VertexBuffer() = default;
@@ -40,8 +51,21 @@ namespace yoi
 		{
 			m_VertexBufferLayout.distributions.emplace_back(sizeof(T), dimension);
 		}
-
 		
+		template<typename ... Args>
+		void SetLayout()
+		{
+			// (PushAttrib<Args::type>(Args::dimension()), ...);
 
+			(m_VertexBufferLayout.distributions.emplace_back(sizeof(Args::type), Args::dimension()), ...);
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="pContext"></param>
+		/// <param name="slot"></param>
+		/// <returns> the num of slots this vertexbuffer occupy </returns>
+		unsigned int Bind(ID3D11DeviceContext* pContext, unsigned int slot);
 	};
 }

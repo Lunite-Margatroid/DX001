@@ -2,7 +2,7 @@
 
 namespace yoi
 {
-	template<BufferManager::Buffer buffer>
+	template<BufferManager::Buffers buffer>
 	void InitBuffer(yoi::BufferManager* bufMng)
 	{
 		FileLogger::Warn("Unknown Buffer Type");

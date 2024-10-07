@@ -15,35 +15,35 @@ void ColoredCubeBuffer(yoi::BufferManager* bufMng)
 
 	Vertex vertexData[] =
 	{
-		{1.0f, -1.0f, -1.0f,	255,255,255},
-		{1.0f, -1.0f, 1.0f,		255,255,255},
-		{1.0f, 1.0f, 1.0f,		255,255,255},
-		{1.0f, 1.0f, -1.0f,		255,255,255},
+		{1.0f, -1.0f, -1.0f,	255,255,255,255},
+		{1.0f, -1.0f, 1.0f,		255,255,255, 255},
+		{1.0f, 1.0f, 1.0f,		255,255,255, 255},
+		{1.0f, 1.0f, -1.0f,		255,255,255, 255},
 
-		{-1.0f, -1.0f, -1.0f,	0,255,255},
-		{-1.0f, 1.0f, -1.0f,	0,255,255},
-		{-1.0f, 1.0f, 1.0f,		0,255,255},
-		{-1.0f, -1.0f, 1.0f,	0,255,255},
+		{-1.0f, -1.0f, -1.0f,	0,255,255, 255},
+		{-1.0f, 1.0f, -1.0f,	0,255,255, 255},
+		{-1.0f, 1.0f, 1.0f,		0,255,255, 255},
+		{-1.0f, -1.0f, 1.0f,	0,255,255, 255},
 
-		{ -1.0f,1.0f, -1.0f,	255,0,255},
-		{ 1.0f, 1.0f,-1.0f,		255,0,255},
-		{ 1.0f, 1.0f,1.0f,		255,0,255},
-		{ -1.0f,1.0f, 1.0f,		255,0,255},
+		{ -1.0f,1.0f, -1.0f,	255,0,255, 255},
+		{ 1.0f, 1.0f,-1.0f,		255,0,255, 255},
+		{ 1.0f, 1.0f,1.0f,		255,0,255, 255},
+		{ -1.0f,1.0f, 1.0f,		255,0,255, 255},
 
-		{ -1.0f,-1.0f, -1.0f,	255,0,0},
-		{ -1.0f,-1.0f, 1.0f,	255,0,0},
-		{ 1.0f, -1.0f,1.0f,		255,0,0},
-		{ 1.0f, -1.0f,-1.0f,	255,0,0},
+		{ -1.0f,-1.0f, -1.0f,	255,0,0, 255},
+		{ -1.0f,-1.0f, 1.0f,	255,0,0, 255},
+		{ 1.0f, -1.0f,1.0f,		255,0,0, 255},
+		{ 1.0f, -1.0f,-1.0f,	255,0,0, 255},
 
-		{ -1.f, -1.f,1.0f,	0,255,0},
-		{ -1.f, 1.f, 1.0f,	0,255,0},
-		{ 1.f, 1.f,  1.0f,	0,255,0},
-		{ 1.f, -1.f, 1.0f,	0,255,0},
+		{ -1.f, -1.f,1.0f,	0,255,0, 255},
+		{ -1.f, 1.f, 1.0f,	0,255,0, 255},
+		{ 1.f, 1.f,  1.0f,	0,255,0, 255},
+		{ 1.f, -1.f, 1.0f,	0,255,0, 255},
 
-		{ -1.0f, -1.0f,-1.0f,	255,255,0},
-		{ 1.0f, -1.0f, -1.0f,	255,255,0},
-		{ 1.0f, 1.0f, -1.0f,	255,255,0},
-		{ -1.0f, 1.0f, -1.0f,	255,255,0},
+		{ -1.0f, -1.0f,-1.0f,	255,255,0,255},
+		{ 1.0f, -1.0f, -1.0f,	255,255,0,255},
+		{ 1.0f, 1.0f, -1.0f,	255,255,0,255},
+		{ -1.0f, 1.0f, -1.0f,	255,255,0,255},
 	};
 
 	// 定义数据
@@ -65,7 +65,8 @@ void ColoredCubeBuffer(yoi::BufferManager* bufMng)
 	D3D11_SUBRESOURCE_DATA subData = {};
 	subData.pSysMem = vertexData;
 
-	bufMng->AddBuffer(yoi::BufferManager::Buffer::Vertex_Colored_Cube, &bufferDesc, &subData);
+	yoi::VertexBuffer* vertexBuffer = bufMng->AddVertexBuffer(yoi::BufferManager::Buffers::Vertex_Colored_Cube,yoi::Buffer(bufMng->m_pDevice, &bufferDesc, &subData),0,  24);
+	vertexBuffer->SetLayout<yoi::VertexBuffer::Distrib<float, 3>, yoi::VertexBuffer::Distrib<unsigned char, 4>>();
 
 	// create index buffer
 	bufferDesc.ByteWidth = sizeof(indexData);
@@ -76,5 +77,5 @@ void ColoredCubeBuffer(yoi::BufferManager* bufMng)
 	bufferDesc.StructureByteStride = sizeof(unsigned int);
 
 	subData.pSysMem = indexData;
-	bufMng->AddBuffer(yoi::BufferManager::Buffer::Index_Colored_Cube, &bufferDesc, &subData);
+	bufMng->AddIndexBuffer(yoi::BufferManager::Buffers::Index_Colored_Cube, yoi::Buffer(bufMng->m_pDevice, &bufferDesc, &subData), 36, 0);
 }

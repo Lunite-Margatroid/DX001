@@ -35,15 +35,15 @@ namespace yoi
 	void WaterWave::RenderV3(const glm::mat4& modelMat, const CameraObj* camera)
 	{
 		// bind water wave update constant buffer
-		ID3D11Buffer* buffer = Graphics::GetInstance().GetBuffer(BufferManager::Buffer::Constant_Water_Wave_Update);
+		ConstBuffer* buffer = Graphics::GetInstance().GetConstBuffer(BufferManager::Buffers::Constant_Water_Wave_Update);
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
-		pContext->VSSetConstantBuffers(2, 1, &buffer);
+		buffer->BindVS(pContext, 2);
 		// render
 		SpriteV3::RenderV3(modelMat, camera);
 
 		// unbind constant buffer
-		buffer = nullptr;
-		pContext->VSSetConstantBuffers(2, 1, &buffer);
+		ID3D11Buffer* null_ptr = nullptr;
+		pContext->VSSetConstantBuffers(2, 1, &null_ptr);
 	}
 	void WaterWave::Update(float deltaTime)
 	{
@@ -67,7 +67,7 @@ namespace yoi
 		constantSetting[2] = (m_Mu * constDeltaTime - 2) / temp2;
 		constantSetting[3] = m_CellWidth;
 
-		Graphics::SetBufferData(BufferManager::Buffer::Constant_Water_Wave_Update, sizeof(float) * 4, 0, constantSetting);
+		Graphics::SetBufferData(BufferManager::Buffers::Constant_Water_Wave_Update, sizeof(float) * 4, 0, constantSetting);
 
 		/*********** update the water wave ************/
 		// bind pre grid
@@ -76,8 +76,8 @@ namespace yoi
 		// bind output grid
 		m_pHeightTexture->BindCS(pContext, 2u);
 		// bind constant buffer
-		ID3D11Buffer* waveUpdateBuffer = Graphics::GetBuffer(BufferManager::Buffer::Constant_Water_Wave_Update);
-		pContext->CSSetConstantBuffers(0, 1, &waveUpdateBuffer);
+		ConstBuffer* waveUpdateBuffer = Graphics::GetConstBuffer(BufferManager::Buffers::Constant_Water_Wave_Update);
+		waveUpdateBuffer->BindCS(pContext, 0);
 
 		// bind Compute shader
 		m_UpdateShader->Bind(pContext);
@@ -107,8 +107,8 @@ namespace yoi
 		m_pHeightTexture->UnbindCS(pContext, 2u);
 
 		// unbind constant buffer
-		waveUpdateBuffer = nullptr;
-		pContext->CSSetConstantBuffers(0, 1, &waveUpdateBuffer);
+		ID3D11Buffer* null_ptr= nullptr;
+		pContext->CSSetConstantBuffers(0, 1, &null_ptr);
 
 	}
 	void WaterWave::Disturb(unsigned int x, unsigned int z, float y)
@@ -122,22 +122,20 @@ namespace yoi
 		float* heightPtr = reinterpret_cast<float*>(tempData + 8);
 		*heightPtr = y;
 
-		Graphics::SetBufferData(BufferManager::Buffer::Constant_Disturb, 16, 0, tempData);
+		Graphics::SetBufferData(BufferManager::Buffers::Constant_Disturb, 16, 0, tempData);
 
 		// get context
 		ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
 
 		// bind constant buffer
-		ID3D11Buffer* buffer = Graphics::GetBuffer(BufferManager::Buffer::Constant_Disturb);
-		pContext->CSSetConstantBuffers(0, 1, &buffer);
+		ConstBuffer* buffer = Graphics::GetConstBuffer(BufferManager::Buffers::Constant_Disturb);
+		buffer->BindCS(pContext, 0);
 
 		// bind Computer shader
 		m_DisturbShader->Bind(pContext);
 
 		// disturb
 		pContext->Dispatch(1, 1, 1);
-		
-
 	}
 	void WaterWave::RenderImGui()
 	{

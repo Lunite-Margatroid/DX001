@@ -1,6 +1,7 @@
 #pragma once
 #include "SpotLight.h"
 #include <d3d11.h>
+#include "BufferManager\ConstBuffer.h"
 #include "Logger\FileLogger.h"
 
 namespace yoi
@@ -8,15 +9,15 @@ namespace yoi
 	class LightManager
 	{
 	private:
-		ID3D11Buffer* m_pDirLightBuffer;
-		ID3D11Buffer* m_pPointLightBuffer;
-		ID3D11Buffer* m_pSpotLightBuffer;
+		ConstBuffer* m_pDirLightBuffer;
+		ConstBuffer* m_pPointLightBuffer;
+		ConstBuffer* m_pSpotLightBuffer;
 
 		std::vector<DirLight*> m_DirLights;
 		std::vector<PointLight*> m_PointLights;
 		std::vector<SpotLight*> m_SpotLights;
 	public:
-		LightManager(ID3D11Buffer* pDirLightBuffer, ID3D11Buffer* pPointLightBuffer, ID3D11Buffer* pSpotLight);
+		LightManager(ConstBuffer* pDirLightBuffer, ConstBuffer* pPointLightBuffer, ConstBuffer* pSpotLight);
 		LightManager(const LightManager&) = delete;
 		LightManager& operator = (const LightManager&) = delete;
 		~LightManager();

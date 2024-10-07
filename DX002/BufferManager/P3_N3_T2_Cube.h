@@ -3,7 +3,7 @@
 namespace yoi
 {
 	template<>
-	void InitBuffer<BufferManager::Buffer::P3_N3_T2_Cube>(yoi::BufferManager* bufMng)
+	void InitBuffer<BufferManager::Buffers::P3_N3_T2_Cube>(yoi::BufferManager* bufMng)
 	{
 		struct Vertex
 		{
@@ -66,6 +66,7 @@ namespace yoi
 		D3D11_SUBRESOURCE_DATA subData = {};
 		subData.pSysMem = vertexData;
 
-		bufMng->AddBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube, &bufferDesc, &subData);
+		VertexBuffer* vertexBuffer = bufMng->AddVertexBuffer(yoi::BufferManager::Buffers::P3_N3_T2_Cube, yoi::Buffer(bufMng->m_pDevice, &bufferDesc, &subData), 0, 24);
+		vertexBuffer->SetLayout<VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 2>>();
 	}
 }

@@ -6,17 +6,8 @@ namespace yoi
 {
 	ColoredCube::ColoredCube()
 	{
-		m_pVertexBuffer = Graphics::GetInstance().GetBuffer(BufferManager::Buffer::Vertex_Colored_Cube);
-		m_pIndexBuffer = Graphics::GetInstance().GetBuffer(BufferManager::Buffer::Index_Colored_Cube);
-
-		m_VertexStripe = sizeof(float) * 3 + 4;
-		m_VertexOffset = 0u;
-
-		m_IndexOffset = 0u;
-		m_IndexCount = 36u;
-
-		m_StartIndex = 0u;
-		m_BaseIndex = 0u;
+		m_VertexBuffers.push_back(Graphics::GetInstance().GetVertexBuffer(BufferManager::Buffers::Vertex_Colored_Cube));
+		m_pIndexBuffer = Graphics::GetInstance().GetIndexBuffer(BufferManager::Buffers::Index_Colored_Cube);
 
 		m_PrimitiveTopology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 

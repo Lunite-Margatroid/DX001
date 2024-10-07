@@ -114,7 +114,9 @@ namespace yoi
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertexData;
 
-		ID3D11Buffer* vertexBuffer = bufferManager.AddBuffer(&bd, &sd);
+		VertexBuffer* vertexBuffer = bufferManager.AddVertexBuffer(&bd, &sd, 0, countVertex);
+		vertexBuffer->SetLayout<VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 2>>();
+
 		// load index buffer
 
 		bd.ByteWidth = sizeIndexBuffer;
@@ -126,11 +128,11 @@ namespace yoi
 		
 		sd.pSysMem = indexData;
 
-		ID3D11Buffer* indexBuffer = bufferManager.AddBuffer(&bd, &sd);
+		IndexBuffer* indexBuffer = bufferManager.AddIndexBuffer(&bd, &sd,countIndex,  0);
 
 		/*********** create mesh ******************/
 
-		Mesh mesh(vertexBuffer, indexBuffer, sizePerVertex, 0, 0, countIndex, 0, 0, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, shader, material);
+		Mesh mesh(vertexBuffer, indexBuffer, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, shader, material);
 		
 		/************create sprite ****************/
 
@@ -242,7 +244,8 @@ namespace yoi
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vertexData;
 
-		ID3D11Buffer* vertexBuffer = bufferManager.AddBuffer(&bd, &sd);
+		VertexBuffer* vertexBuffer = bufferManager.AddVertexBuffer(&bd, &sd, 0u, countVertex);
+		vertexBuffer->SetLayout<VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 2>>();
 		// load index buffer
 
 		bd.ByteWidth = sizeIndexBuffer;
@@ -254,7 +257,7 @@ namespace yoi
 
 		sd.pSysMem = indexData;
 
-		ID3D11Buffer* indexBuffer = bufferManager.AddBuffer(&bd, &sd);
+		IndexBuffer* indexBuffer = bufferManager.AddIndexBuffer(&bd, &sd, countIndex, 0u);
 
 		/*********** create texture **************/
 		if (diffuseTexture == nullptr)
@@ -275,7 +278,7 @@ namespace yoi
 
 		/*********** create mesh ******************/
 
-		Mesh mesh(vertexBuffer, indexBuffer, sizePerVertex, 0, 0, countIndex, 0, 0, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, 
+		Mesh mesh(vertexBuffer, indexBuffer,D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, 
 			shaderManager.GetShader("Water Wave Render Shader"), material);
 
 		/************create sprite ****************/

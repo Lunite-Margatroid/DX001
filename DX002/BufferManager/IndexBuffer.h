@@ -10,7 +10,8 @@ namespace yoi
 		unsigned int m_Offset;
 	public:
 		IndexBuffer();
-		explicit IndexBuffer(const Buffer& buffer, unsigned int indexCount, unsigned int offset);
+		IndexBuffer(const Buffer& buffer, unsigned int indexCount, unsigned int offset);
+		IndexBuffer(Buffer&& buffer, unsigned int indexCount, unsigned int offset);
 		~IndexBuffer() = default;
 		IndexBuffer& operator = (const IndexBuffer&) = delete;
 		IndexBuffer(const IndexBuffer&) = delete;

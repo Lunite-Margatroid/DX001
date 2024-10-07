@@ -8,6 +8,8 @@
 #include "Sprite\TexturedCube.h"
 #include "Application.h"
 
+
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
 
@@ -332,9 +334,9 @@ namespace yoi
 
 		// init light manager
 		m_pLightManager = std::make_unique<LightManager>(
-			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_DirLight),
-			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_PointLight),
-			m_pBufferManager->GetBuffer(BufferManager::Buffer::Constant_SpotLight)
+			m_pBufferManager->GetConstBuffer(BufferManager::Buffers::Constant_DirLight),
+			m_pBufferManager->GetConstBuffer(BufferManager::Buffers::Constant_PointLight),
+			m_pBufferManager->GetConstBuffer(BufferManager::Buffers::Constant_SpotLight)
 		);
 
 		// init sprite manager
@@ -596,11 +598,23 @@ namespace yoi
 			return nullptr;
 		}
 	}
-	ID3D11Buffer* Graphics::GetBuffer(BufferManager::Buffer buffer)
+	Buffer* Graphics::GetBuffer(BufferManager::Buffers buffer)
 	{
 		return (GetInstance().m_pBufferManager)->GetBuffer(buffer);
 	}
-	ID3D11Buffer* Graphics::SetBufferData(BufferManager::Buffer buffer, unsigned int size, unsigned int offset, void* src)
+	IndexBuffer* Graphics::GetIndexBuffer(BufferManager::Buffers buffer)
+	{
+		return (GetInstance().m_pBufferManager)->GetIndexBuffer(buffer);
+	}
+	VertexBuffer* Graphics::GetVertexBuffer(BufferManager::Buffers buffer)
+	{
+		return (GetInstance().m_pBufferManager)->GetVertexBuffer(buffer);
+	}
+	ConstBuffer* Graphics::GetConstBuffer(BufferManager::Buffers buffer)
+	{
+		return (GetInstance().m_pBufferManager)->GetConstBuffer(buffer);
+	}
+	Buffer* Graphics::SetBufferData(BufferManager::Buffers buffer, unsigned int size, unsigned int offset, void* src)
 	{
 		return (GetInstance().m_pBufferManager)->SetBufferData(buffer, size, offset, src);
 	}
@@ -785,7 +799,8 @@ namespace yoi
 		D3D11_SUBRESOURCE_DATA subData = {};
 		subData.pSysMem = buffer;
 
-		ID3D11Buffer* dxVertexBuffer = m_pBufferManager->AddBuffer(&bufDesc, &subData);
+		VertexBuffer* dxVertexBuffer = dynamic_cast<VertexBuffer*>(m_pBufferManager->AddVertexBuffer(Buffer(pDevice.Get(), &bufDesc, &subData),0u,vertexCount));
+		dxVertexBuffer->SetLayout<VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 3>, VertexBuffer::Distrib<float, 2>>();
 
 		// load index buffer
 		bufDesc.ByteWidth = indexBufferSize;
@@ -797,13 +812,13 @@ namespace yoi
 
 		subData.pSysMem = indexBuffer;
 
-		ID3D11Buffer* dxIndexBuffer = m_pBufferManager->AddBuffer(&bufDesc, &subData);
+		IndexBuffer* dxIndexBuffer = dynamic_cast<IndexBuffer*>(m_pBufferManager->AddIndexBuffer(Buffer(pDevice.Get(), &bufDesc, &subData), indexCount, 0u));
 
 		delete[] indexBuffer;
 		delete[] buffer;
 
 
-		return Mesh(dxVertexBuffer, dxIndexBuffer, sizeOfOneVertex, 0u, 0u, indexCount, 0u, 0u, D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		return Mesh(dxVertexBuffer, dxIndexBuffer, D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			m_pShaderManager->GetShader("Texture Color Shader"));
 	}
 	SceneObj* Graphics::ProcessNode(const aiNode* node, const std::vector<Mesh>& meshes)

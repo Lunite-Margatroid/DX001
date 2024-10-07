@@ -9,6 +9,10 @@ namespace yoi
 		:m_d3dBuffer(nullptr)
 	{
 	}
+	Buffer::Buffer(ID3D11Device* pDevice, const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd)
+	{
+		Init(pDevice, bd, sd);
+	}
 	Buffer::Buffer(const Buffer& other)
 	{
 		m_d3dBuffer = other.m_d3dBuffer;

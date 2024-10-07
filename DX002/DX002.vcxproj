@@ -183,6 +183,7 @@
     <ClInclude Include="BufferManager\BufferManager.h" />
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
+    <ClInclude Include="BufferManager\ConstBuffer.h" />
     <ClInclude Include="BufferManager\IndexBuffer.h" />
     <ClInclude Include="BufferManager\InitBuffer.h" />
     <ClInclude Include="BufferManager\P2_N2_Quad.h" />
@@ -268,6 +269,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BufferManager\Buffer.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
+    <ClCompile Include="BufferManager\ConstBuffer.cpp" />
     <ClCompile Include="BufferManager\IndexBuffer.cpp" />
     <ClCompile Include="BufferManager\VertexBuffer.cpp" />
     <ClCompile Include="CShader\CShader.cpp" />

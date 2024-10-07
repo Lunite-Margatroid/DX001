@@ -11,6 +11,7 @@ namespace yoi
 
 	public:
 		Buffer();
+		Buffer(ID3D11Device* pDevice, const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd);
 		Buffer(const Buffer&);
 		Buffer(Buffer&&) noexcept;
 		Buffer& operator = (const Buffer&);
@@ -21,5 +22,6 @@ namespace yoi
 		ID3D11Buffer* GetBuffer();
 
 		void SetBufferData(ID3D11DeviceContext* pContext, void* src, size_t size, size_t offset);
+
 	};
 }

@@ -11,6 +11,10 @@ namespace yoi
 		:Buffer(buffer), m_IndexCount(indexCount), m_Offset(offset)
 	{
 	}
+	IndexBuffer::IndexBuffer(Buffer&& buffer, unsigned int indexCount, unsigned int offset)
+		:Buffer(std::move(buffer)), m_IndexCount(indexCount), m_Offset(offset)
+	{
+	}
 	unsigned int IndexBuffer::GetIndexCount() const
 	{
 		return m_IndexCount;

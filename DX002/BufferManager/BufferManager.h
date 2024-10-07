@@ -1,5 +1,9 @@
 #pragma once
 #include <d3d11.h>
+#include "Buffer.h"
+#include "ConstBuffer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 namespace yoi
 {
@@ -8,7 +12,7 @@ namespace yoi
 	public:
 
 		/* preloaded buffer */
-		enum class Buffer
+		enum class Buffers
 		{
 			// vertex buffer of a cube. Position-float3 : TexCoord-float2
 			Vertex_Textured_Cube, 
@@ -67,9 +71,10 @@ namespace yoi
 
 
 	private:
-		std::vector<ID3D11Buffer*> m_Buffers;
+		std::vector<Buffer*> m_Buffers;
+		std::map<BufferManager::Buffers, Buffer*> m_BufferMap;
+	public:
 		ID3D11Device* m_pDevice;
-		std::map<Buffer, ID3D11Buffer*> m_BufferMap;
 	public:
 		BufferManager(ID3D11Device*);
 		BufferManager() = delete;
@@ -77,10 +82,29 @@ namespace yoi
 		BufferManager(const BufferManager&) = delete;
 		BufferManager& operator = (const BufferManager&) = delete;
 
-		ID3D11Buffer* AddBuffer(const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
-		ID3D11Buffer* AddBuffer(Buffer buffer, const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
-		ID3D11Buffer* GetBuffer(Buffer buffer);
+		Buffer* AddBuffer(const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
+		Buffer* AddBuffer(BufferManager::Buffers buffer, const D3D11_BUFFER_DESC* pDescript, const D3D11_SUBRESOURCE_DATA* initData);
+		
 
-		ID3D11Buffer* SetBufferData(Buffer buffer, unsigned int size, unsigned int offset, void* src);
+		VertexBuffer* AddVertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
+		IndexBuffer* AddIndexBuffer(const Buffer& buffer, unsigned int indexCount, unsigned int offset);
+
+		VertexBuffer* AddVertexBuffer(const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd, size_t offset, unsigned int vertexCount);
+		IndexBuffer* AddIndexBuffer(const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd, unsigned int indexCount, unsigned int offset);
+
+		ConstBuffer* AddConstBuffer(ID3D11Device* pDevice, size_t size, const void* data = nullptr);
+		ConstBuffer* AddConstBuffer(ID3D11Device* pDevice, size_t size, const D3D11_SUBRESOURCE_DATA* sd);
+
+		VertexBuffer* AddVertexBuffer(Buffers buffers, const Buffer& buffer, size_t offset, unsigned int vertexCount);
+		IndexBuffer* AddIndexBuffer(Buffers buffers, const Buffer& buffer, unsigned int indexCount, unsigned int offset);
+		ConstBuffer* AddConstBuffer(Buffers buffers, ID3D11Device* pDevice, size_t size, const void* data = nullptr);
+		ConstBuffer* AddConstBuffer(Buffers buffers, ID3D11Device* pDevice, size_t size, const D3D11_SUBRESOURCE_DATA* sd);
+
+		Buffer* GetBuffer(BufferManager::Buffers buffer);
+		IndexBuffer* GetIndexBuffer(BufferManager::Buffers buffer);
+		VertexBuffer* GetVertexBuffer(BufferManager::Buffers buffer);
+		ConstBuffer* GetConstBuffer(BufferManager::Buffers buffer);
+
+		Buffer* SetBufferData(BufferManager::Buffers buffer, unsigned int size, unsigned int offset, void* src);
 	};
 }

@@ -58,12 +58,12 @@ namespace yoi
 		if (!m_Meshes.empty())
 		{
 			GFX_EXCEPT_SUPPORT();
-			ID3D11Buffer* constantBuffer = Graphics::GetInstance().GetBuffer(BufferManager::Buffer::Constant_Matrix);
+			ConstBuffer* constantBuffer = Graphics::GetInstance().GetConstBuffer(BufferManager::Buffers::Constant_Matrix);
 			ID3D11DeviceContext* pContext = Graphics::GetInstance().GetContext();
 
 			glm::mat4 mvpTrans = camera->GetVPTrans() * modelMat;
 			D3D11_MAPPED_SUBRESOURCE dataMap;
-			GFX_THROW_INFO(pContext->Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
+			GFX_THROW_INFO(pContext->Map(constantBuffer->GetBuffer(), 0, D3D11_MAP_WRITE_DISCARD, 0, &dataMap));
 			// memset(dataMap.pData, 0, 64 * 5);
 			// model mat
 			memcpy(dataMap.pData, glm::value_ptr(modelMat), 64);
@@ -84,9 +84,10 @@ namespace yoi
 			// camera pos
 			memcpy((BYTE*)dataMap.pData + 320, glm::value_ptr(camera->GetPosition()), 12);
 
-			GFX_THROW_INFO_ONLY(pContext->Unmap(constantBuffer, 0));
+			GFX_THROW_INFO_ONLY(pContext->Unmap(constantBuffer->GetBuffer(), 0));
 
-			GFX_THROW_INFO_ONLY(pContext->VSSetConstantBuffers(0, 1, &constantBuffer));
+			constantBuffer->BindVS(pContext, 0u);
+
 			for (Mesh& mesh : m_Meshes)
 			{
 				mesh.Draw(pContext);

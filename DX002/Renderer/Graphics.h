@@ -28,6 +28,8 @@
 
 namespace yoi
 {
+	class LightManager;
+
 	class Graphics
 	{
 		friend class Sprite;
@@ -156,8 +158,11 @@ namespace yoi
 		protected:
 			std::unique_ptr<BufferManager> m_pBufferManager;
 		public:
-			static ID3D11Buffer* GetBuffer(BufferManager::Buffer buffer);
-			static ID3D11Buffer* SetBufferData(BufferManager::Buffer buffer, unsigned int size, unsigned int offset, void* src);
+			static Buffer* GetBuffer(BufferManager::Buffers buffer);
+			static IndexBuffer* GetIndexBuffer(BufferManager::Buffers buffer);
+			static VertexBuffer* GetVertexBuffer(BufferManager::Buffers buffer);
+			static ConstBuffer* GetConstBuffer(BufferManager::Buffers buffer);
+			static Buffer* SetBufferData(BufferManager::Buffers buffer, unsigned int size, unsigned int offset, void* src);
 
 		/*********** Material Manager *************/
 		protected:

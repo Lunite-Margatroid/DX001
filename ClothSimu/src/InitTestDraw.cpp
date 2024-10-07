@@ -15,27 +15,15 @@ namespace yoi
 		Material* mtlRumia = new Material(texRumia, m_pTextureManager.get());
 		m_pMaterialManager->Add(mtlRumia, "Rumia");
 		Mesh mshRumia(
-			GetBuffer(BufferManager::Buffer::Vertex_Textured_Cube),
-			GetBuffer(BufferManager::Buffer::Index_Textured_Cube),
-			sizeof(float) * 5,
-			0u,
-			0u,
-			36,
-			0u,
-			0u,
+			GetVertexBuffer(BufferManager::Buffers::Vertex_Textured_Cube),
+			GetIndexBuffer(BufferManager::Buffers::Index_Textured_Cube),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			GetShader("Materialed Shader"),
 			mtlRumia);
 
 		Mesh lightedCube(
-			GetBuffer(BufferManager::Buffer::P3_N3_T2_Cube),
-			GetBuffer(BufferManager::Buffer::Index_Textured_Cube),
-			sizeof(float) * 8,
-			0u,
-			0u,
-			36,
-			0u,
-			0u,
+			GetVertexBuffer(BufferManager::Buffers::P3_N3_T2_Cube),
+			GetIndexBuffer(BufferManager::Buffers::Index_Textured_Cube),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			GetShader("Lighted Shader"),
 			mtlRumia);
