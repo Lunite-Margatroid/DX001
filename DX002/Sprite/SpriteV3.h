@@ -17,7 +17,7 @@ namespace yoi
 		SpriteV3();
 		// copy mesh from sprite
 		SpriteV3(SpriteV3* sprite);
-		SpriteV3(Mesh& mesh);
+		SpriteV3(const Mesh& mesh);
 		SpriteV3(Mesh&& mesh);
 		SpriteV3(std::vector<Mesh>& meshes);
 		SpriteV3(std::vector<Mesh>&& meshes);

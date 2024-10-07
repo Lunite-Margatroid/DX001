@@ -17,6 +17,13 @@ namespace yoi
 		:Buffer(std::move(buffer)), m_Offset(offset), m_VertexCount(vertexCount)
 	{
 	}
+	VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
+		:m_Offset(other.m_Offset),
+		m_VertexCount(other.m_VertexCount),
+		m_VertexBufferLayout(std::move(other.m_VertexBufferLayout))
+	{
+		m_d3dBuffer = std::move(other.m_d3dBuffer);
+	}
 	void VertexBuffer::SetVertexCount(unsigned int vertexCount)
 	{
 		m_VertexCount = vertexCount;

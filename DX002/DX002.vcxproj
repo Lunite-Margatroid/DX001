@@ -184,6 +184,7 @@
     <ClInclude Include="BufferManager\ColoredCubeBuffer.h" />
     <ClInclude Include="BufferManager\ConstantLightBuffer.h" />
     <ClInclude Include="BufferManager\ConstBuffer.h" />
+    <ClInclude Include="BufferManager\DVertexBuffer.h" />
     <ClInclude Include="BufferManager\IndexBuffer.h" />
     <ClInclude Include="BufferManager\InitBuffer.h" />
     <ClInclude Include="BufferManager\P2_N2_Quad.h" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Shader\P3_N3_T2_Lighted.h" />
     <ClInclude Include="Shader\P3_T2_Materialed.h" />
     <ClInclude Include="Shader\P3_N3_T2_Wave.h" />
+    <ClInclude Include="Shader\P3_N3_T2_ClothSim.hpp" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\ShaderManager.h" />
     <ClInclude Include="Sprite\ColoredCube.h" />
@@ -270,6 +272,7 @@
     <ClCompile Include="BufferManager\Buffer.cpp" />
     <ClCompile Include="BufferManager\BufferManager.cpp" />
     <ClCompile Include="BufferManager\ConstBuffer.cpp" />
+    <ClCompile Include="BufferManager\DVertexBuffer.cpp" />
     <ClCompile Include="BufferManager\IndexBuffer.cpp" />
     <ClCompile Include="BufferManager\VertexBuffer.cpp" />
     <ClCompile Include="CShader\CShader.cpp" />

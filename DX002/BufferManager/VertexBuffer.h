@@ -22,6 +22,7 @@ namespace yoi
 			int typeLayout;	// 0: 按顶点排列。每一个顶点的属性紧挨着。1: 按属性排列。相同的属性紧挨着。
 
 			Layout() :typeLayout(0) {}
+			Layout(Layout&& layout) noexcept : distributions(std::move(layout.distributions)), typeLayout(layout.typeLayout)  {}
 		};
 	protected:
 		
@@ -34,6 +35,7 @@ namespace yoi
 		VertexBuffer();
 		VertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
 		VertexBuffer(Buffer&& buffer, size_t offset, unsigned int vertexCount);
+		VertexBuffer(VertexBuffer&& other) noexcept;
 		VertexBuffer(const VertexBuffer&) = delete;
 		VertexBuffer& operator = (const VertexBuffer&) = delete;
 		~VertexBuffer() = default;

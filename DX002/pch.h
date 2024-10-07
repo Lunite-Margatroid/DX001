@@ -18,3 +18,6 @@
 #include "glm/common.hpp"
 
 #define PI 3.1416f
+
+#define YOI_WINDOW_WIDTH 800
+#define YOI_WINDOW_HEIGHT 600

@@ -13,20 +13,17 @@ cbuffer Cbuf : register(b0)
     matrix viewMatrix;
     matrix projectcionMatrix;
     matrix mvpMatrix;
+    matrix normalMatrix;
     float3 cameraPos;
 };
 
-Texture2D normalBuffer : register(t4);
 
-// linear sample, clamp to edge. 
-SamplerState samNormalBuffer : register(s2);
-
-VSout main(float3 pos : Postion, float2 texCoord : TexCoord)
+VSout main(float3 pos : Position, float3 normal: Normal, float2 texCoord : TexCoord)
 {
     VSout vsout;
     vsout.texCoord = texCoord;
     vsout.fragPos = mul(modelMatrix, float4(pos, 1.0f));
-    vsout.normalVec = normalBuffer.SampleLevel(samNormalBuffer, texCoord, 0.0f).xyz;
+    vsout.normalVec = normalize(mul(normalMatrix, float4(normal, 0.0f)).xyz);
     vsout.vertPos = mul(mvpMatrix, float4(pos, 1.0f));
     vsout.cameraPos = cameraPos;
     

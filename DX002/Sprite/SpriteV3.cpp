@@ -11,13 +11,13 @@ namespace yoi
 	{
 		m_Meshes = sprite->m_Meshes;
 	}
-	SpriteV3::SpriteV3(Mesh& mesh)
+	SpriteV3::SpriteV3(const Mesh& mesh)
 	{
 		AddMesh(mesh);
 	}
 	SpriteV3::SpriteV3(Mesh&& mesh)
 	{
-		AddMesh(mesh);
+		AddMesh(std::move(mesh));
 	}
 	SpriteV3::SpriteV3(std::vector<Mesh>& meshes)
 	{
@@ -33,7 +33,7 @@ namespace yoi
 	}
 	void SpriteV3::AddMesh(Mesh&& mesh)
 	{
-		m_Meshes.emplace_back(mesh);
+		m_Meshes.emplace_back(std::move(mesh));
 	}
 	void SpriteV3::AddMeshes(std::vector<Mesh>& meshes)
 	{
@@ -43,7 +43,7 @@ namespace yoi
 	{
 		if (m_Meshes.empty())
 		{
-			m_Meshes = meshes;
+			m_Meshes = std::move(meshes);
 		}
 		else
 		{

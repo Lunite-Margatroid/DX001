@@ -19,9 +19,10 @@ namespace yoi
 		virtual void Bind(ID3D11DeviceContext* pContext);
 		virtual const char* GetVertexShaderPath() const = 0;
 		virtual const char* GetPixelShaderPath() const = 0;
-		virtual std::string GetShaderDescript() const;
 		virtual const char* GetInputLayoutInfo() const = 0;
 		virtual const char* GetTitle() const = 0;
+
+		virtual std::string GetShaderDescript() const;
 	};
 
 	std::wstring UTF8ToWStr(const std::string& str);

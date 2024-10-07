@@ -22,6 +22,7 @@ namespace yoi
 	public:
 		
 		Mesh(VertexBuffer* vertexBuffer, IndexBuffer* indexBuffer,  D3D11_PRIMITIVE_TOPOLOGY primitive, Shader* shader, Material* material = nullptr);
+		Mesh(std::vector<VertexBuffer*>&& vertexBuffer, IndexBuffer* indexBuffer, D3D11_PRIMITIVE_TOPOLOGY primitive, Shader* shader, Material* material = nullptr);
 		Mesh(Mesh&&) noexcept;
 		~Mesh() = default;
 		Mesh& operator = (const Mesh&) = default;

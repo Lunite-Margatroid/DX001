@@ -101,27 +101,15 @@ void CSGraphics::ComputeShaderTestInit()
 
 	// init mesh
 	yoi::Mesh mesh(
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_T2_Quad),
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Quad),
-		sizeof(float) * 4,
-		0u,
-		0u,
-		4u,
-		0u,
-		0u,
+		m_pBufferManager->GetVertexBuffer(yoi::BufferManager::Buffers::Vertex_P2_T2_Quad),
+		m_pBufferManager->GetIndexBuffer(yoi::BufferManager::Buffers::Index_Quad),
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
 		m_pShaderManager->GetShader("Textured Shader 2D"),
 		mtl);
 
 	yoi::Mesh meshRumia(
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P2_T2_Quad),
-		m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Quad),
-		sizeof(float) * 4,
-		0u,
-		0u,
-		4u,
-		0u,
-		0u,
+		m_pBufferManager->GetVertexBuffer(yoi::BufferManager::Buffers::Vertex_P2_T2_Quad),
+		m_pBufferManager->GetIndexBuffer(yoi::BufferManager::Buffers::Index_Quad),
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
 		m_pShaderManager->GetShader("Textured Shader 2D"),
 		mtlRumia);

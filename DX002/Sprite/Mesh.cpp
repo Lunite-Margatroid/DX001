@@ -21,6 +21,15 @@ namespace yoi
 	{
 		m_VertexBuffers.push_back(vertexBuffer);
 	}
+	Mesh::Mesh(std::vector<VertexBuffer*>&& vertexBuffer, IndexBuffer* indexBuffer, D3D11_PRIMITIVE_TOPOLOGY primitive, Shader* shader, Material* material)
+		:
+		m_VertexBuffers(std::move(vertexBuffer)),
+		m_pIndexBuffer(indexBuffer),
+		m_PrimitiveTopology(primitive),
+		m_Shader(shader),
+		m_Material(material)
+	{
+	}
 	Mesh::Mesh(Mesh&& other) noexcept
 		:m_VertexBuffers(std::move(other.m_VertexBuffers)),
 		m_pIndexBuffer(other.m_pIndexBuffer),

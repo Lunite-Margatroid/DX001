@@ -80,7 +80,7 @@ namespace yoi
 	/************* Excpetion ***************** end */
 
 	public:
-		Graphics(HWND hWnd, unsigned int width, unsigned int height);
+		Graphics(HWND hWnd, unsigned int width = YOI_WINDOW_WIDTH, unsigned int height = YOI_WINDOW_HEIGHT);
 		Graphics(const Graphics&) = delete;
 		Graphics& operator=(const Graphics&) = delete;
 		virtual ~Graphics();

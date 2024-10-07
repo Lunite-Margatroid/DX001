@@ -9,6 +9,7 @@
 #include "P2_T2_2D.h"
 #include "P3_N3_T2_Wave.h"
 #include "P3_N3_T2_ChessBoard.h"
+#include "P3_N3_T2_ClothSim.hpp"
 
 namespace yoi
 {
@@ -23,6 +24,7 @@ namespace yoi
 		RegisterShader<P2_T2_2D>(pDevice, pContext);
 		RegisterShader<P3_N3_T2_Wave>(pDevice, pContext);
 		RegisterShader<P3_N3_T2_ChessBoard>(pDevice, pContext);
+		RegisterShader<P3_N3_T2_ClothSim>(pDevice, pContext);
 
 		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveCS.cso", "Water Wave Update");
 		RegisterComputeShader(pDevice, "./shader-bin/WaterWaveDisturbCS.cso", "Water Wave Disturb");

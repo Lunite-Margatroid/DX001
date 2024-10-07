@@ -2,6 +2,7 @@
 #include "SpriteV3.h"
 #include "BufferManager/VertexBuffer.h"
 #include "BufferManager/IndexBuffer.h"
+#include "BufferManager\DVertexBuffer.h"
 #include "Texture\CSUTexture.h"
 #include "CShader\CShader.h"
 namespace yoi
@@ -10,18 +11,18 @@ namespace yoi
 	{
 		friend class SpriteManager;
 	private:
-		VertexBuffer m_VertexBuffer;
+		std::unique_ptr<DVertexBuffer> m_pPositionBuffer;
+		std::unique_ptr<DVertexBuffer> m_pNormalBuffer;
+		std::unique_ptr<VertexBuffer> m_pTexCoordBuffer;
 		IndexBuffer m_IndexBuffer;
-		Buffer m_cbufferSettings;
+		ConstBuffer m_cbufferSettings;
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pPreGridBuffer;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pVelRecordBuffer;
 
-		Microsoft::WRL::ComPtr <ID3D11UnorderedAccessView> m_pCurGridView;
 		Microsoft::WRL::ComPtr <ID3D11UnorderedAccessView> m_pPreGridView;
 		Microsoft::WRL::ComPtr <ID3D11UnorderedAccessView> m_pVelRecordView;
 
-		CSUTexture m_NormalBuffer;
 
 		std::unique_ptr<CShader> m_pUpdateShader;
 		std::unique_ptr<CShader> m_pConstraintShader;
@@ -61,9 +62,33 @@ namespace yoi
 			float constraintZ;
 		};
 
-
-		QuadCloth(unsigned int width = 128u, unsigned int height = 128u, float cellWidth = 1.0f / 127.f, float cellHeight = 1.0f / 127.0f , float alpha = 0.5f, 
-			float beta = 0.1f, float constDeltaTime = 0.016f, float mass = 1.0f, float G = 9.8f);
+	public:
+		struct QuadClothDesc
+		{
+			unsigned int Width, Height;
+			float CellWidth, CellHeight;
+			float Alpha;
+			float Beta;
+			float ConstDeltaTime;
+			float Mass;
+			float G;
+			QuadClothDesc():
+				Width(128u), Height(128u),
+				CellWidth(1.0f / 127.f),CellHeight(1.f / 127.f), 
+				Alpha(0.5f), Beta(0.1f),
+				ConstDeltaTime(0.016f),
+				Mass(1.0f), G(9.8f)
+			{}
+		};
+	private:
+		QuadCloth(
+			Shader* shader, Material* material,
+			unsigned int width = 128u, unsigned int height = 128u, 
+			float cellWidth = 1.0f / 127.f, float cellHeight = 1.0f / 127.0f ,
+			float alpha = 0.5f, float beta = 0.1f, 
+			float constDeltaTime = 0.016f, 
+			float mass = 1.0f, float G = 9.8f);
+		QuadCloth(Shader* shader, Material* material, const QuadClothDesc* desc);
 
 	public:
 		~QuadCloth();

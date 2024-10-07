@@ -44,40 +44,22 @@ namespace yoi
 		// create meshes
 
 		yoi::Mesh meshRumia(
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube),
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Colored_Cube),
-			sizeof(float) * 8,
-			0,
-			0,
-			36,
-			0,
-			0,
+			m_pBufferManager->GetVertexBuffer(yoi::BufferManager::Buffers::P3_N3_T2_Cube),
+			m_pBufferManager->GetIndexBuffer(yoi::BufferManager::Buffers::Index_Colored_Cube),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			m_pShaderManager->GetShader("Lighted Shader"),
 			mtlRumia);
 
 		yoi::Mesh meshWhite(
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::P3_N3_T2_Cube),
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Colored_Cube),
-			sizeof(float) * 8,
-			0,
-			0,
-			36,
-			0,
-			0,
+			m_pBufferManager->GetVertexBuffer(yoi::BufferManager::Buffers::P3_N3_T2_Cube),
+			m_pBufferManager->GetIndexBuffer(yoi::BufferManager::Buffers::Index_Colored_Cube),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
 			m_pShaderManager->GetShader("Texture Color Shader"),
 			mtlWhite);
 
 		yoi::Mesh meshQuad(
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Vertex_P3_N3_T2_Quad),
-			m_pBufferManager->GetBuffer(yoi::BufferManager::Buffer::Index_Quad),
-			sizeof(float) * 8,
-			0u,
-			0u,
-			4u,
-			0u,
-			0u,
+			m_pBufferManager->GetVertexBuffer(yoi::BufferManager::Buffers::Vertex_P3_N3_T2_Quad),
+			m_pBufferManager->GetIndexBuffer(yoi::BufferManager::Buffers::Index_Quad),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
 			m_pShaderManager->GetShader("Lighted Shader"),
 			mtlWhite);

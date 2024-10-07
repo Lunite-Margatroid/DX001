@@ -5,13 +5,18 @@
 
 namespace yoi
 {
+	QuadCloth::QuadCloth(Shader* shader, Material* material, const QuadClothDesc* desc)
+		:QuadCloth(shader, material, desc->Width, desc->Height, desc->CellWidth, desc->CellHeight,
+			desc->Alpha, desc->Beta, desc->ConstDeltaTime, desc->Mass, desc->G)
+	{}
+
 	QuadCloth::QuadCloth(
-		unsigned int width, unsigned int height, 
-		float cellWidth , float cellHeight, 
-		float alpha ,float beta, 
-		float constDeltaTime , float mass, float G)
+		Shader* shader, Material* material,
+		unsigned int width, unsigned int height,
+		float cellWidth, float cellHeight,
+		float alpha, float beta,
+		float constDeltaTime, float mass, float G)
 		:
-		m_NormalBuffer(width, height, DXGI_FORMAT_R32G32B32_FLOAT, 0u),
 		m_Width(width), m_Height(height),
 		m_CellWidth(cellWidth), m_CellHeight(cellHeight),
 		m_Alpha(alpha), m_Beta(beta),
@@ -24,26 +29,28 @@ namespace yoi
 		unsigned int indexCount = (height - 1) * width * 2 + height - 1;
 
 		GFX_EXCEPT_SUPPORT();
-		ID3D11Device* pDevice =  Graphics::GetInstance().GetDevice();
-		
+		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
+
 
 		struct Position { float x, y, z; };
 		struct TexCoord { float u, v; };
+		struct Normal { float x, y, z; };
 
-		size_t sizeVertexBuffer = vertexCount * (sizeof(Position) + sizeof(TexCoord));
+		size_t sizeVertexBuffer[3] = { vertexCount * sizeof(Position) ,vertexCount * sizeof(TexCoord) , vertexCount * sizeof(Normal) };
 		size_t sizeIndexBuffer = indexCount * sizeof(unsigned int);
 
-		std::unique_ptr<BYTE[]> vertexBuffer(new BYTE[sizeVertexBuffer]);
-		std::unique_ptr<unsigned int[]> indexBuffer ( new unsigned[indexCount]);
+		std::unique_ptr<BYTE[]> vertexBuffer(new BYTE[sizeVertexBuffer[0] + sizeVertexBuffer[1] + sizeVertexBuffer[2]]);
+		std::unique_ptr<unsigned int[]> indexBuffer(new unsigned[indexCount]);
 
 		Position* positionPtr = reinterpret_cast<Position*>(vertexBuffer.get());
 		TexCoord* texCoordPtr = reinterpret_cast<TexCoord*>(positionPtr + vertexCount);
+		Normal* normalPtr = reinterpret_cast<Normal*>(texCoordPtr + vertexCount);
 
 		unsigned int counter = 0;
 		/****************** init vertex buffer ********************/
 		float deltaU = 1.0f / (m_Width - 1);
 		float deltaV = 1.0f / (m_Height - 1);
-		for(int i =0 ;i < m_Height;i++)
+		for (int i = 0; i < m_Height; i++)
 			for (int j = 0; j < m_Width; j++)
 			{
 				Position& position = *(positionPtr + counter);
@@ -72,20 +79,44 @@ namespace yoi
 
 		/************** create d3d buffer ************/
 		// vertex buffer
-		bd.ByteWidth = sizeVertexBuffer;
+		// position
+		bd.ByteWidth = sizeVertexBuffer[0] + sizeVertexBuffer[1];
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER | D3D11_BIND_UNORDERED_ACCESS;
 		bd.CPUAccessFlags = 0u;
 		bd.MiscFlags = 0u;
 		bd.StructureByteStride = 0u;
 
-		sd.pSysMem = vertexBuffer.get();
+		sd.pSysMem = positionPtr;
 		sd.SysMemPitch = sizeof(Position) * m_Width;
 
-		m_VertexBuffer.Init(pDevice, &bd, &sd);
-		m_VertexBuffer.PushAttrib<float>(3);
-		m_VertexBuffer.PushAttrib<float>(2);
-		m_VertexBuffer.SetLayoutType(1);
+		m_pPositionBuffer = std::make_unique<DVertexBuffer>(
+			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Width, m_Height, 3
+		);
+		m_pPositionBuffer->SetLayoutType(1);
+		m_pPositionBuffer->SetLayout<VertexBuffer::Distrib<float, 3>>();
+
+
+		// vertexBuffer normal vector
+		bd.ByteWidth = sizeVertexBuffer[2];
+		sd.pSysMem = normalPtr;
+		sd.SysMemPitch = sizeof(Normal) * m_Width;
+		m_pNormalBuffer = std::make_unique<DVertexBuffer>(
+			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Height, m_Width, 3u
+		);
+		m_pNormalBuffer->SetLayoutType(1);
+		m_pNormalBuffer->SetLayout<VertexBuffer::Distrib<float, 3>>(); 
+
+		// vertex buffer texcoord buffer
+		bd.ByteWidth = sizeVertexBuffer[1];
+		sd.pSysMem = texCoordPtr;
+		sd.SysMemPitch = 0u;
+		m_pTexCoordBuffer = std::make_unique<VertexBuffer>(
+			Buffer(pDevice, &bd, &sd), 0, vertexCount
+		);
+		m_pTexCoordBuffer->SetLayoutType(1);
+		m_pTexCoordBuffer->SetLayout<VertexBuffer::Distrib<float, 2>>();
+
 
 		// index buffer
 		bd.ByteWidth = sizeIndexBuffer;
@@ -99,6 +130,8 @@ namespace yoi
 		sd.SysMemPitch = 0u;
 
 		m_IndexBuffer.Init(pDevice, &bd, &sd);
+		m_IndexBuffer.SetIndexCount(indexCount);
+		m_IndexBuffer.SetOffset(0u);
 
 		/*************** create temp buffer ****************/
 		// position temp buffer
@@ -114,7 +147,7 @@ namespace yoi
 		GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &m_pPreGridBuffer));
 
 		// velocity record buffer
-		memset(vertexBuffer.get(), 0, sizeof(Position)* vertexCount);
+		memset(vertexBuffer.get(), 0, sizeof(Position) * vertexCount);
 		BYTE* velocityBuffer = vertexBuffer.get();
 		bd.ByteWidth = sizeof(float) * 3 * vertexCount;
 		bd.Usage = D3D11_USAGE_DEFAULT;
@@ -129,13 +162,11 @@ namespace yoi
 		GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &m_pVelRecordBuffer));
 
 		/******************** Resource Veiw ***********************/
-		// cur grid unorder access view
 		D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
 		uavd.Format = DXGI_FORMAT_R32G32B32_FLOAT;
 		uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
 		uavd.Texture2D.MipSlice = 0u;
 
-		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_VertexBuffer.GetBuffer(), &uavd, &m_pCurGridView));
 
 		// pre grid unorder access view
 		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pPreGridBuffer.Get(), &uavd, &m_pPreGridView));
@@ -167,6 +198,19 @@ namespace yoi
 			m_IndexBuffer.GetBuffer(),
 
 		);*/
+
+		Mesh mesh(
+			std::vector<VertexBuffer*>(
+				{static_cast<VertexBuffer*>(m_pPositionBuffer.get()), 
+				static_cast<VertexBuffer*>(m_pNormalBuffer.get()),
+				static_cast<VertexBuffer*>(m_pTexCoordBuffer.get())
+				}),
+			&m_IndexBuffer, 
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP, 
+			shader, 
+			material);
+
+		AddMesh(std::move(mesh));
 	}
 	QuadCloth::~QuadCloth()
 	{
@@ -190,8 +234,12 @@ namespace yoi
 		*/
 		GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, m_pVelRecordView.GetAddressOf(), nullptr));
 		GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(1, 1, m_pPreGridView.GetAddressOf(), nullptr));
-		GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(2, 1, m_pCurGridView.GetAddressOf(), nullptr));
-		m_NormalBuffer.BindCS(pContext, 3);
+		m_pPositionBuffer->BindCS(pContext, 2);
+		m_pNormalBuffer  ->BindCS(pContext, 3);
+
+		// GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(2, 1, m_pCurGridView.GetAddressOf(), nullptr));
+
+		
 
 		/********************* Update quad cloth ***************/
 		// set constant buffer
@@ -254,8 +302,5 @@ namespace yoi
 		m_pGenNormal->Bind(pContext);
 		// Dispatch
 		pContext->Dispatch(xCount, yCount, 1);
-
-		m_NormalBuffer.UnbindCS(pContext, 3);
-
 	}
 }
