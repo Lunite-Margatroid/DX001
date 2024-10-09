@@ -300,4 +300,12 @@ namespace yoi
 		delete[] indexData;
 		return sprite;
 	}
+	QuadCloth* SpriteManager::CreateQuadCloth(Shader* shader, Material* material, const QuadCloth::QuadClothDesc* desc)
+	{
+		QuadCloth* sprite = new QuadCloth(shader, material, desc);
+
+		m_Sprites.insert(static_cast<SpriteV3*>(sprite));
+
+		return sprite;
+	}
 }

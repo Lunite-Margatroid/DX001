@@ -18,13 +18,13 @@ cbuffer Cbuf : register(b0)
 };
 
 
-VSout main(float3 pos : Position, float3 normal: Normal, float2 texCoord : TexCoord)
+VSout main(float4 pos : Position, float4 normal: Normal, float2 texCoord : TexCoord)
 {
     VSout vsout;
     vsout.texCoord = texCoord;
-    vsout.fragPos = mul(modelMatrix, float4(pos, 1.0f));
-    vsout.normalVec = normalize(mul(normalMatrix, float4(normal, 0.0f)).xyz);
-    vsout.vertPos = mul(mvpMatrix, float4(pos, 1.0f));
+    vsout.fragPos = mul(modelMatrix, float4(pos.xyz, 1.0f));
+    vsout.normalVec = normalize(mul(normalMatrix, float4(normal.xyz, 0.0f)).xyz);
+    vsout.vertPos = mul(mvpMatrix, float4(pos.xyz, 1.0f));
     vsout.cameraPos = cameraPos;
     
 	return vsout;

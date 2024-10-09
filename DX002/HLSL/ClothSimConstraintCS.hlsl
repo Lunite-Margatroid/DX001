@@ -1,6 +1,5 @@
 
-RWTexture2D<float3> curGrid : register(u2);
-
+RWBuffer<float4> curGrid : register(u2);
 
 cbuffer ClothSimSetting : register(b0)
 {
@@ -29,5 +28,5 @@ cbuffer ClothSimSetting : register(b0)
 [numthreads(1, 1, 1)]
 void main(uint3 DTid : SV_DispatchThreadID)
 {
-    curGrid[uint2(constraintU, constraintV)] = float3(constraintX, constraintY, constraintZ);
+    curGrid[constraintU  +  nWidth * constraintV] = float4(constraintX, constraintY, constraintZ, 1.0f);
 }

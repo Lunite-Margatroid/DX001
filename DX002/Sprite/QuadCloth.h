@@ -5,6 +5,8 @@
 #include "BufferManager\DVertexBuffer.h"
 #include "Texture\CSUTexture.h"
 #include "CShader\CShader.h"
+#include "Texture\UATexture.h"
+
 namespace yoi
 {
 	class QuadCloth : public SpriteV3
@@ -17,12 +19,8 @@ namespace yoi
 		IndexBuffer m_IndexBuffer;
 		ConstBuffer m_cbufferSettings;
 
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pPreGridBuffer;
-		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pVelRecordBuffer;
-
-		Microsoft::WRL::ComPtr <ID3D11UnorderedAccessView> m_pPreGridView;
-		Microsoft::WRL::ComPtr <ID3D11UnorderedAccessView> m_pVelRecordView;
-
+		std::unique_ptr<UATexture> m_pPreGridBuffer;
+		std::unique_ptr<UATexture> m_pVelRecordBuffer;
 
 		std::unique_ptr<CShader> m_pUpdateShader;
 		std::unique_ptr<CShader> m_pConstraintShader;
@@ -75,9 +73,9 @@ namespace yoi
 			QuadClothDesc():
 				Width(128u), Height(128u),
 				CellWidth(1.0f / 127.f),CellHeight(1.f / 127.f), 
-				Alpha(0.5f), Beta(0.1f),
+				Alpha(0.01f), Beta(0.1f),
 				ConstDeltaTime(0.016f),
-				Mass(1.0f), G(9.8f)
+				Mass(1.0f), G(0.8f)
 			{}
 		};
 	private:
@@ -87,7 +85,7 @@ namespace yoi
 			float cellWidth = 1.0f / 127.f, float cellHeight = 1.0f / 127.0f ,
 			float alpha = 0.5f, float beta = 0.1f, 
 			float constDeltaTime = 0.016f, 
-			float mass = 1.0f, float G = 9.8f);
+			float mass = 1.0f, float G = 0.8f);
 		QuadCloth(Shader* shader, Material* material, const QuadClothDesc* desc);
 
 	public:

@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "BufferManager\BufferManager.h"
 #include "Shader\ShaderManager.h"
+#include "QuadCloth.h"
 
 namespace yoi
 {
@@ -62,5 +63,7 @@ namespace yoi
 			Texture* specularTexture = nullptr,
 			const std::function<float(float, float)>& GenHeight = [](float x, float y) { return 0.0f; },
 			const std::function<glm::vec3(float, float)>& GenNormal = [](float x, float y) { return glm::vec3(0.0f, 1.0f, 0.0f); });
+
+		QuadCloth* CreateQuadCloth(Shader* shader, Material * material, const QuadCloth::QuadClothDesc* desc);
 	};
 }

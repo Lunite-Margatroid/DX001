@@ -25,6 +25,7 @@ namespace yoi
 		~DVertexBuffer() = default;
 
 		void BindCS(ID3D11DeviceContext* pContext, unsigned int slot);
+		void UnbindCS(ID3D11DeviceContext* pContext, unsigned int slot);
 	
 	};
 }

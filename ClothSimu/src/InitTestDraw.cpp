@@ -75,10 +75,26 @@ namespace yoi
 		// sampler
 		m_pSampler = std::make_unique<Sampler>();
 		m_pSampler->Bind(pContext.Get());
+
 		// camera
 		m_MainCamera = new PerspectiveCamera(m_RootObj.get(), nullptr, "Camera");
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
 		((PerspectiveCamera*)m_MainCamera)->SetWidth(4.0);
+
+		QuadCloth::QuadClothDesc desc;
+		desc.Alpha = 0.5f;
+		desc.G = 2.0f;
+		desc.CellHeight = 0.2f;
+		desc.CellWidth = 0.2f;
+		desc.Mass = 0.001f;
+		desc.Width = 16;
+		desc.Height = 16;
+		
+
+		QuadCloth* quadCloth = m_pSpriteManager->CreateQuadCloth(m_pShaderManager->GetShader("Cloth Simulation Shader"), whtMaterial,
+			&desc);
+		SceneObj* quadClothObj = new SceneObj(m_RootObj.get(), static_cast<SpriteV3*>(quadCloth), "QuadClothTest");
+		quadClothObj->SetPosition(glm::vec3(-3.0f, 0.f, 0.f));
 	}
 }

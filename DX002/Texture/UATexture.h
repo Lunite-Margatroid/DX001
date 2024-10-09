@@ -13,8 +13,9 @@ namespace yoi
 	{
 	private:
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> m_pUAV;
+	protected:
+		UATexture() = default;
 	public:
-		UATexture() = delete;
 		~UATexture() = default;
 		UATexture(const UATexture&) = delete;
 		UATexture& operator = (const UATexture&) = delete;

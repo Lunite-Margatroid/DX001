@@ -32,9 +32,9 @@ namespace yoi
 		ID3D11Device* pDevice = Graphics::GetInstance().GetDevice();
 
 
-		struct Position { float x, y, z; };
+		struct Position { float x, y, z, w; };
 		struct TexCoord { float u, v; };
-		struct Normal { float x, y, z; };
+		struct Normal { float x, y, z, w; };
 
 		size_t sizeVertexBuffer[3] = { vertexCount * sizeof(Position) ,vertexCount * sizeof(TexCoord) , vertexCount * sizeof(Normal) };
 		size_t sizeIndexBuffer = indexCount * sizeof(unsigned int);
@@ -60,6 +60,7 @@ namespace yoi
 				position.x = j * m_CellWidth;
 				position.y = -i * m_CellHeight;
 				position.z = 0.f;
+				position.w = 1.0f;
 
 				texCoord.u = j * deltaU;
 				texCoord.v = i * deltaV;
@@ -91,10 +92,10 @@ namespace yoi
 		sd.SysMemPitch = sizeof(Position) * m_Width;
 
 		m_pPositionBuffer = std::make_unique<DVertexBuffer>(
-			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Width, m_Height, 3
+			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Width, m_Height, 4u
 		);
 		m_pPositionBuffer->SetLayoutType(1);
-		m_pPositionBuffer->SetLayout<VertexBuffer::Distrib<float, 3>>();
+		m_pPositionBuffer->SetLayout<VertexBuffer::Distrib<float, 4>>();
 
 
 		// vertexBuffer normal vector
@@ -102,10 +103,10 @@ namespace yoi
 		sd.pSysMem = normalPtr;
 		sd.SysMemPitch = sizeof(Normal) * m_Width;
 		m_pNormalBuffer = std::make_unique<DVertexBuffer>(
-			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Height, m_Width, 3u
+			VertexBuffer(Buffer(pDevice, &bd, &sd), 0, vertexCount), m_Height, m_Width, 4u
 		);
 		m_pNormalBuffer->SetLayoutType(1);
-		m_pNormalBuffer->SetLayout<VertexBuffer::Distrib<float, 3>>(); 
+		m_pNormalBuffer->SetLayout<VertexBuffer::Distrib<float, 4>>(); 
 
 		// vertex buffer texcoord buffer
 		bd.ByteWidth = sizeVertexBuffer[1];
@@ -116,6 +117,7 @@ namespace yoi
 		);
 		m_pTexCoordBuffer->SetLayoutType(1);
 		m_pTexCoordBuffer->SetLayout<VertexBuffer::Distrib<float, 2>>();
+
 
 
 		// index buffer
@@ -134,45 +136,11 @@ namespace yoi
 		m_IndexBuffer.SetOffset(0u);
 
 		/*************** create temp buffer ****************/
-		// position temp buffer
-		bd.ByteWidth = sizeof(Position) * vertexCount;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
-		bd.CPUAccessFlags = 0u;
-		bd.MiscFlags = 0u;
-		bd.StructureByteStride = 0u;
-
-		sd.pSysMem = vertexBuffer.get();
-		sd.SysMemPitch = sizeof(Position) * m_Width;
-		GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &m_pPreGridBuffer));
-
-		// velocity record buffer
-		memset(vertexBuffer.get(), 0, sizeof(Position) * vertexCount);
-		BYTE* velocityBuffer = vertexBuffer.get();
-		bd.ByteWidth = sizeof(float) * 3 * vertexCount;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
-		bd.CPUAccessFlags = 0u;
-		bd.MiscFlags = 0u;
-		bd.StructureByteStride = 0u;
-
-		sd.pSysMem = velocityBuffer;
-		sd.SysMemPitch = 0u;
-
-		GFX_THROW_INFO(pDevice->CreateBuffer(&bd, &sd, &m_pVelRecordBuffer));
-
-		/******************** Resource Veiw ***********************/
-		D3D11_UNORDERED_ACCESS_VIEW_DESC uavd = {};
-		uavd.Format = DXGI_FORMAT_R32G32B32_FLOAT;
-		uavd.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2D;
-		uavd.Texture2D.MipSlice = 0u;
+		
+		m_pPreGridBuffer = std::make_unique<UATexture>(m_Width, m_Height, static_cast<void*>(positionPtr), static_cast<D3D11_CPU_ACCESS_FLAG>(0u), DXGI_FORMAT_R32G32B32A32_FLOAT);
+		m_pVelRecordBuffer = std::make_unique<UATexture>(m_Width, m_Height, nullptr, static_cast<D3D11_CPU_ACCESS_FLAG>(0u), DXGI_FORMAT_R32G32B32A32_FLOAT);
 
 
-		// pre grid unorder access view
-		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pPreGridBuffer.Get(), &uavd, &m_pPreGridView));
-
-		// velocity record unorder access view
-		GFX_THROW_INFO(pDevice->CreateUnorderedAccessView(m_pVelRecordBuffer.Get(), &uavd, &m_pVelRecordView));
 
 		/**************** load compute shader ****************/
 		m_pConstraintShader = std::make_unique<CShader>(pDevice, "./shader-bin/ClothSimConstraintCS.cso");
@@ -222,9 +190,9 @@ namespace yoi
 
 		// calc thread count
 		int xCount = m_Width / 16;
-		xCount = m_Width % 16 ? xCount : xCount + 1;
+		xCount = m_Width % 16 ? xCount + 1: xCount;
 		int yCount = m_Height / 16;
-		yCount = m_Height % 16 ? yCount : yCount + 1;
+		yCount = m_Height % 16 ? yCount + 1: yCount;
 		// bind unorder access view
 		/*
 		RWTexture2D<float3> velRecord : register(u0);
@@ -232,10 +200,14 @@ namespace yoi
 		RWTexture2D<float3> curGrid : register(u2);
 		RWTexture2D<float3> normalGrid : register(u3);
 		*/
-		GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(0, 1, m_pVelRecordView.GetAddressOf(), nullptr));
-		GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(1, 1, m_pPreGridView.GetAddressOf(), nullptr));
-		m_pPositionBuffer->BindCS(pContext, 2);
-		m_pNormalBuffer  ->BindCS(pContext, 3);
+		m_pPreGridBuffer  ->BindCS(pContext, 1u);
+		m_pVelRecordBuffer->BindCS(pContext, 0u);
+
+		m_pPositionBuffer->UnbindVertexBuffer(pContext, 0);
+		m_pNormalBuffer->UnbindVertexBuffer(pContext, 1);
+
+		m_pPositionBuffer ->BindCS(pContext, 2);
+		m_pNormalBuffer   ->BindCS(pContext, 3);
 
 		// GFX_THROW_INFO_ONLY(pContext->CSSetUnorderedAccessViews(2, 1, m_pCurGridView.GetAddressOf(), nullptr));
 
@@ -245,7 +217,7 @@ namespace yoi
 		// set constant buffer
 		ClothSimSettings settings;
 		settings.deltaTime = m_ConstDeltaTime;
-		settings.nIteration = 20u;
+		settings.nIteration = 40u;
 		settings.alpha = m_Alpha;
 		settings.m = m_Mass;
 		settings.height = m_CellHeight;
@@ -286,10 +258,10 @@ namespace yoi
 
 		// right top vertex
 		settings.constraintU = m_Width - 1;
-		settings.constraintV = m_Height - 1;
+		settings.constraintV = 0u;
 		settings.constraintX = m_CellWidth * settings.constraintU;
 		settings.constraintY = 0.0f;
-		settings.constraintZ = 0.0f;
+		settings.constraintZ = 0.1f;
 
 		// set const buffer
 		m_cbufferSettings.SetBufferData(pContext, &settings, sizeof(ClothSimSettings), 0);
@@ -298,9 +270,15 @@ namespace yoi
 		GFX_THROW_INFO_ONLY(pContext->Dispatch(1, 1, 1));
 
 		/*********************** Generate the normal **************************/
+		// copy curGrid -> preGrid is also occur here
 		// bind compute shader
 		m_pGenNormal->Bind(pContext);
 		// Dispatch
 		pContext->Dispatch(xCount, yCount, 1);
+
+
+		/********************** unbind the view on vertex buffer***************/
+		m_pPositionBuffer->UnbindCS(pContext, 2);
+		m_pNormalBuffer->UnbindCS(pContext, 3);
 	}
 }

@@ -20,7 +20,7 @@ void CSGraphics::ComputeShaderTestInit()
 
 	// create test 2d texture
 	m_MaskImg = m_pTextureManager->LoadTexture("./img/mask.png");
-	m_TestImg = m_pTextureManager->LoadTexture("./img/img.png");
+	m_TestImg = m_pTextureManager->LoadTexture("./img/rumia.jpg");
 	yoi::Texture* texRumia = m_pTextureManager->LoadTexture("./img/rumia.jpg");
 
 	DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM;

@@ -252,6 +252,7 @@ namespace yoi
 		// RasterizerState
 		D3D11_RASTERIZER_DESC stt = {};
 		stt.FillMode = D3D11_FILL_SOLID;
+		// stt.FillMode = D3D11_FILL_WIREFRAME;
 		stt.CullMode = D3D11_CULL_NONE;
 		stt.FrontCounterClockwise = false;
 		stt.DepthBias = 0;

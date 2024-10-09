@@ -83,4 +83,11 @@ namespace yoi
 
 		return numSlots;
 	}
+	void VertexBuffer::UnbindVertexBuffer(ID3D11DeviceContext* pContext, unsigned int slot)
+	{
+		GFX_EXCEPT_SUPPORT();
+		ID3D11Buffer* null_ptr = nullptr;
+		unsigned int temp = 0u;
+		GFX_THROW_INFO_ONLY(pContext->IASetVertexBuffers(slot, 1, &null_ptr, &temp, &temp));
+	}
 }

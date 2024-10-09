@@ -22,6 +22,7 @@ namespace yoi
 		
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture2D();
+		ID3D11Texture2D* GetTexture2DPtr();
 		/********* defulat bind func ****************/
 		
 		virtual void Bind(ID3D11DeviceContext* pContext, UINT slot = 0u) = 0;

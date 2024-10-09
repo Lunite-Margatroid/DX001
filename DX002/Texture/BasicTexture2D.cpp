@@ -33,4 +33,8 @@ namespace yoi
     {
         return m_pTexture2D;
     }
+    ID3D11Texture2D* BasicTexture2D::GetTexture2DPtr()
+    {
+        return m_pTexture2D.Get();
+    }
 }

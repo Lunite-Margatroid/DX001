@@ -69,5 +69,7 @@ namespace yoi
 		/// <param name="slot"></param>
 		/// <returns> the num of slots this vertexbuffer occupy </returns>
 		unsigned int Bind(ID3D11DeviceContext* pContext, unsigned int slot);
+
+		void UnbindVertexBuffer(ID3D11DeviceContext* pContext, unsigned int slot);
 	};
 }

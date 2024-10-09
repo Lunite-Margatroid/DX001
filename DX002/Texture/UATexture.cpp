@@ -53,8 +53,8 @@ namespace yoi
 	}
 	UATexture::UATexture(UINT width, UINT height, void* data, D3D11_CPU_ACCESS_FLAG cpuFlag, DXGI_FORMAT format)
 	{
-		assert(format == DXGI_FORMAT_R32_FLOAT || format == DXGI_FORMAT_R32G32B32_FLOAT);
-		int nChannal = format == DXGI_FORMAT_R32G32B32_FLOAT ? 3 : 1;
+		assert(format == DXGI_FORMAT_R32_FLOAT || format == DXGI_FORMAT_R32G32B32A32_FLOAT);
+		int nChannal = format == DXGI_FORMAT_R32G32B32A32_FLOAT ? 4 : 1;
 		// ---- create temp data ---
 		float* tempData = nullptr;
 		if (data == nullptr)
