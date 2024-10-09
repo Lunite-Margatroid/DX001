@@ -53,4 +53,13 @@ namespace yoi
 			m_Position = m_AttachObj->GetModelTrans() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 		}
 	}
+	void PointLight::SetAttenuationFactor(int index, float factor)
+	{
+		if(index >= 0 && index < 3)
+			(&m_kConstant)[index] = factor;
+	}
+	void PointLight::SetPosition(const glm::vec3& position)
+	{
+		m_Position = position;
+	}
 }

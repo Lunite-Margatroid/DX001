@@ -42,4 +42,8 @@ namespace yoi
 			m_Direction = rotationTrans * glm::vec4(0.0f, -1.0f, 0.0f, 0.0f);
 		}
 	}
+	void DirLight::SetDirection(const glm::vec3 direction)
+	{
+		m_Direction = direction;
+	}
 }

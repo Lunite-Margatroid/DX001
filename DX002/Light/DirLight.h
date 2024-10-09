@@ -19,5 +19,9 @@ namespace yoi
 		virtual size_t WriteToBuffer(void* dest, size_t offset) override;
 
 		void UpdatePosition() override;
+
+
+		// direction defined by the attached object if exists
+		void SetDirection(const glm::vec3 direction);
 	};
 }

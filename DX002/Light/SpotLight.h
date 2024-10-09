@@ -26,5 +26,11 @@ namespace yoi
 		size_t WriteToBuffer(void* dest, size_t offset) override;
 
 		void UpdatePosition() override;
+
+		// input the cos of half view angel 
+		void SetOuterEdge(float outer);
+
+		// input the cos of half view angel
+		void SetinnerEdge(float inner);
 	};
 }

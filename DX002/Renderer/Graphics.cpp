@@ -356,6 +356,9 @@ namespace yoi
 		m_pObjWin = std::make_unique<ObjectPropertyWin>(m_RootObj.get());
 
 		m_DeltaTime = 0.f;
+
+		float clearColor[4] = { 0.224f, 0.773f, 0.733f , 1.0f};
+		memcpy(m_ClearColor, clearColor, sizeof(float) * 4);
 	}
 
 	Graphics::~Graphics()
@@ -439,10 +442,16 @@ namespace yoi
 
 
 	}
+
 	void Graphics::ClearBuffer(float red, float green, float blue)
 	{
 		const float color[] = { red, green, blue, 1.0f };
 		pContext->ClearRenderTargetView(pTarget.Get(), color);
+	}
+
+	void Graphics::ClearBuffer()
+	{
+		pContext->ClearRenderTargetView(pTarget.Get(), m_ClearColor);
 	}
 
 	/*

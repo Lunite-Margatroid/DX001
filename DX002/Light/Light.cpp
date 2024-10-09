@@ -25,4 +25,14 @@ namespace yoi
 	{
 		return m_AttachObj;
 	}
+	void Light::SetLightColor(const glm::vec3& color)
+	{
+		m_Color = color;
+	}
+	void Light::SetContribution(float ambient, float diffuse, float specular)
+	{
+		m_Contribution[0] = ambient;
+		m_Contribution[1] = diffuse;
+		m_Contribution[2] = specular;
+	}
 }

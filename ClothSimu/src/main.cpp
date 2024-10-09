@@ -2,6 +2,8 @@
 #include "Application.h"
 #include "Logger/FileLogger.h"
 
+#define CLOTHSIMU_WINDOW_HEIGHT 720
+#define CLOTHSIMU_WINDOW_WIDTH 1280
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
@@ -13,7 +15,7 @@ int CALLBACK WinMain(
 	{
 		yoi::FileLogger::Info("App begin to Run.");
 		yoi::FileLogger::Flush();
-		yoi::Application app;
+		yoi::Application app(CLOTHSIMU_WINDOW_WIDTH, CLOTHSIMU_WINDOW_HEIGHT, "Cloth Simulation Demoscene");
 		int ret = app.Run();
 		std::ostringstream oss;
 		oss << "App end. return code = " << ret;

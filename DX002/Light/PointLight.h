@@ -23,5 +23,10 @@ namespace yoi
 		virtual size_t WriteToBuffer(void* dest, size_t offset) override;
 
 		void UpdatePosition() override;
+
+		void SetAttenuationFactor(int index, float factor);
+
+		// position defined by the object attached if exists
+		void SetPosition(const glm::vec3& position);
 	};
 }

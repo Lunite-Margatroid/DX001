@@ -28,5 +28,8 @@ namespace yoi
 
 		void SetAttachedObj(LightObj* obj);
 		LightObj* GetAttachedObj();
+
+		void SetLightColor(const glm::vec3& color);
+		void SetContribution(float ambient, float diffuse, float specular);
 	};
 }

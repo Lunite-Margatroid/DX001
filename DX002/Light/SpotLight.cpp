@@ -65,4 +65,12 @@ namespace yoi
 			m_Direction = glm::normalize(m_Direction);
 		}
 	}
+	void SpotLight::SetOuterEdge(float outer)
+	{
+		m_OuterEdge = outer;
+	}
+	void SpotLight::SetinnerEdge(float inner)
+	{
+		m_InnerEdge = inner;
+	}
 }

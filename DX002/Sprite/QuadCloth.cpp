@@ -227,6 +227,7 @@ namespace yoi
 		settings.G = m_G;
 		settings.tAlpha = m_Alpha / (m_ConstDeltaTime * m_ConstDeltaTime);
 		settings.tBeta = 0.5f;
+		settings.constraintZ = sqrtf(settings.height * settings.height + settings.width * settings.width);
 		m_cbufferSettings.SetBufferData(pContext, &settings, sizeof(ClothSimSettings), 0);
 
 		// bind constant buffer
@@ -252,7 +253,6 @@ namespace yoi
 
 		// set const buffer
 		m_cbufferSettings.SetBufferData(pContext, &settings, sizeof(ClothSimSettings), 0);
-
 		// dispatch
 		GFX_THROW_INFO_ONLY(pContext->Dispatch(1, 1, 1));
 
@@ -261,11 +261,11 @@ namespace yoi
 		settings.constraintV = 0u;
 		settings.constraintX = m_CellWidth * settings.constraintU;
 		settings.constraintY = 0.0f;
-		settings.constraintZ = 0.1f;
+		settings.constraintZ = -0.1f;
+		// settings.constraintZ = 0.0f;
 
 		// set const buffer
 		m_cbufferSettings.SetBufferData(pContext, &settings, sizeof(ClothSimSettings), 0);
-
 		// dispatch
 		GFX_THROW_INFO_ONLY(pContext->Dispatch(1, 1, 1));
 

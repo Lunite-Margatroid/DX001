@@ -24,7 +24,7 @@ cbuffer ClothSimSetting : register(b0)
     uint constraintV;
     float constraintX;
     float constraintY;
-    float constraintZ;
+    float constraintZ; // it equal sqrt( height ^ 2 + width ^ 2 ) when update the vertex position
 };
 
 [numthreads(16, 16, 1)]
@@ -35,37 +35,50 @@ void main(uint3 DTid : SV_DispatchThreadID)
     float3 vel = velRecord[uint2(u, v)].xyz;
     float3 preX = preGrid[uint2(u, v)].xyz;
     
-    float gridWidth[2];
+    float gridWidth[3];
     gridWidth[0] = height;
     gridWidth[1] = width;
+    gridWidth[2] = constraintZ;
     
     // initial
     
-    float lambda[4];
+    float lambda[8];
     lambda[0] = 0.0f;
     lambda[1] = 0.0f;
     lambda[2] = 0.0f;
     lambda[3] = 0.0f;
+    lambda[4] = 0.0f;
+    lambda[5] = 0.0f;
+    lambda[6] = 0.0f;
+    lambda[7] = 0.0f;
     
-    uint2 offset[4];
+    int2 offset[8];
     offset[0] = int2(0, 1);
     offset[1] = int2(1, 0);
     offset[2] = int2(0, -1);
     offset[3] = int2(-1, 0);
     
+    offset[4] = int2( 1, -1);
+    offset[5] = int2(-1, -1);
+    offset[6] = int2(-1,  1);
+    offset[7] = int2( 1,  1);
+    
     // neibor vertex
-    float3 neiborVertex[4];
-    for (int i = 0; i < 4;i ++)
+    float3 neiborVertex[8];
+    for (int i = 0; i < 8;i ++)
     {
         int uu = int(u) + offset[i].x;
         int vv = int(v) + offset[i].y;
-        neiborVertex[i] = preGrid[uint2(uu, vv)].xyz;
+        if (uu < 0 || uu >= nWidth || vv < 0 || vv >= nHeight)
+            neiborVertex[i] = preX;
+        else
+            neiborVertex[i] = preGrid[uint2(uu, vv)].xyz;
     }
     
     
     // calc the accaleration
     float3 a = float3(0.0f, -G, 0.0f);
-    for (int j = 0; j < 4; j++)
+    for (int j = 0; j < 8; j++)
     {
         int uu = int(u) + offset[j].x;
         int vv = int(v) + offset[j].y;
@@ -76,7 +89,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
         float3 gridC = float3(0.0f, 0.0f, 0.0f);
         if (dist > 0.0001f)
             gridC = p / dist;
-        float C = dist - gridWidth[j % 2];
+        float C = dist - gridWidth[2];
+        if (j < 4)
+            C = dist - gridWidth[j % 2];
         
         a += -C * gridC / alpha / m;
     }
@@ -86,7 +101,7 @@ void main(uint3 DTid : SV_DispatchThreadID)
     for (int i = 0; i < nIteration; i++)
     {
         float3 deltaX = float3(0.0f, 0.0f, 0.0f);
-        for (int j = 0; j < 4; j++)
+        for (int j = 0; j < 8; j++)
         {
             int uu = int(u) + offset[j].x;
             int vv = int(v) + offset[j].y;
@@ -97,7 +112,9 @@ void main(uint3 DTid : SV_DispatchThreadID)
             float3 gridC  = float3(0.0f, 0.0f, 0.0f);
             if (dist > 0.0001f)
                gridC = p / dist;
-            float C = dist - gridWidth[j % 2];
+            float C = dist - gridWidth[2];
+            if (j < 4)
+                C = dist - gridWidth[j % 2];
             float deltaLambda = (-C - tAlpha * lambda[j]) / (dot(gridC, gridC) / m + tAlpha);
             
             lambda[j] += deltaLambda;

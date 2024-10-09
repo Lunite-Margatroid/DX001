@@ -89,12 +89,14 @@ namespace yoi
 		void EndFrame();
 
 		void ClearBuffer(float red, float green, float blue);
+		void ClearBuffer();
 
 	/****** test draw ******/
 	protected:
 		
 		std::unique_ptr<SceneObj> m_RootObj;
 		CameraObj* m_MainCamera;
+		float m_ClearColor[4];
 
 		YoiTimer timer;
 
