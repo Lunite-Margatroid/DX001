@@ -352,4 +352,11 @@ namespace yoi
 			}
 		}
 	}
+	void SceneObj::UpdateModelTrans(const glm::mat4& modelTrans)
+	{
+		m_ModelTrans = glm::translate(modelTrans, m_Position);
+		QuaternionRotate(m_ModelTrans, m_Qua);
+		m_ModelTrans = glm::scale(m_ModelTrans, m_Scale);
+		m_ModelTrans = m_ModelTrans * m_StaggerTrans;
+	}
 }

@@ -257,13 +257,13 @@ namespace yoi
 		stt.FrontCounterClockwise = false;
 		stt.DepthBias = 0;
 		stt.DepthBiasClamp = 0.0f;
-		stt.ScissorEnable = 0.0f;
+		stt.ScissorEnable = false;
 		stt.DepthClipEnable = true;
 		stt.ScissorEnable = false;
 		stt.MultisampleEnable = false;
 		stt.AntialiasedLineEnable = false;
 
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerState;
+		// Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerState;
 		GFX_THROW_INFO(pDevice->CreateRasterizerState(&stt, &pRasterizerState));
 		GFX_THROW_INFO_ONLY(pContext->RSSetState(pRasterizerState.Get()));
 
@@ -284,7 +284,7 @@ namespace yoi
 		dsd.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 		dsd.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDSState;
+		// Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDSState;
 
 		GFX_THROW_INFO(pDevice->CreateDepthStencilState(&dsd, &pDSState));
 		GFX_THROW_INFO_ONLY(pContext->OMSetDepthStencilState(pDSState.Get(), 0));
@@ -397,7 +397,8 @@ namespace yoi
 		ImVec2 windowSize = ImGui::GetWindowSize();					// 窗口大小
 		static ImVec2 sLastCursor;
 		ImVec2 sDeltaPos;
-		if (io.MouseDown[0] && camera)	// 左键按下
+
+		if (io.MouseDown[0] && camera )	// 左键按下
 		{
 			// 这里windowPos 是scene绘制区域的左上角
 			if (/*io.MouseClickedPos[0].x >= windowPos.x &&
@@ -551,6 +552,7 @@ namespace yoi
 
 	}
 	*/
+
 	void Graphics::DrawTriangle()
 	{
 		m_DeltaTime = timer.Mark();
@@ -568,9 +570,44 @@ namespace yoi
 		m_pLightManager->Bind(pContext.Get());
 		GFX_THROW_INFO_ONLY(m_RootObj->RenderV3(m_MainCamera));
 	}
+	void Graphics::Update()
+	{
+		m_DeltaTime = timer.Mark();
+		m_RootObj->Update(m_DeltaTime);
+
+		m_pLightManager->Flush();
+		m_pLightManager->Bind(pContext.Get());
+
+		m_pLightManager->UpdateConstantBuffer();
+		m_pLightManager->Bind(pContext.Get());
+	}
 	CameraObj* Graphics::GetMainCamera()
 	{
 		return m_MainCamera;
+	}
+	void Graphics::InitPipeline()
+	{
+		m_pPipeline = std::make_unique<Pipeline>(pDevice.Get(), pContext.Get());
+
+		m_pPipeline->AddRenderTaget(pTarget.Get());
+		m_pPipeline->SetDepthStencilView(pDepthStencil.Get());
+		m_pPipeline->SetRasterizerState(pRasterizerState.Get());
+		m_pPipeline->SetDepthStencilState(pDSState.Get());
+
+		D3D11_VIEWPORT vp = {};
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		vp.Width = 1280;
+		vp.Height = 720;
+		vp.MinDepth = 0;
+		vp.MaxDepth = 1;
+
+		m_pPipeline->SetViewPort(&vp);
+
+	}
+	void Graphics::RunPipeline()
+	{
+		m_pPipeline->Render(m_MainCamera, m_RootObj.get());
 	}
 	ID3D11Device* Graphics::GetDevice()
 	{

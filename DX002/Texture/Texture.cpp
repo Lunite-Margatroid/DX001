@@ -4,6 +4,19 @@
 #include "Renderer\GFXMacro.h"
 namespace yoi
 {
+	void Texture::Init(ID3D11Device* pDevcie, const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd)
+	{
+		GFX_EXCEPT_SUPPORT();
+
+		GFX_THROW_INFO(pDevcie->CreateTexture2D(td, sd, &m_pTexture2D));
+
+		D3D11_SHADER_RESOURCE_VIEW_DESC rvd = {};
+		rvd.Format = td->Format;
+		rvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		rvd.Texture2D.MostDetailedMip = 0u;
+		rvd.Texture2D.MipLevels = 1u;
+		GFX_THROW_INFO(pDevcie->CreateShaderResourceView(m_pTexture2D.Get(), &rvd, &m_pResView));
+	}
 	Texture::Texture(const ImgRes& img)
 	{
 		GFX_EXCEPT_SUPPORT();
@@ -37,16 +50,7 @@ namespace yoi
 
 	Texture::Texture(ID3D11Device* device, const D3D11_TEXTURE2D_DESC* desc, const D3D11_SUBRESOURCE_DATA* data)
 	{
-		GFX_EXCEPT_SUPPORT();
-
-		GFX_THROW_INFO(device->CreateTexture2D(desc, data, &m_pTexture2D));
-
-		D3D11_SHADER_RESOURCE_VIEW_DESC rvd = {};
-		rvd.Format = desc->Format;
-		rvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		rvd.Texture2D.MostDetailedMip = 0u;
-		rvd.Texture2D.MipLevels = 1u;
-		GFX_THROW_INFO(device->CreateShaderResourceView(m_pTexture2D.Get(), &rvd, &m_pResView));
+		Init(device, desc, data);
 	}
 
 	Texture::Texture(Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture)

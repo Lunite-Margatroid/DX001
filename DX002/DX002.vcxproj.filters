@@ -279,6 +279,15 @@
     <ClInclude Include="Shader\P3_N3_T2_ClothSim.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Pipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\OSRTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -501,6 +510,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BufferManager\DVertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Pipeline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\OSRTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Screen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

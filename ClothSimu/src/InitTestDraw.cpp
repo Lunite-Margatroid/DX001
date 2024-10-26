@@ -58,13 +58,13 @@ namespace yoi
 		SpriteV3* floorSprite = m_pSpriteManager->Sprite(floorMesh);
 
 		QuadCloth::QuadClothDesc desc;
-		desc.Alpha = 0.1f;
+		desc.Alpha = 0.2f;
 		desc.G = 9.8f;
-		desc.CellHeight = 0.2f;
-		desc.CellWidth = 0.2f;
-		desc.Mass = 0.01f;
-		desc.Width = 16;
-		desc.Height = 16;
+		desc.CellHeight = 0.1f;
+		desc.CellWidth = 0.1f;
+		desc.Mass = 0.0005f;
+		desc.Width = 32;
+		desc.Height = 32;
 		desc.ConstDeltaTime = 0.005f;
 
 		QuadCloth* quadCloth = m_pSpriteManager->CreateQuadCloth(m_pShaderManager->GetShader("Cloth Simulation Shader"), whtMaterial,

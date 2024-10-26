@@ -35,6 +35,7 @@ namespace yoi
 		VertexBuffer();
 		VertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
 		VertexBuffer(Buffer&& buffer, size_t offset, unsigned int vertexCount);
+		VertexBuffer(ID3D11Device* pDevice, void* data, size_t size);
 		VertexBuffer(VertexBuffer&& other) noexcept;
 		VertexBuffer(const VertexBuffer&) = delete;
 		VertexBuffer& operator = (const VertexBuffer&) = delete;

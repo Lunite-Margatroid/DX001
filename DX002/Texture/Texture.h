@@ -13,6 +13,8 @@ namespace yoi
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_pResView;
 
 		Texture() = default;
+
+		void Init(ID3D11Device* pDevcie, const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd);
 	public:
 		Texture(const ImgRes& img);
 		// Create a single-color Texture

@@ -17,6 +17,24 @@ namespace yoi
 		:Buffer(std::move(buffer)), m_Offset(offset), m_VertexCount(vertexCount)
 	{
 	}
+	VertexBuffer::VertexBuffer(ID3D11Device* pDevice, void* data, size_t size)
+		:m_Offset(0),m_VertexCount(0)
+	{
+		GFX_EXCEPT_SUPPORT();
+		D3D11_BUFFER_DESC bufferDesc = {};
+		bufferDesc.ByteWidth = size;
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+
+		D3D11_SUBRESOURCE_DATA subData = {};
+		subData.pSysMem = data;
+
+		GFX_THROW_INFO(pDevice->CreateBuffer(&bufferDesc, &subData, &m_d3dBuffer));
+		
+	}
 	VertexBuffer::VertexBuffer(VertexBuffer&& other) noexcept
 		:m_Offset(other.m_Offset),
 		m_VertexCount(other.m_VertexCount),

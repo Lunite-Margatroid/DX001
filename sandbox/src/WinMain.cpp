@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "Application.h"
 #include "Logger/FileLogger.h"
-
+#include "Sandbox.h"
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
@@ -13,7 +12,7 @@ int CALLBACK WinMain(
 	{
 		yoi::FileLogger::Info("App begin to Run.");
 		yoi::FileLogger::Flush();
-		yoi::Application app;
+		yoi::Sandbox app;
 		int ret = app.Run();
 		std::ostringstream oss;
 		oss << "App end. return code = " << ret;

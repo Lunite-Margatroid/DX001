@@ -177,6 +177,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Sandbox.cpp" />
     <ClCompile Include="src\InitTestDraw.cpp" />
     <ClCompile Include="src\WinMain.cpp" />
   </ItemGroup>
@@ -184,6 +185,9 @@
     <ProjectReference Include="..\DX002\DX002.vcxproj">
       <Project>{798eef49-ebe9-4314-bad8-b4bbb5f2a645}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Sandbox.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

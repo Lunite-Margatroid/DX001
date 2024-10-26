@@ -206,6 +206,8 @@
     <ClInclude Include="Material\Material.h" />
     <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
+    <ClInclude Include="Renderer\Pipeline.h" />
+    <ClInclude Include="Renderer\Screen.h" />
     <ClInclude Include="SceneObject\Camera2DObj.h" />
     <ClInclude Include="SceneObject\LightObj.h" />
     <ClInclude Include="Shader\P2_T2_2D.h" />
@@ -232,6 +234,7 @@
     <ClInclude Include="Texture\BasicTexture2D.h" />
     <ClInclude Include="Texture\CSUTexture.h" />
     <ClInclude Include="Texture\ImgRes.h" />
+    <ClInclude Include="Texture\OSRTexture.h" />
     <ClInclude Include="Texture\Sampler.h" />
     <ClInclude Include="Texture\Texture.h" />
     <ClInclude Include="Texture\TextureManager.h" />
@@ -289,6 +292,8 @@
     <ClCompile Include="Logger\FileLogger.cpp" />
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\MaterialManager.cpp" />
+    <ClCompile Include="Renderer\Pipeline.cpp" />
+    <ClCompile Include="Renderer\Screen.cpp" />
     <ClCompile Include="SceneObject\Camera2DObj.cpp" />
     <ClCompile Include="SceneObject\LightObj.cpp" />
     <ClCompile Include="Shader\P2_T2_2D.cpp" />
@@ -314,6 +319,7 @@
     <ClCompile Include="Texture\BasicTexture2D.cpp" />
     <ClCompile Include="Texture\CSUTexture.cpp" />
     <ClCompile Include="Texture\ImgRes.cpp" />
+    <ClCompile Include="Texture\OSRTexture.cpp" />
     <ClCompile Include="Texture\Sampler.cpp" />
     <ClCompile Include="Texture\Texture.cpp" />
     <ClCompile Include="Texture\TextureManager.cpp" />

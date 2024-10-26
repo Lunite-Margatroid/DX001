@@ -24,6 +24,7 @@
 #include "Sprite\SpriteManager.h"
 
 #include "CShader\CShader.h"
+#include "Pipeline.h"
 
 
 namespace yoi
@@ -106,12 +107,25 @@ namespace yoi
 		std::unique_ptr<Sampler> m_pSampler;
 		std::unique_ptr<Sampler> m_pSampler1;
 		float m_DeltaTime;
+
+		// pipeline test
 	public:
 		void InitTestDraw();
 		void DrawTriangle();
 
+		void Update();
+		
+
 		CameraObj* GetMainCamera();
 	/****** test draw * end */
+
+	/******** pipeline test ***********/
+	private:
+		std::unique_ptr<Pipeline> m_pPipeline;
+	public:
+		void InitPipeline();
+		void RunPipeline();
+	/******** pipeline test *** end ***/
 
 	/*********** Context ********************/
 	protected:
@@ -121,6 +135,8 @@ namespace yoi
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> pDepthStencil;
 		Microsoft::WRL::ComPtr<ID3D11BlendState> pBlendState;
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState> pRasterizerState;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDSState;
 		/*
 		* 使用&运算符，获取的是ComPtr的资源的地址，即内部指针的地址。
 		* 使用&运算符，ComPtr会先Release，再返回指针的地址。这意味着使用&后，原先的实例会失效。

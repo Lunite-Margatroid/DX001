@@ -11,6 +11,7 @@ namespace yoi
 
 	class SceneObj
 	{
+		friend class Pipeline;
 	protected:
 		SceneObj* m_ParentObj;
 		Sprite* m_Sprite;
@@ -105,5 +106,11 @@ namespace yoi
 		void ResetStaggering();
 
 		void SetVisible(bool visible, bool recursion = false);
+
+		/// <summary>
+		/// update model mat basing on the input.
+		/// </summary>
+		/// <param name="modelTrans"></param>
+		void UpdateModelTrans(const glm::mat4& modelTrans);
 	};
 }

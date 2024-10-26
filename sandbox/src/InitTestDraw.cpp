@@ -78,7 +78,7 @@ namespace yoi
 		// camera
 		m_MainCamera = new PerspectiveCamera(m_RootObj.get(), nullptr, "Camera");
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
-		((PerspectiveCamera*)m_MainCamera)->SetHeight(3.0);
-		((PerspectiveCamera*)m_MainCamera)->SetWidth(4.0);
+		((PerspectiveCamera*)m_MainCamera)->SetHeight(9.0);
+		((PerspectiveCamera*)m_MainCamera)->SetWidth(16.0);
 	}
 }
