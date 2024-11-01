@@ -587,13 +587,31 @@ namespace yoi
 	}
 	void Graphics::InitPipeline()
 	{
-		m_pPipeline = std::make_unique<Pipeline>(pDevice.Get(), pContext.Get());
+		
+		m_pScreenTex = std::make_unique<OSRTexture>(pDevice.Get(), 1280, 720);
+		m_pDepthStencilTex = std::make_unique<DSTexture>(pDevice.Get(), 1280, 720);
+		
+		// create scene for screen render
+		Material* mtl = m_pMaterialManager->Add(
+			new Material(dynamic_cast<Texture*>(m_pScreenTex.get()),m_pTextureManager.get()), 
+			"screen texture");
+		Mesh mesh(m_pBufferManager->GetVertexBuffer(BufferManager::Buffers::Vertex_P2_T2_Quad),
+			m_pBufferManager->GetIndexBuffer(BufferManager::Buffers::Index_Quad),
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP,
+			m_pShaderManager->GetShader("Textured Shader 2D"),
+			mtl);
+		SpriteV3 *sprite = m_pSpriteManager->Sprite(std::move(mesh));
+		m_pScreenScene = std::make_unique<SceneObj>(nullptr, sprite, "off-screen render");
 
-		m_pPipeline->AddRenderTaget(pTarget.Get());
-		m_pPipeline->SetDepthStencilView(pDepthStencil.Get());
-		m_pPipeline->SetRasterizerState(pRasterizerState.Get());
-		m_pPipeline->SetDepthStencilState(pDSState.Get());
+		m_pCamera2D = new Camera2DObj(m_pScreenScene.get(), nullptr, "screen camera");
+		m_pCamera2D->SetViewLeft(-1.0f);
+		m_pCamera2D->SetViewRight(1.0f);
+		m_pCamera2D->SetViewBottom(-1.0f);
+		m_pCamera2D->SetViewTop(1.0f);
+		m_pCamera2D->SetViewNear(1.0f);
+		m_pCamera2D->SetViewFar(-1.0f);
 
+		// view port
 		D3D11_VIEWPORT vp = {};
 		vp.TopLeftX = 0;
 		vp.TopLeftY = 0;
@@ -602,12 +620,28 @@ namespace yoi
 		vp.MinDepth = 0;
 		vp.MaxDepth = 1;
 
+		// init pipeline for screen render
+		m_pPipelineScreen = std::make_unique<Screen>(pDevice.Get(), pContext.Get());
+		m_pPipelineScreen->AddRenderTaget(pTarget.Get());
+		m_pPipelineScreen->SetDepthStencilView(m_pDepthStencilTex->GetDSView());
+		m_pPipelineScreen->SetViewPort(&vp);
+
+		// init pipeline for main scene render
+		m_pPipeline = std::make_unique<Pipeline>(pDevice.Get(), pContext.Get());
+		m_pPipeline->AddRenderTaget(m_pScreenTex->GetRenderTarget());
+		m_pPipeline->SetDepthStencilView(pDepthStencil.Get());
+		m_pPipeline->SetRasterizerState(pRasterizerState.Get());
+		m_pPipeline->SetDepthStencilState(pDSState.Get());
+
 		m_pPipeline->SetViewPort(&vp);
+
+
 
 	}
 	void Graphics::RunPipeline()
 	{
 		m_pPipeline->Render(m_MainCamera, m_RootObj.get());
+		m_pPipelineScreen->Render(m_pCamera2D, m_pScreenScene.get());
 	}
 	ID3D11Device* Graphics::GetDevice()
 	{

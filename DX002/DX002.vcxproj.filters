@@ -288,6 +288,9 @@
     <ClInclude Include="Renderer\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\DSTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -519,6 +522,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\DSTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

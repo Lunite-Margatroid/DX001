@@ -10,22 +10,33 @@
 #include "Timer/YoiTimer.h"
 #include <D3D11.h>
 #include <wrl.h>
+
 #include "ImGuiManager/ImGuiManager.h"
-#include "Sprite\SpriteV1Cube.h"
-#include "SceneObject\PerspectiveCamera.h"
 #include "ImWindow\ObjectPropertyWin.h"
-#include "Shader\ShaderManager.h"
+
+#include "SceneObject\PerspectiveCamera.h"
+#include "SceneObject\Camera2DObj.h"
+
 #include "BufferManager\BufferManager.h"
-#include "Texture\Texture.h"
-#include "Texture\Sampler.h"
+
 #include "Material\MaterialManager.h"
+
 #include "Texture/TextureManager.h"
+#include "Texture\Sampler.h"
+#include "Texture\Texture.h"
+#include "Texture\OSRTexture.h"
+#include "Texture\DSTexture.h"
+
 #include "Light\LightManager.h"
+
 #include "Sprite\SpriteManager.h"
+#include "Sprite\SpriteV1Cube.h"
 
+#include "Shader\ShaderManager.h"
 #include "CShader\CShader.h"
-#include "Pipeline.h"
 
+#include "Pipeline.h"
+#include "Screen.h"
 
 namespace yoi
 {
@@ -121,11 +132,24 @@ namespace yoi
 
 	/******** pipeline test ***********/
 	private:
+		// pipeline to render main scene
 		std::unique_ptr<Pipeline> m_pPipeline;
+		// off-screen render target and the render target for main scene.
+		std::unique_ptr<OSRTexture> m_pScreenTex;
+		
+
+		// render the off-screen texture on screen
+		std::unique_ptr<Screen> m_pPipelineScreen;
+		// the scene to show off-screen texture
+		std::unique_ptr<SceneObj> m_pScreenScene;
+		// the camera to show off-screen texture
+		Camera2DObj* m_pCamera2D;
+		// depthstencil texture for screen render
+		std::unique_ptr<DSTexture> m_pDepthStencilTex;
 	public:
 		void InitPipeline();
 		void RunPipeline();
-	/******** pipeline test *** end ***/
+	/******** pipeline test **** end ***/
 
 	/*********** Context ********************/
 	protected:

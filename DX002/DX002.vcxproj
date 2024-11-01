@@ -233,6 +233,7 @@
     <ClInclude Include="Sprite\WaterWave.h" />
     <ClInclude Include="Texture\BasicTexture2D.h" />
     <ClInclude Include="Texture\CSUTexture.h" />
+    <ClInclude Include="Texture\DSTexture.h" />
     <ClInclude Include="Texture\ImgRes.h" />
     <ClInclude Include="Texture\OSRTexture.h" />
     <ClInclude Include="Texture\Sampler.h" />
@@ -318,6 +319,7 @@
     <ClCompile Include="Sprite\WaterWave.cpp" />
     <ClCompile Include="Texture\BasicTexture2D.cpp" />
     <ClCompile Include="Texture\CSUTexture.cpp" />
+    <ClCompile Include="Texture\DSTexture.cpp" />
     <ClCompile Include="Texture\ImgRes.cpp" />
     <ClCompile Include="Texture\OSRTexture.cpp" />
     <ClCompile Include="Texture\Sampler.cpp" />

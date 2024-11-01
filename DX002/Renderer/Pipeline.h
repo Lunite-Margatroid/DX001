@@ -1,3 +1,16 @@
+/*
+* abstract pipeline
+* 
+* excepted to call the methord below before rendering
+* 
+* void AddRenderTaget(ID3D11RenderTargetView* renderTarget);
+* void SetDepthStencilView(ID3D11DepthStencilView* depthStencilView);
+* void SetRasterizerState(ID3D11RasterizerState* rasterizerState);
+* void SetDepthStencilState(ID3D11DepthStencilState* depthStencilState);
+* void SetViewPort(const D3D11_VIEWPORT* viewPort);
+* 
+*/
+
 #pragma once
 #include <d3d11.h>
 #include "SceneObject\CameraObj.h"
@@ -26,9 +39,9 @@ namespace yoi
 	protected:
 		// render target views
 		std::vector<ID3D11RenderTargetView*> m_RenderTargets;
-
 		// depth stencil view
 		ID3D11DepthStencilView* m_DepthStencilVeiw;
+
 		// state
 		ID3D11DepthStencilState* m_DepthStencilState;
 
@@ -55,7 +68,7 @@ namespace yoi
 		void PushRenderQueue( SceneObj* scene, const glm::mat4& modelTrans);
 
 	public:
-		Pipeline(ID3D11Device* pDevice, ID3D11DeviceContext* Context);
+		Pipeline(ID3D11Device* pDevice, ID3D11DeviceContext* pContext);
 		virtual ~Pipeline() = default;
 
 		void AddRenderTaget(ID3D11RenderTargetView* renderTarget);

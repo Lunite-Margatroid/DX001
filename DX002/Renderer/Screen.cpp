@@ -59,32 +59,11 @@ namespace yoi
 
 		GFX_THROW_INFO(m_pDevice->CreateBlendState(&bd, &m_pBlendState));
 
-		/************ Init vertex buffer ************/
-		struct Vertex
-		{
-			struct
-			{
-				float x, y;
-			}Postion;
-			struct
-			{
-				float u, v;
-			}TexCoord;
-		};
-
-		Vertex vertexData[] =
-		{
-			{{-1.0f, -1.0f}, {0.0f, 1.0f}},
-			{{1.0f, -1.0f}, {1.0f, 1.0f}},
-			{{-1.0f, 1.0f}, {0.0f, 0.0f}},
-			{{1.0f, 1.0f}, {1.0f, 0.0f}}
-		};
-
-		m_pVertexBuffer = std::make_unique<VertexBuffer>(m_pDevice, vertexData, sizeof(vertexData));
-		m_pVertexBuffer->SetVertexCount(4);
-		m_pVertexBuffer->SetLayout<VertexBuffer::Distrib<float, 2>, VertexBuffer::Distrib<float, 2>>();
-
-
+	}
+	Screen::Screen(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
+		:Pipeline(pDevice, pContext)
+	{
+		Init();
 	}
 	Screen::~Screen()
 	{
@@ -96,34 +75,7 @@ namespace yoi
 			delete m_pBlendState;
 	}
 
-	void Screen::Flush()
-	{
-		GFX_EXCEPT_SUPPORT();
 
-		GFX_THROW_INFO_ONLY(m_pContext->OMSetDepthStencilState(m_DepthStencilState, m_StencilRef));
-		GFX_THROW_INFO_ONLY(m_pContext->OMSetBlendState(m_pBlendState, m_BlendFactor, m_SampleMask));
-		GFX_THROW_INFO_ONLY(m_pContext->RSSetViewports(1, &m_ViewPort));
-		GFX_THROW_INFO_ONLY(m_pContext->OMSetRenderTargets(m_RenderTargets.size(), m_RenderTargets.data(), m_DepthStencilVeiw));
-		GFX_THROW_INFO_ONLY(m_pContext->RSSetState(m_pRasterizerState));
 
-		// clear buffer
-		GFX_THROW_INFO_ONLY(m_pContext->ClearRenderTargetView(m_RenderTargets[0], m_ClearColor));
-		GFX_THROW_INFO_ONLY(m_pContext->ClearDepthStencilView(m_DepthStencilVeiw, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0x00));
 
-		m_pVertexBuffer->Bind(m_pContext, 0);
-		m_Shader->Bind(m_pContext);
-
-		GFX_THROW_INFO_ONLY(m_pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP));
-
-		GFX_THROW_INFO_ONLY(m_pContext->Draw(m_pVertexBuffer->GetVertexCount(), 0u));
-	}
-
-	void Screen::Render(CameraObj* camera, SceneObj* scene)
-	{
-		assert(false);
-	}
-	void Screen::SetShader(Shader* shader)
-	{
-		m_Shader = shader;
-	}
 }

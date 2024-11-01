@@ -19,6 +19,7 @@ namespace yoi
 
 
 		void InitTextureResource(const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd);
+		void InitTextureResource(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd);
 		
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture2D();

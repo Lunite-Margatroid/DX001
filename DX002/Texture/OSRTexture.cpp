@@ -7,6 +7,8 @@ namespace yoi
 {
 	OSRTexture::OSRTexture(ID3D11Device* pDevice, unsigned int width, unsigned int height, DXGI_FORMAT format)
 	{
+		GFX_EXCEPT_SUPPORT();
+
 		D3D11_TEXTURE2D_DESC td = {};
 
 		td.Format = format;
@@ -16,7 +18,7 @@ namespace yoi
 		td.CPUAccessFlags  = 0u;
 		td.Width = width;
 		td.Height = height;
-		td.MipLevels = 0u;
+		td.MipLevels = 1u;
 		td.MiscFlags = 0u;
 		td.SampleDesc.Count = 1;
 		td.SampleDesc.Quality = 0;
@@ -45,16 +47,20 @@ namespace yoi
 
 		Texture::Init(pDevice, &td, &sd);
 
-		D3D11_RENDER_TARGET_VIEW_DESC rtvd = {};
+		/*D3D11_RENDER_TARGET_VIEW_DESC rtvd = {};
 		rtvd.Format = format;
-		rtvd.Texture2D.MipSlice = 0u;
+		rtvd.Texture2D.MipSlice = 0u;*/
 
-		pDevice->CreateRenderTargetView(m_pTexture2D.Get(), &rtvd, &m_RenderTargetView);
+		GFX_THROW_INFO(pDevice->CreateRenderTargetView(m_pTexture2D.Get(), nullptr, &m_RenderTargetView));
 
 	}
 	void OSRTexture::BindRenderTarget(ID3D11DeviceContext* pContext)
 	{
 		GFX_EXCEPT_SUPPORT();
 		GFX_THROW_INFO_ONLY(pContext->OMSetRenderTargets(1, m_RenderTargetView.GetAddressOf(), nullptr));
+	}
+	ID3D11RenderTargetView* OSRTexture::GetRenderTarget()
+	{
+		return m_RenderTargetView.Get();
 	}
 }

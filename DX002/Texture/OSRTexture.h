@@ -18,6 +18,6 @@ namespace yoi
 		OSRTexture(ID3D11Device* pDevice, unsigned int width, unsigned int height, DXGI_FORMAT format = DXGI_FORMAT_R8G8B8A8_UNORM);
 
 		void BindRenderTarget(ID3D11DeviceContext* pContext);
-	
+		ID3D11RenderTargetView* GetRenderTarget();
 	};
 };
