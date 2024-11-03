@@ -16,5 +16,6 @@ namespace yoi
 
 		virtual void ShowWindow() = 0;
 		virtual const char* GetWindowTitle() const = 0;
+		virtual void Update(float deltaTime);
 	};
 }

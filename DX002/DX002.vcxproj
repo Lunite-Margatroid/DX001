@@ -196,6 +196,7 @@
     <ClInclude Include="ImGuiManager\ImGuiManager.h" />
     <ClInclude Include="ImGuiManager\ImWindowManager.h" />
     <ClInclude Include="ImWindow\ImWindow.h" />
+    <ClInclude Include="ImWindow\MainSceneWin.h" />
     <ClInclude Include="ImWindow\ObjectPropertyWin.h" />
     <ClInclude Include="Light\DirLight.h" />
     <ClInclude Include="Light\Light.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
     <ClCompile Include="ImGuiManager\ImWindowManager.cpp" />
     <ClCompile Include="ImWindow\ImWindow.cpp" />
+    <ClCompile Include="ImWindow\MainSceneWin.cpp" />
     <ClCompile Include="ImWindow\ObjectPropertyWin.cpp" />
     <ClCompile Include="Light\DirLight.cpp" />
     <ClCompile Include="Light\Light.cpp" />

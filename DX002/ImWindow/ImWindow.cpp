@@ -8,4 +8,7 @@ namespace yoi
 		m_Open(true)
 	{
 	}
+	void ImWindow::Update(float deltaTime)
+	{
+	}
 }

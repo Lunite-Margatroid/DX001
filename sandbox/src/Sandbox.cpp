@@ -6,7 +6,7 @@ namespace yoi
 	yoi::Sandbox::Sandbox()
 		:Application(1280, 720, "sandbox")
 	{
-		wnd.Gfx().InitPipeline();
+		// wnd.Gfx().InitPipeline();
 	}
 	void Sandbox::DoFrame()
 	{

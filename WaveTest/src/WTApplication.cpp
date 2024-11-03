@@ -30,9 +30,14 @@ void WTAApplication::DoFrame()
 	wnd.SetTitle(oss.str());*/
 	// float c = sinf(timer.Peek()) / 2.f + 0.5f;
 
-	wnd.Gfx().ClearBuffer(0.224f, 0.773f, 0.733f);
+	/*wnd.Gfx().ClearBuffer(0.224f, 0.773f, 0.733f);
 
 	wnd.Gfx().DrawTriangle();
+	wnd.Gfx().ImGuiFrame();
+	wnd.Gfx().EndFrame();*/
+
+	wnd.Gfx().Update();
+	wnd.Gfx().RunPipeline();
 	wnd.Gfx().ImGuiFrame();
 	wnd.Gfx().EndFrame();
 }

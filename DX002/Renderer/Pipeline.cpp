@@ -60,6 +60,10 @@ namespace yoi
     {
         m_ViewPort = *viewPort;
     }
+    void Pipeline::SetBlendState(ID3D11BlendState* blendState)
+    {
+        m_pBlendState = blendState;
+    }
     void Pipeline::Render(CameraObj* camera, SceneObj* scene)
     {
         GFX_EXCEPT_SUPPORT();

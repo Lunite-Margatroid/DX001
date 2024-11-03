@@ -13,6 +13,7 @@
 
 #include "ImGuiManager/ImGuiManager.h"
 #include "ImWindow\ObjectPropertyWin.h"
+#include "ImWindow\MainSceneWin.h"
 
 #include "SceneObject\PerspectiveCamera.h"
 #include "SceneObject\Camera2DObj.h"
@@ -113,13 +114,13 @@ namespace yoi
 		YoiTimer timer;
 
 		std::unique_ptr<ObjectPropertyWin> m_pObjWin;
+		std::unique_ptr<MainSceneWin> m_pMainSceneWin;
 
 		std::unique_ptr<Texture> m_pTexture;
 		std::unique_ptr<Sampler> m_pSampler;
 		std::unique_ptr<Sampler> m_pSampler1;
 		float m_DeltaTime;
 
-		// pipeline test
 	public:
 		void InitTestDraw();
 		void DrawTriangle();

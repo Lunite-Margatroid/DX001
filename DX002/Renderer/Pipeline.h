@@ -8,6 +8,7 @@
 * void SetRasterizerState(ID3D11RasterizerState* rasterizerState);
 * void SetDepthStencilState(ID3D11DepthStencilState* depthStencilState);
 * void SetViewPort(const D3D11_VIEWPORT* viewPort);
+* void SetBlendState(ID3D11BlendState* blendState);
 * 
 */
 
@@ -72,11 +73,13 @@ namespace yoi
 		virtual ~Pipeline() = default;
 
 		void AddRenderTaget(ID3D11RenderTargetView* renderTarget);
-		void SetDepthStencilView(ID3D11DepthStencilView* depthStencilView);
 		void ClearRenderTarget();
+
+		void SetDepthStencilView(ID3D11DepthStencilView* depthStencilView);
 		void SetRasterizerState(ID3D11RasterizerState* rasterizerState);
 		void SetDepthStencilState(ID3D11DepthStencilState* depthStencilState);
 		void SetViewPort(const D3D11_VIEWPORT* viewPort);
+		void SetBlendState(ID3D11BlendState* blendState);
 
 		virtual void Render(CameraObj* camera, SceneObj* scene);
 	};

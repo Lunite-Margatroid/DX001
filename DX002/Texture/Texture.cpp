@@ -147,6 +147,11 @@ namespace yoi
 		pContext->VSSetShaderResources(slot, 1u, &null_ptr);
 	}
 
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Texture::GetShaderResourceView()
+	{
+		return m_pResView;
+	}
+
 	/*********** bind pixel shader *****************/
 	void Texture::BindPS(ID3D11DeviceContext* pContext, UINT slot)
 	{

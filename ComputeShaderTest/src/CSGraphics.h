@@ -4,7 +4,7 @@
 class CSGraphics : public yoi::Graphics
 {
 public:
-	CSGraphics(HWND hwnd);
+	CSGraphics(HWND hwnd,unsigned int width, unsigned int height);
 	virtual ~CSGraphics() = default;
 	CSGraphics(const CSGraphics&) = delete;
 	CSGraphics& operator = (const CSGraphics&) = delete;

@@ -371,53 +371,10 @@ namespace yoi
 	{
 		pImGuiManager->BeginImGuiFrame();
 
+		ImGui::DockSpaceOverViewport();
+
 		m_pObjWin->ShowWindow();
-
-		/* temp camera control */
-		// key control
-		ImGuiIO& io = ImGui::GetIO();
-		Camera3DObj* camera = dynamic_cast<Camera3DObj*>(m_MainCamera);
-		if (camera)
-		{
-			if (io.KeysDown[ImGuiKey_W])
-				camera->Move(CameraObj::Direction::front, m_DeltaTime);
-			if (io.KeysDown[ImGuiKey_A])
-				camera->Move(CameraObj::Direction::left, m_DeltaTime);
-			if (io.KeysDown[ImGuiKey_S])
-				camera->Move(CameraObj::Direction::back, m_DeltaTime);
-			if (io.KeysDown[ImGuiKey_D])
-				camera->Move(CameraObj::Direction::right, m_DeltaTime);
-			if (io.KeysDown[ImGuiKey_LeftShift])
-				camera->Move(CameraObj::Direction::down, m_DeltaTime);
-			if (io.KeysDown[ImGuiKey_Space])
-				camera->Move(CameraObj::Direction::up, m_DeltaTime);
-		}
-		// mouse control
-		ImVec2 windowPos = ImGui::GetCursorScreenPos();					// 当前窗口位置
-		ImVec2 windowSize = ImGui::GetWindowSize();					// 窗口大小
-		static ImVec2 sLastCursor;
-		ImVec2 sDeltaPos;
-
-		if (io.MouseDown[0] && camera )	// 左键按下
-		{
-			// 这里windowPos 是scene绘制区域的左上角
-			if (/*io.MouseClickedPos[0].x >= windowPos.x &&
-				io.MouseClickedPos[0].x <= windowPos.x &&
-				io.MouseClickedPos[0].y >= windowPos.y &&
-				io.MouseClickedPos[0].y <= windowPos.y */
-				true)	// 左键点击位置在目标区域内
-			{
-				sDeltaPos.x = io.MousePos.x - sLastCursor.x;
-				sDeltaPos.y = io.MousePos.y - sLastCursor.y;
-				// std::cout << "Mouse Drag dleta Pos: " << sDeltaPos.x << ", " << sDeltaPos.y << std::endl;
-
-				camera->RotateYaw(-sDeltaPos.x / 500.0f);
-				camera->RotatePitch(-sDeltaPos.y / 500.0f);
-			}
-		}
-		sLastCursor = ImGui::GetMousePos();
-
-
+		m_pMainSceneWin->ShowWindow();
 	}
 
 	void Graphics::EndFrame()
@@ -580,6 +537,8 @@ namespace yoi
 
 		m_pLightManager->UpdateConstantBuffer();
 		m_pLightManager->Bind(pContext.Get());
+
+		m_pMainSceneWin->Update(m_DeltaTime);
 	}
 	CameraObj* Graphics::GetMainCamera()
 	{
@@ -591,6 +550,9 @@ namespace yoi
 		m_pScreenTex = std::make_unique<OSRTexture>(pDevice.Get(), 1280, 720);
 		m_pDepthStencilTex = std::make_unique<DSTexture>(pDevice.Get(), 1280, 720);
 		
+		// create the window to show off-screen texture
+		m_pMainSceneWin = std::make_unique<MainSceneWin>(m_pScreenTex->GetShaderResourceView(), dynamic_cast<Camera3DObj*>(m_MainCamera));
+
 		// create scene for screen render
 		Material* mtl = m_pMaterialManager->Add(
 			new Material(dynamic_cast<Texture*>(m_pScreenTex.get()),m_pTextureManager.get()), 
@@ -632,9 +594,9 @@ namespace yoi
 		m_pPipeline->SetDepthStencilView(pDepthStencil.Get());
 		m_pPipeline->SetRasterizerState(pRasterizerState.Get());
 		m_pPipeline->SetDepthStencilState(pDSState.Get());
+		m_pPipeline->SetBlendState(pBlendState.Get());
 
 		m_pPipeline->SetViewPort(&vp);
-
 
 
 	}

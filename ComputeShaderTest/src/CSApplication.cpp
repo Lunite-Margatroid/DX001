@@ -5,9 +5,16 @@
 
 
 Application::Application() :
-	wnd(YOI_WINDOW_WIDTH, YOI_WINDOW_HEIGHT, "DX002")
+	wnd(YOI_WINDOW_WIDTH, YOI_WINDOW_HEIGHT, "CouputeShaderTest")
 {
-	
+	// wnd.Gfx().InitTestDraw();
+	wnd.Gfx().InitPipeline();
+}
+
+Application::Application(unsigned int width, unsigned int height)
+	:wnd(width, height, "CouputeShaderTest")
+{
+	wnd.Gfx().InitPipeline();
 }
 
 int Application::Run()
@@ -25,14 +32,9 @@ int Application::Run()
 
 void Application::DoFrame()
 {
-	/*std::ostringstream oss;
-	oss << "time has pasted: " << timer.Peek() << 's';
-	wnd.SetTitle(oss.str());*/
-	// float c = sinf(timer.Peek()) / 2.f + 0.5f;
 
-	wnd.Gfx().ClearBuffer(0.224f, 0.773f, 0.733f);
-
-	wnd.Gfx().DrawTriangle();
+	wnd.Gfx().Update();
+	wnd.Gfx().RunPipeline();
 	wnd.Gfx().ImGuiFrame();
 	wnd.Gfx().EndFrame();
 }

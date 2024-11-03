@@ -40,6 +40,8 @@ namespace yoi
 		virtual void UnbindGS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
 		virtual void UnbindVS(ID3D11DeviceContext* pContext, UINT slot = 0u) override;
 
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& GetShaderResourceView();
+
 
 	};
 }

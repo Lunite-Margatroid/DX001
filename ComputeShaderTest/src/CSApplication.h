@@ -9,6 +9,7 @@ class Application
 {
 public:
 	Application();
+	Application(unsigned int width, unsigned int height);
 	int Run();
 private:
 	void DoFrame();

@@ -5,8 +5,8 @@
 #include "CSApplication.h"
 #include "Texture\UATexture.h"
 
-CSGraphics::CSGraphics(HWND hwnd)
-	:Graphics(hwnd)
+CSGraphics::CSGraphics(HWND hwnd, unsigned int width, unsigned int height)
+	:Graphics(hwnd, width, height)
 {
 	ComputeShaderTestInit();
 }

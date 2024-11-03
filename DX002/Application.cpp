@@ -7,12 +7,14 @@ namespace yoi
 		wnd(YOI_WINDOW_WIDTH, YOI_WINDOW_HEIGHT, "DX002")
 	{
 		wnd.Gfx().InitTestDraw();
+		wnd.Gfx().InitPipeline();
 	}
 
 	Application::Application(unsigned int width, unsigned int height, const char* title)
 		:wnd(width, height, title)
 	{
 		wnd.Gfx().InitTestDraw();
+		wnd.Gfx().InitPipeline();
 	}
 
 	int Application::Run()
@@ -35,9 +37,14 @@ namespace yoi
 		wnd.SetTitle(oss.str());*/
 		// float c = sinf(timer.Peek()) / 2.f + 0.5f;
 
-		wnd.Gfx().ClearBuffer();
+		/*wnd.Gfx().ClearBuffer();
 		
 		wnd.Gfx().DrawTriangle();
+		wnd.Gfx().ImGuiFrame();
+		wnd.Gfx().EndFrame();*/
+
+		wnd.Gfx().Update();
+		wnd.Gfx().RunPipeline();
 		wnd.Gfx().ImGuiFrame();
 		wnd.Gfx().EndFrame();
 	}
