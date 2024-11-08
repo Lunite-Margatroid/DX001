@@ -91,8 +91,8 @@ namespace yoi
 					camera->RotatePitch(-sDeltaPos.y / 500.0f);
 				}
 			}
-			m_LastMosPos = ImGui::GetMousePos();
 		}
+		m_LastMosPos = ImGui::GetMousePos();
 
 		ImGui::End();
 	}
