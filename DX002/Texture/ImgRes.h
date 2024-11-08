@@ -24,5 +24,7 @@ namespace yoi
 		void Release();
 		void ErrorColor();
 
+		bool Resize(int newSizeWidth, int newSizeHeight);
+
 	};
 }

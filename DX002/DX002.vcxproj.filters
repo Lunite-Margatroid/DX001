@@ -294,6 +294,12 @@
     <ClInclude Include="ImWindow\MainSceneWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture\CubeTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture\Texture2DRes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -531,6 +537,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ImWindow\MainSceneWin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\CubeTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture\Texture2DRes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

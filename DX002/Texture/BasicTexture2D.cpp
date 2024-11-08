@@ -34,12 +34,5 @@ namespace yoi
         GFX_EXCEPT_SUPPORT();
         GFX_THROW_INFO(pDevice->CreateTexture2D(td, sd, &m_pTexture2D));
     }
-    Microsoft::WRL::ComPtr<ID3D11Texture2D> BasicTexture2D::GetTexture2D()
-    {
-        return m_pTexture2D;
-    }
-    ID3D11Texture2D* BasicTexture2D::GetTexture2DPtr()
-    {
-        return m_pTexture2D.Get();
-    }
+    
 }

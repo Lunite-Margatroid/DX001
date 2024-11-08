@@ -5,6 +5,8 @@
 #include "stb\stb_image.h"
 #include "Logger\FileLogger.h"
 
+#define STB_IMAGE_RESIZE_IMPLEMENTATION
+#include "stb\stb_image_resize.h"
 
 #include "Shader\Shader.h"
 
@@ -46,6 +48,19 @@ namespace yoi
 		m_Channals = 4;
 		m_Height = 2;
 		m_Width = 2;
+	}
+	bool ImgRes::Resize(int newSizeWidth, int newSizeHeight)
+	{
+		if (m_ResultCode < 0 || m_Data == nullptr)
+			return false;
+
+		unsigned char* tempData = new unsigned char[newSizeHeight * newSizeWidth * m_Channals];
+		stbir_resize_uint8(m_Data, m_Width, m_Height, 0, tempData, newSizeWidth, newSizeHeight, 0, m_Channals);
+		Release();
+		m_Data = tempData;
+		m_Width = newSizeWidth;
+		m_Height = newSizeHeight;
+		return true;
 	}
 	ImgRes::ImgRes(const std::string& path)
 	{

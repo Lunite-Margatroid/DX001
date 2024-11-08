@@ -1,9 +1,8 @@
 #pragma once
-#include <d3d11.h>
-#include <wrl.h>
+#include "Texture2DRes.h"
 namespace yoi
 {
-	class BasicTexture2D
+	class BasicTexture2D : public Texture2DRes
 	{
 	protected:
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_pTexture2D;
@@ -22,8 +21,7 @@ namespace yoi
 		void InitTextureResource(ID3D11Device* pDevice, const D3D11_TEXTURE2D_DESC* td, const D3D11_SUBRESOURCE_DATA* sd);
 		
 
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture2D();
-		ID3D11Texture2D* GetTexture2DPtr();
+		
 		/********* defulat bind func ****************/
 		
 		virtual void Bind(ID3D11DeviceContext* pContext, UINT slot = 0u) = 0;
