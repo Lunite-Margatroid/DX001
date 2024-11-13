@@ -10,6 +10,7 @@
 #include "P3_N3_T2_Cube.h"
 #include "P2_N2_Quad.h"
 #include "Vertex_P3_N3_T2_Quad.h"
+#include "SkyboxBuffer.h"
 
 
 namespace yoi
@@ -132,6 +133,7 @@ namespace yoi
 		InitBuffer<Buffers::P3_N3_T2_Cube>(this);
 		InitBuffer<Buffers::Vertex_P2_T2_Quad>(this);
 		InitBuffer<Buffers::Vertex_P3_N3_T2_Quad>(this);
+		InitBuffer<Buffers::Vertex_P3_Skybox>(this);
 	}
 	BufferManager::~BufferManager()
 	{
@@ -190,6 +192,45 @@ namespace yoi
 		IndexBuffer* indexBuffer = new IndexBuffer(buffer, indexCount, offset);
 		m_Buffers.push_back(static_cast<Buffer*>(indexBuffer));
 		return indexBuffer;
+	}
+	VertexBuffer* BufferManager::AddVertexBuffer(Buffers buffers, void* data, size_t sizeVertex, unsigned int count)
+	{
+		D3D11_BUFFER_DESC bufferDesc = {};
+		bufferDesc.ByteWidth = sizeVertex * count;
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+
+		D3D11_SUBRESOURCE_DATA subData = {};
+		subData.pSysMem = data;
+
+		return AddVertexBuffer(
+			buffers,
+			Buffer(m_pDevice, &bufferDesc, &subData),
+			0,
+			count
+		);
+	}
+	IndexBuffer* BufferManager::AddIndexBuffer(Buffers buffers, void* data, unsigned int indexCount)
+	{
+		D3D11_BUFFER_DESC bufferDesc = {};
+		bufferDesc.ByteWidth = indexCount * sizeof(unsigned int);
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.StructureByteStride = 0u;
+
+		D3D11_SUBRESOURCE_DATA subData = {};
+		subData.pSysMem = data;
+
+		return AddIndexBuffer(
+			buffers,
+			Buffer(m_pDevice, &bufferDesc, &subData),
+			indexCount,
+			0u);
 	}
 	VertexBuffer* BufferManager::AddVertexBuffer(const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd, size_t offset, unsigned int vertexCount)
 	{

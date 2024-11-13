@@ -300,6 +300,18 @@
     <ClInclude Include="Texture\Texture2DRes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BufferManager\SkyboxBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite\SpriteSkybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\PipelineV1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\P3_Skybox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Window\Window.cpp">
@@ -545,6 +557,12 @@
     <ClCompile Include="Texture\Texture2DRes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Sprite\SpriteSkybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\PipelineV1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX002.rc">
@@ -580,5 +598,7 @@
     <FxCompile Include="HLSL\ClothSimGenNormal.hlsl" />
     <FxCompile Include="HLSL\ClothSimVS.hlsl" />
     <FxCompile Include="HLSL\ClothSimConstraintCS.hlsl" />
+    <FxCompile Include="HLSL\SkyboxVS.hlsl" />
+    <FxCompile Include="HLSL\SkyboxPS.hlsl" />
   </ItemGroup>
 </Project>

@@ -5,10 +5,17 @@ namespace yoi
 {
 	class Sprite
 	{
-	protected:
-
 	public:
-		Sprite() = default;
+		enum class SpriteType
+		{
+			Untransparent,
+			Transparent,
+			Skybox
+		};
+	public:
+		SpriteType m_Type;
+
+		Sprite();
 		virtual ~Sprite() = default;
 
 		virtual void Update(float deltaTime);

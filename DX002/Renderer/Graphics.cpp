@@ -661,6 +661,14 @@ namespace yoi
 	{
 		return (GetInstance().m_pBufferManager)->SetBufferData(buffer, size, offset, src);
 	}
+	MaterialManager* Graphics::GetMaterialManager()
+	{
+		return m_pMaterialManager.get();
+	}
+	TextureManager* Graphics::GetTextureManager()
+	{
+		return m_pTextureManager.get();
+	}
 	SceneObj* Graphics::LoadModel(const std::string& path)
 	{
 		Assimp::Importer importer;

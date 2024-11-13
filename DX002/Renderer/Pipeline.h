@@ -37,20 +37,25 @@ namespace yoi
 			}
 		};
 
+		using RenderQueue = std::queue<RenderItem>;
+
 	protected:
 		// render target views
 		std::vector<ID3D11RenderTargetView*> m_RenderTargets;
+
 		// depth stencil view
 		ID3D11DepthStencilView* m_DepthStencilVeiw;
 
-		// state
+		// DS state
 		ID3D11DepthStencilState* m_DepthStencilState;
 
 		// view port
 		D3D11_VIEWPORT m_ViewPort;
 
+		// rasterizer state ¹âÕ¤»¯×´Ì¬
 		ID3D11RasterizerState* m_pRasterizerState;
 
+		// blend state »ìºÏ×´Ì¬
 		ID3D11BlendState* m_pBlendState;
 
 		// Stencil reference
@@ -60,7 +65,9 @@ namespace yoi
 		float m_ClearColor[4];
 		
 		// render queue
+		// render queue for normal object
 		std::queue<RenderItem> m_RenderQueueMain;
+		// render queue for transparent object
 		std::queue<RenderItem> m_RenderQueueTrsp;
 
 		ID3D11Device* m_pDevice;

@@ -189,6 +189,7 @@
     <ClInclude Include="BufferManager\InitBuffer.h" />
     <ClInclude Include="BufferManager\P2_N2_Quad.h" />
     <ClInclude Include="BufferManager\P3_N3_T2_Cube.h" />
+    <ClInclude Include="BufferManager\SkyboxBuffer.h" />
     <ClInclude Include="BufferManager\VertexBuffer.h" />
     <ClInclude Include="BufferManager\Vertex_P3_N3_T2_Quad.h" />
     <ClInclude Include="CShader\CShader.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="Renderer\Pipeline.h" />
+    <ClInclude Include="Renderer\PipelineV1.h" />
     <ClInclude Include="Renderer\Screen.h" />
     <ClInclude Include="SceneObject\Camera2DObj.h" />
     <ClInclude Include="SceneObject\LightObj.h" />
@@ -215,6 +217,7 @@
     <ClInclude Include="Shader\P3_C3.h" />
     <ClInclude Include="Shader\P3_N3_T2.h" />
     <ClInclude Include="Shader\P3_N3_T2_ChessBoard.h" />
+    <ClInclude Include="Shader\P3_Skybox.hpp" />
     <ClInclude Include="Shader\P3_T2.h" />
     <ClInclude Include="Shader\P3_N3_T2_Lighted.h" />
     <ClInclude Include="Shader\P3_T2_Materialed.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="Sprite\Mesh.h" />
     <ClInclude Include="Sprite\QuadCloth.h" />
     <ClInclude Include="Sprite\SpriteManager.h" />
+    <ClInclude Include="Sprite\SpriteSkybox.h" />
     <ClInclude Include="Sprite\SpriteV1.h" />
     <ClInclude Include="Sprite\SpriteV1Cube.h" />
     <ClInclude Include="Sprite\SpriteV2.h" />
@@ -298,6 +302,7 @@
     <ClCompile Include="Material\Material.cpp" />
     <ClCompile Include="Material\MaterialManager.cpp" />
     <ClCompile Include="Renderer\Pipeline.cpp" />
+    <ClCompile Include="Renderer\PipelineV1.cpp" />
     <ClCompile Include="Renderer\Screen.cpp" />
     <ClCompile Include="SceneObject\Camera2DObj.cpp" />
     <ClCompile Include="SceneObject\LightObj.cpp" />
@@ -315,6 +320,7 @@
     <ClCompile Include="Sprite\Mesh.cpp" />
     <ClCompile Include="Sprite\QuadCloth.cpp" />
     <ClCompile Include="Sprite\SpriteManager.cpp" />
+    <ClCompile Include="Sprite\SpriteSkybox.cpp" />
     <ClCompile Include="Sprite\SpriteV1.cpp" />
     <ClCompile Include="Sprite\SpriteV1Cube.cpp" />
     <ClCompile Include="Sprite\SpriteV2.cpp" />
@@ -461,6 +467,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="HLSL\SkyboxPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSL\SkyboxVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="HLSL\WaterWaveCalmCS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>

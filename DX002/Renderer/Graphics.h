@@ -210,10 +210,14 @@ namespace yoi
 		/*********** Material Manager *************/
 		protected:
 			std::unique_ptr<MaterialManager> m_pMaterialManager;
+		public:
+			MaterialManager* GetMaterialManager();
 
 		/*********** Texture Mananger *************/
 		protected:
 			std::unique_ptr<TextureManager> m_pTextureManager;
+		public:
+			TextureManager* GetTextureManager();
 
 		/*********** Light Manager ****************/
 		protected:

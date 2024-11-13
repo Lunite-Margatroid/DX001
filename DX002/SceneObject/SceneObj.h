@@ -12,6 +12,7 @@ namespace yoi
 	class SceneObj
 	{
 		friend class Pipeline;
+		friend class PipelineV1;
 	protected:
 		SceneObj* m_ParentObj;
 		Sprite* m_Sprite;

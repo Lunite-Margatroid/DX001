@@ -66,7 +66,13 @@ namespace yoi
 			Constant_Disturb,
 
 			// vertex buffer of a 3D rectangle.
-			Vertex_P3_N3_T2_Quad
+			Vertex_P3_N3_T2_Quad,
+
+			// Vertex buffer for skybox
+			Vertex_P3_Skybox,
+
+			// index buffer for skybox
+			Index_Skybox
 		};
 
 
@@ -88,6 +94,9 @@ namespace yoi
 
 		VertexBuffer* AddVertexBuffer(const Buffer& buffer, size_t offset, unsigned int vertexCount);
 		IndexBuffer* AddIndexBuffer(const Buffer& buffer, unsigned int indexCount, unsigned int offset);
+
+		VertexBuffer* AddVertexBuffer(Buffers buffers, void* data, size_t sizeVertex, unsigned int count);
+		IndexBuffer* AddIndexBuffer(Buffers buffers, void* data, unsigned int indexCount);
 
 		VertexBuffer* AddVertexBuffer(const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd, size_t offset, unsigned int vertexCount);
 		IndexBuffer* AddIndexBuffer(const D3D11_BUFFER_DESC* bd, const D3D11_SUBRESOURCE_DATA* sd, unsigned int indexCount, unsigned int offset);
