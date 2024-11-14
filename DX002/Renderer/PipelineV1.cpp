@@ -53,7 +53,7 @@ namespace yoi
 		D3D11_RASTERIZER_DESC rd = {};
 		rd.FillMode = D3D11_FILL_SOLID;
 		rd.CullMode = D3D11_CULL_BACK;
-		rd.FrontCounterClockwise = true;	// anticlockwise is front side
+		rd.FrontCounterClockwise = false;
 
 		rd.DepthBias = 0;
 		rd.DepthBiasClamp = 0.0f;
@@ -99,6 +99,24 @@ namespace yoi
 		dsd.BackFace = dsd.FrontFace;
 
 		pDevice->CreateDepthStencilState(&dsd, &m_pDSStateSkybox);
+
+
+		/* 5 ******** Create Rasterizer state for skybox rendering **********/
+		rd.FillMode = D3D11_FILL_SOLID;
+		rd.CullMode = D3D11_CULL_FRONT;
+		rd.FrontCounterClockwise = false;
+
+		rd.DepthBias = 0;
+		rd.DepthBiasClamp = 0.0f;
+		rd.SlopeScaledDepthBias = 0.0f;
+
+		rd.DepthClipEnable = true;
+
+		rd.ScissorEnable = false;
+
+		rd.MultisampleEnable = false;
+		rd.AntialiasedLineEnable = false;
+		pDevice->CreateRasterizerState(&rd, &m_RasterizerStateSkyb);
 	}
 
 	PipelineV1::~PipelineV1()
@@ -111,6 +129,9 @@ namespace yoi
 		m_pBlendState->Release();
 		// 4
 		m_pDSStateSkybox->Release();
+		// 5
+		m_RasterizerStateSkyb->Release();
+
 	}
 
 	void PipelineV1::Render(CameraObj* camera, SceneObj* scene)

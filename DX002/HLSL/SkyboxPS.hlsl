@@ -1,7 +1,7 @@
 TextureCube tex : register(t0);
 SamplerState smpCube : register(s0);
 
-float4 main(float3  fragPos: FRAG_POSITION) : SV_TARGET
+float4 main(float3 texVec : TEX_VEC) : SV_TARGET
 {   
-    return tex.Sample(smpCube, fragPos);
+    return tex.Sample(smpCube, texVec);
 }

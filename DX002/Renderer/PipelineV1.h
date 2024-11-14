@@ -19,6 +19,9 @@ namespace yoi
 		// DS state for skybox rendering
 		ID3D11DepthStencilState* m_pDSStateSkybox;
 
+		// Rasterizer state for skybox rendering
+		ID3D11RasterizerState* m_RasterizerStateSkyb;
+
 		// render queue for skybox
 		RenderQueue m_RenderQueueSkyb;
 

@@ -2,17 +2,28 @@
 #include "Renderer\Graphics.h"
 #include "Renderer\GFXMacro.h"
 #include "Sprite\ColoredCube.h"
-
+#include "Texture/CubeTexture.h"
+#include "Sprite\SpriteSkybox.h"
 namespace yoi
 {
 	void Graphics::InitTestDraw()
 	{
+
 		ImgRes img("./img/rumia.jpg");
 		m_pTexture = std::make_unique<Texture>(img);
 		m_pTexture->Bind();
 
 		Texture* texRumia = m_pTextureManager->LoadTexture("./img/rumia.jpg");
+
+		img.Resize(1024, 1024);
+		CubeTexture* texSkybox = m_pTextureManager->CreateTexture<CubeTexture>(pDevice.Get(), 1024, 1024);
+		for (unsigned int face = D3D11_TEXTURECUBE_FACE_POSITIVE_X ; face <= D3D11_TEXTURECUBE_FACE_NEGATIVE_Z; face += 1)
+		{
+			texSkybox->SetFaceTexture(pContext.Get(), static_cast<D3D11_TEXTURECUBE_FACE>(face), img);
+		}
+
 		Material* mtlRumia = new Material(texRumia, m_pTextureManager.get());
+	
 		m_pMaterialManager->Add(mtlRumia, "Rumia");
 		Mesh mshRumia(
 			GetVertexBuffer(BufferManager::Buffers::Vertex_Textured_Cube),
@@ -48,6 +59,7 @@ namespace yoi
 		// white material
 		Material* whtMaterial = m_pMaterialManager->CreateMaterial(dynamic_cast<Texture*>(m_pTextureManager->GetAt()), dynamic_cast<Texture*>(m_pTextureManager->GetAt()), m_pTextureManager.get(), 64.0f);
 
+
 		// colored cube
 		SpriteV3* cubeSprite = m_pSpriteManager->Sprite(ColoredCube());
 		SceneObj* colorCube = new SceneObj(m_RootObj.get(), cubeSprite, "Colored Cube");
@@ -80,5 +92,13 @@ namespace yoi
 		m_MainCamera->SetPosition(glm::vec3(0.0f, 0.0f, 5.f));
 		((PerspectiveCamera*)m_MainCamera)->SetHeight(9.0);
 		((PerspectiveCamera*)m_MainCamera)->SetWidth(16.0);
+
+		// skybox sprite
+		SpriteSkybox* spriteSkybox = m_pSpriteManager->CreateSprite<SpriteSkybox>(
+			texSkybox,
+			m_pShaderManager->GetShader("Skybox Shader")
+		);
+
+		SceneObj* objSkybox = new SceneObj(m_RootObj.get(), spriteSkybox, "skybox");
 	}
 }

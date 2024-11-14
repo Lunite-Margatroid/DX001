@@ -1,5 +1,6 @@
 #pragma once
 #include "Texture.h"
+#include "CubeTexture.h"
 /**********************************************************************************
 * Texture Manager will be a Singleton Class.
 * It has 3 default textures at index 0, 1 and 2.
@@ -34,6 +35,24 @@ namespace yoi
 
 		// Add texture to manager. this func is unsafe.
 		BasicTexture2D* AddTexture(BasicTexture2D* tex, const std::string& title);
+
+		template<typename Ttex, typename ... Args>
+		Ttex* CreateTexture(Args ... args)
+		{
+			int n = m_Textures.size();
+			char tempStr[32] = {};
+			char texStr[64] = "texture-";
+			_itoa(n, tempStr, 10);
+			strcat(texStr, tempStr);
+
+
+			Ttex* tex = new Ttex(args...);
+			BasicTexture2D* bTex = dynamic_cast<BasicTexture2D*>(tex);
+			assert(bTex);
+			
+			m_Textures.emplace_back(std::string(texStr), bTex);
+			return tex;
+		}
 
 		void LogTextureInfo();
 		BasicTexture2D* GetAt(int index = 0);

@@ -134,7 +134,7 @@ namespace yoi
 	/******** pipeline test ***********/
 	private:
 		// pipeline to render main scene
-		std::unique_ptr<Pipeline> m_pPipeline;
+		std::unique_ptr<PipelineV1> m_pPipeline;
 		// off-screen render target and the render target for main scene.
 		std::unique_ptr<OSRTexture> m_pScreenTex;
 		

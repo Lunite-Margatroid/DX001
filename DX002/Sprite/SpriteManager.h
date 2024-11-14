@@ -5,6 +5,7 @@
 #include "BufferManager\BufferManager.h"
 #include "Shader\ShaderManager.h"
 #include "QuadCloth.h"
+#include "SpriteSkybox.h"
 
 namespace yoi
 {
@@ -24,6 +25,16 @@ namespace yoi
 		{
 			SpriteV3* sprite = new SpriteV3(args...);
 			m_Sprites.insert(sprite);
+			return sprite;
+		}
+
+		template<typename TSprite, typename ... Args>
+		TSprite* CreateSprite(Args ... args)
+		{
+			TSprite* sprite = new TSprite(args...);
+			SpriteV3* bSprite = dynamic_cast<SpriteV3*>(sprite);
+			assert(bSprite);
+			m_Sprites.insert(bSprite);
 			return sprite;
 		}
 

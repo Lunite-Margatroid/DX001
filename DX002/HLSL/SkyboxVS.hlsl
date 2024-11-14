@@ -1,6 +1,6 @@
 struct VSout
 {
-    float3 fragPos : FRAG_POSITION;
+    float3 texVec : TEX_VEC;
 	float4 vertPos : SV_Position;
 };
 
@@ -14,12 +14,12 @@ cbuffer Cbuf : register(b0)
     float3 cameraPos;
 };
 
-VSout main( float3 pos : POSITION)
+VSout main( float3 pos : Position)
 {
-    float4 tPos = mul(viewMatrix, mul(modelMatrix, float4(pos, 0.0f)));
+    float4 tPos = mul(viewMatrix, float4(pos, 0.0f));
     VSout outVS;
-    outVS.fragPos = tPos.xyz;
-    tPos = mul(projectionMatrix, tPos);
-    outVS.vertPos = tPos.xyzz;
+    outVS.texVec = pos;
+    tPos = mul(projectionMatrix, float4(tPos.xyz, 1.0f));
+    outVS.vertPos = tPos.xyww;
 	return outVS;
 }

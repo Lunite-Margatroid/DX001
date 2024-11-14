@@ -7,6 +7,7 @@
 #include "Sprite\ColoredCube.h"
 #include "Sprite\TexturedCube.h"
 #include "Application.h"
+#include "PipelineV1.h"
 
 
 
@@ -589,12 +590,9 @@ namespace yoi
 		m_pPipelineScreen->SetViewPort(&vp);
 
 		// init pipeline for main scene render
-		m_pPipeline = std::make_unique<Pipeline>(pDevice.Get(), pContext.Get());
+		m_pPipeline = std::make_unique<PipelineV1>(pDevice.Get(), pContext.Get());
 		m_pPipeline->AddRenderTaget(m_pScreenTex->GetRenderTarget());
 		m_pPipeline->SetDepthStencilView(pDepthStencil.Get());
-		m_pPipeline->SetRasterizerState(pRasterizerState.Get());
-		m_pPipeline->SetDepthStencilState(pDSState.Get());
-		m_pPipeline->SetBlendState(pBlendState.Get());
 
 		m_pPipeline->SetViewPort(&vp);
 
