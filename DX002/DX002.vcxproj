@@ -196,6 +196,7 @@
     <ClInclude Include="Component\CollisionBox\CollisionManager.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\ComponentManager.h" />
+    <ClInclude Include="Component\ComponentRect.h" />
     <ClInclude Include="CShader\CShader.h" />
     <ClInclude Include="Exception\UFException.h" />
     <ClInclude Include="ImGuiManager\ImGuiManager.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Material\Material.h" />
     <ClInclude Include="Material\MaterialManager.h" />
     <ClInclude Include="QuadTree\QuadTree.h" />
+    <ClInclude Include="Reflection\TypeInfo.h" />
     <ClInclude Include="Renderer\GFXMacro.h" />
     <ClInclude Include="Renderer\Pipeline.h" />
     <ClInclude Include="Renderer\PipelineV1.h" />
@@ -295,6 +297,7 @@
     <ClCompile Include="Component\CollisionBox\CollisionManager.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\ComponentManager.cpp" />
+    <ClCompile Include="Component\ComponentRect.cpp" />
     <ClCompile Include="CShader\CShader.cpp" />
     <ClCompile Include="Exception\UFException.cpp" />
     <ClCompile Include="ImGuiManager\ImGuiManager.cpp" />
@@ -316,6 +319,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Reflection\TypeInfo.cpp" />
     <ClCompile Include="Renderer\Pipeline.cpp" />
     <ClCompile Include="Renderer\PipelineV1.cpp" />
     <ClCompile Include="Renderer\Screen.cpp" />

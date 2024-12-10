@@ -2,5 +2,8 @@
 
 namespace yoi
 {
-
+	class CollisionBox2D
+	{
+		
+	};
 }
